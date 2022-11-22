@@ -1,0 +1,1 @@
+export type UserStaffNameLanguage = "ROMAJI_WESTERN" | "ROMAJI" | "NATIVE";

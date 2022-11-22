@@ -1,0 +1,1 @@
+export type CharacterRole = "MAIN" | "SUPPORTING" | "BACKGROUND";

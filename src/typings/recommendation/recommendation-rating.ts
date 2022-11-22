@@ -1,0 +1,1 @@
+export type RecommendationRating = "NO_RATING" | "RATE_UP" | "RATE_DOWN";
