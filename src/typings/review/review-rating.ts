@@ -1,0 +1,1 @@
+export type ReviewRating = "NO_VOTE" | "UP_VOTE" | "DOWN_VOTE";
