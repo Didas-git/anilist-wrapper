@@ -1,4 +1,4 @@
-import { MediaConnection, MediaCoverImage, MediaExternalLink, MediaFormat, MediaRank, MediaSeason, MediaStats, MediaStatus, MediaStreamingEpisode, MediaTag, MediaTitle, MediaTrailer, MediaTrendConnection, MediaType } from ".";
+import { MediaConnection, MediaCoverImage, MediaExternalLink, MediaFormat, MediaRank, MediaSeason, MediaStats, MediaStatus, MediaStreamingEpisode, MediaTag, MediaTitle, MediaTrailer, MediaTrendConnection, MediaType, MediaSource, MediaList } from ".";
 import { AiringSchedule, AiringScheduleConnection } from "../airing";
 import { CharacterConnection } from "../character";
 import { CountryCode } from "../country-code";
