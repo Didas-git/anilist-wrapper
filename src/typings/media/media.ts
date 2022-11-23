@@ -28,7 +28,7 @@ export interface Media {
     countryOfOrigin?: CountryCode | null;
     isLicensed?: boolean | null;
     source?: MediaSource | null;
-    hastag?: string | null;
+    hashtag?: string | null;
     trailer?: MediaTrailer | null;
     updatedAt?: number | null;
     coverImage?: MediaCoverImage | null;
