@@ -1,8 +1,18 @@
-import { QueryMedia } from "./query";
+import { QueryMedia } from "./media-query";
+import { MediaArguments } from "./typings";
 
-export * from "./query";
+export * from "./media-query";
 export * from "./typings";
 
 export const Anilist = {
-    query: QueryMedia
+    query: {
+        media: mediaQuery
+    },
+    mediaQuery
+}
+
+function mediaQuery(search: string): QueryMedia;
+function mediaQuery(args: MediaArguments): QueryMedia;
+function mediaQuery(options: string | MediaArguments): QueryMedia {
+    return new QueryMedia(<never>options)
 }
