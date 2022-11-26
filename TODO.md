@@ -6,7 +6,7 @@
 - [x] Support complex fields
 - [x] Ability to chose what fields to return in complex fields
 - [ ] Support nested complex fields
-- [ ] Add ability to pass in default fields at query creation
+- [x] Add ability to pass in default fields at query creation
 - [ ] AiringSchedule Query
 - [ ] Character Query
 - [ ] Studio Query

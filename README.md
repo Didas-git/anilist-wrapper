@@ -15,6 +15,7 @@ An UNOFFICIAL wrapper for the anilist api written in typescript that tries to fo
       - [Media Query](#media-query)
         - [Fetching without building the query](#fetching-without-building-the-query)
         - [Creating a complete search query](#creating-a-complete-search-query)
+        - [Adding query defaults](#adding-query-defaults)
 
 ## Status
 
@@ -117,3 +118,22 @@ await query.fetch();
 */
 ```
 
+##### Adding query defaults
+
+The query builder supports default values to be passed in for the ones who wish to either avoid using multiple functions or want to change the query at run type while keeping certain fields.
+
+```ts
+const query = Anilist.query.media("Kamisama Ni Natta Hi", ["id", "format"]);
+
+await query.fetch();
+/*
+{ id: 118419, format: 'TV' }
+*/
+
+query.withStatus()
+
+await query.fetch();
+/*
+{ id: 118419, format: 'TV', status: 'FINISHED' }
+*/
+```

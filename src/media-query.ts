@@ -1,5 +1,5 @@
 import { inspect } from "node:util";
-import type {
+import {
     AiringSchedule,
     AiringScheduleEdge,
     Character,
@@ -29,7 +29,10 @@ import type {
     Recommendation,
     ScoreDistribution,
     StatusDistribution,
-    Add
+    Add,
+    EnumTypes,
+    MediaArgs,
+    ComplexTypes
 } from "./typings";
 
 type ReqMedia = Required<Media>
@@ -40,31 +43,34 @@ export class QueryMedia<T = { empty: never }> {
         type: "ANIME"
     };
 
-    #query: Array<keyof Media> = [];
-    /**
-     * @param media - Not Implemented yet
-     */
-    constructor(name: string, media?: MediaArguments)
-    /**
-     * @param media - Not Implemented yet
-     */
-    constructor(args: MediaArguments, media?: MediaArguments)
-    /**
-     * @param _media - Not Implemented yet
-     */
-    constructor(params: MediaArguments | string, _media?: MediaArguments) {
+    #query = new Set<keyof Media>();
+    constructor(name: string, media?: Array<MediaArgs>)
+    constructor(args: MediaArguments, media?: Array<MediaArgs>)
+    constructor(params: MediaArguments | string, media?: Array<MediaArgs>) {
         if (typeof params === "string") this.#options = { ...this.#options, search: params };
         else this.#options = { ...this.#options, ...params };
+
+        this.#createQueryOptions(media);
     }
 
     #transformOptions() {
-        return Object.keys(this.#options).map((key) => `${key}: ${this.#options[<keyof MediaArguments>key]!.toString().split(" ").length - 1 >= 1 ? JSON.stringify(this.#options[<keyof MediaArguments>key]) : this.#options[<keyof MediaArguments>key]}`).join(", ")
+        return Object.keys(this.#options).map((key) => `${key}: ${EnumTypes.has(key) ? this.#options[<keyof MediaArguments>key] : Array.isArray(this.#options[<keyof MediaArguments>key]) ? `[${this.#options[<keyof MediaArguments>key]}]` : JSON.stringify(this.#options[<keyof MediaArguments>key])}`).join(", ")
+    }
+
+    #createQueryOptions(media?: Array<MediaArgs>) {
+        if (!media || !media.length) return;
+
+        // Casting to never in case someone who uses js tries to use one of the complex types (support in the future)
+        for (let i = 0; i < media.length; i++) {
+            if (ComplexTypes.has(<never>media[i])) throw new Error(`'${media[i]}' cannot be passed to the constructor, use the builder method instead`);
+            this.#query.add(media[i]);
+        }
     }
 
     #buildQuery() {
         return `query {
     Media(${this.#transformOptions()}) {
-        ${this.#query.join(",\n        ") || "id"}
+        ${Array.from(this.#query).join(",\n        ") || "id"}
     }
 }
     `};
@@ -88,12 +94,12 @@ export class QueryMedia<T = { empty: never }> {
     }
 
     withId(): QueryMedia<Add<T, { id: ReqMedia["id"] }>> {
-        this.#query.push("id");
+        this.#query.add("id");
         return <never>this;
     }
 
     withMalId(): QueryMedia<Add<T, { idMal: ReqMedia["idMal"] }>> {
-        this.#query.push("idMal");
+        this.#query.add("idMal");
         return <never>this;
     }
 
@@ -104,92 +110,92 @@ export class QueryMedia<T = { empty: never }> {
             romaji
         }`)
 
-        this.#query.push(titleQuery);
+        this.#query.add(titleQuery);
         return <never>this;
     }
 
     withType(): QueryMedia<Add<T, { type: ReqMedia["type"] }>> {
-        this.#query.push("type");
+        this.#query.add("type");
         return <never>this;
     }
 
     withFormat(): QueryMedia<Add<T, { format: ReqMedia["format"] }>> {
-        this.#query.push("format");
+        this.#query.add("format");
         return <never>this;
     }
 
     withStatus(): QueryMedia<Add<T, { status: ReqMedia["status"] }>> {
-        this.#query.push("status");
+        this.#query.add("status");
         return <never>this;
     }
 
     withDescription(): QueryMedia<Add<T, { description: ReqMedia["description"] }>> {
-        this.#query.push("description");
+        this.#query.add("description");
         return <never>this;
     }
 
     withStartDate(): QueryMedia<Add<T, { startDate: ReqMedia["startDate"] }>> {
-        this.#query.push("startDate");
+        this.#query.add("startDate");
         return <never>this;
     }
 
     withEndDate(): QueryMedia<Add<T, { endDate: ReqMedia["endDate"] }>> {
-        this.#query.push("endDate");
+        this.#query.add("endDate");
         return <never>this;
     }
 
     withSeason(): QueryMedia<Add<T, { season: ReqMedia["season"] }>> {
-        this.#query.push("season");
+        this.#query.add("season");
         return <never>this;
     }
 
     withSeasonYear(): QueryMedia<Add<T, { seasonYear: ReqMedia["seasonYear"] }>> {
-        this.#query.push("seasonYear");
+        this.#query.add("seasonYear");
         return <never>this;
     }
 
     withSeasonInt(): QueryMedia<Add<T, { seasonInt: ReqMedia["seasonInt"] }>> {
-        this.#query.push("seasonInt");
+        this.#query.add("seasonInt");
         return <never>this;
     }
 
     withEpisodes(): QueryMedia<Add<T, { episodes: ReqMedia["episodes"] }>> {
-        this.#query.push("episodes");
+        this.#query.add("episodes");
         return <never>this;
     }
 
     withDuration(): QueryMedia<Add<T, { duration: ReqMedia["duration"] }>> {
-        this.#query.push("duration");
+        this.#query.add("duration");
         return <never>this;
     }
 
     withChapters(): QueryMedia<Add<T, { chapters: ReqMedia["chapters"] }>> {
-        this.#query.push("chapters");
+        this.#query.add("chapters");
         return <never>this;
     }
 
     withVolumes(): QueryMedia<Add<T, { volumes: ReqMedia["volumes"] }>> {
-        this.#query.push("volumes");
+        this.#query.add("volumes");
         return <never>this;
     }
 
     withCountryOfOrigin(): QueryMedia<Add<T, { countryOfOrigin: ReqMedia["countryOfOrigin"] }>> {
-        this.#query.push("countryOfOrigin");
+        this.#query.add("countryOfOrigin");
         return <never>this;
     }
 
     isLicensed(): QueryMedia<Add<T, { isLicensed: ReqMedia["isLicensed"] }>> {
-        this.#query.push("isLicensed");
+        this.#query.add("isLicensed");
         return <never>this;
     }
 
     withSource(): QueryMedia<Add<T, { source: ReqMedia["source"] }>> {
-        this.#query.push("source");
+        this.#query.add("source");
         return <never>this;
     }
 
     withTwitterHashtag(): QueryMedia<Add<T, { hashtag: ReqMedia["hashtag"] }>> {
-        this.#query.push("hashtag");
+        this.#query.add("hashtag");
         return <never>this;
     }
 
@@ -200,12 +206,12 @@ export class QueryMedia<T = { empty: never }> {
             id
         }`)
 
-        this.#query.push(trailerQuery);
+        this.#query.add(trailerQuery);
         return <never>this;
     }
 
     updatedAt(): QueryMedia<Add<T, { updatedAt: ReqMedia["updatedAt"] }>> {
-        this.#query.push("updatedAt");
+        this.#query.add("updatedAt");
         return <never>this;
     }
 
@@ -219,52 +225,52 @@ export class QueryMedia<T = { empty: never }> {
             color
         }`)
 
-        this.#query.push(coverImageQuery);
+        this.#query.add(coverImageQuery);
         return <never>this;
     }
 
     withBannerImage(): QueryMedia<Add<T, { bannerImage: ReqMedia["bannerImage"] }>> {
-        this.#query.push("bannerImage");
+        this.#query.add("bannerImage");
         return <never>this;
     }
 
     withGenres(): QueryMedia<Add<T, { genres: ReqMedia["genres"] }>> {
-        this.#query.push("genres");
+        this.#query.add("genres");
         return <never>this;
     }
 
     withSynonyms(): QueryMedia<Add<T, { synonyms: ReqMedia["synonyms"] }>> {
-        this.#query.push("synonyms");
+        this.#query.add("synonyms");
         return <never>this;
     }
 
     withAverageScore(): QueryMedia<Add<T, { averageScore: ReqMedia["averageScore"] }>> {
-        this.#query.push("averageScore");
+        this.#query.add("averageScore");
         return <never>this;
     }
 
     withMeanScore(): QueryMedia<Add<T, { meanScore: ReqMedia["meanScore"] }>> {
-        this.#query.push("meanScore");
+        this.#query.add("meanScore");
         return <never>this;
     }
 
     withPopularity(): QueryMedia<Add<T, { popularity: ReqMedia["popularity"] }>> {
-        this.#query.push("popularity");
+        this.#query.add("popularity");
         return <never>this;
     }
 
     isLocked(): QueryMedia<Add<T, { isLocked: ReqMedia["isLocked"] }>> {
-        this.#query.push("isLocked");
+        this.#query.add("isLocked");
         return <never>this;
     }
 
     withTrending(): QueryMedia<Add<T, { trending: ReqMedia["trending"] }>> {
-        this.#query.push("trending");
+        this.#query.add("trending");
         return <never>this;
     }
 
     withFavourites(): QueryMedia<Add<T, { favourites: ReqMedia["favourites"] }>> {
-        this.#query.push("favourites");
+        this.#query.add("favourites");
         return <never>this;
     }
 
@@ -274,7 +280,7 @@ export class QueryMedia<T = { empty: never }> {
         }` : `tags {
             id
         }`)
-        this.#query.push(tagsQuery);
+        this.#query.add(tagsQuery);
         return <never>this;
     }
 
@@ -300,7 +306,7 @@ export class QueryMedia<T = { empty: never }> {
             }
         }`)
 
-        this.#query.push(relationsQuery);
+        this.#query.add(relationsQuery);
         return <never>this;
     }
 
@@ -326,7 +332,7 @@ export class QueryMedia<T = { empty: never }> {
             }
         }`)
 
-        this.#query.push(charactersQuery);
+        this.#query.add(charactersQuery);
         return <never>this;
     }
 
@@ -352,7 +358,7 @@ export class QueryMedia<T = { empty: never }> {
             }
         }`)
 
-        this.#query.push(staffQuery);
+        this.#query.add(staffQuery);
         return <never>this;
     }
 
@@ -378,22 +384,22 @@ export class QueryMedia<T = { empty: never }> {
             }
         }`)
 
-        this.#query.push(studiosQuery);
+        this.#query.add(studiosQuery);
         return <never>this;
     }
 
     isFavourite(): QueryMedia<Add<T, { isFavourite: ReqMedia["isFavourite"] }>> {
-        this.#query.push("isFavourite");
+        this.#query.add("isFavourite");
         return <never>this;
     }
 
     isFavouriteBlocked(): QueryMedia<Add<T, { isFavouriteBlocked: ReqMedia["isFavouriteBlocked"] }>> {
-        this.#query.push("isFavouriteBlocked");
+        this.#query.add("isFavouriteBlocked");
         return <never>this;
     }
 
     isAdult(): QueryMedia<Add<T, { isAdult: ReqMedia["isAdult"] }>> {
-        this.#query.push("isAdult");
+        this.#query.add("isAdult");
         return <never>this;
     }
 
@@ -403,7 +409,7 @@ export class QueryMedia<T = { empty: never }> {
         }` : `nextAiringEpisode {
             id
         }`)
-        this.#query.push(nextAiringEpisodeQuery);
+        this.#query.add(nextAiringEpisodeQuery);
         return <never>this;
     }
 
@@ -429,7 +435,7 @@ export class QueryMedia<T = { empty: never }> {
             }
         }`)
 
-        this.#query.push(airingScheduleQuery);
+        this.#query.add(airingScheduleQuery);
         return <never>this;
     }
 
@@ -455,7 +461,7 @@ export class QueryMedia<T = { empty: never }> {
             }
         }`)
 
-        this.#query.push(trendsQuery);
+        this.#query.add(trendsQuery);
         return <never>this;
     }
 
@@ -466,7 +472,7 @@ export class QueryMedia<T = { empty: never }> {
             id
         }`)
 
-        this.#query.push(externalLinksQuery);
+        this.#query.add(externalLinksQuery);
         return <never>this;
     }
 
@@ -480,7 +486,7 @@ export class QueryMedia<T = { empty: never }> {
             site
         }`)
 
-        this.#query.push(streamingEpisodesQuery);
+        this.#query.add(streamingEpisodesQuery);
         return <never>this;
     }
 
@@ -490,7 +496,7 @@ export class QueryMedia<T = { empty: never }> {
         }` : `rankings {
             id
         }`)
-        this.#query.push(rankingsQuery);
+        this.#query.add(rankingsQuery);
         return <never>this;
     }
 
@@ -501,7 +507,7 @@ export class QueryMedia<T = { empty: never }> {
             id
         }`)
 
-        this.#query.push(mediaListEntryQuery);
+        this.#query.add(mediaListEntryQuery);
         return <never>this;
     }
 
@@ -527,7 +533,7 @@ export class QueryMedia<T = { empty: never }> {
             }
         }`)
 
-        this.#query.push(reviewsQuery);
+        this.#query.add(reviewsQuery);
         return <never>this;
     }
 
@@ -553,7 +559,7 @@ export class QueryMedia<T = { empty: never }> {
             }
         }`)
 
-        this.#query.push(recommendationsQuery);
+        this.#query.add(recommendationsQuery);
         return <never>this;
     }
 
@@ -579,32 +585,32 @@ export class QueryMedia<T = { empty: never }> {
                 amount
             }
         }`)
-        this.#query.push(trailerQuery);
+        this.#query.add(trailerQuery);
         return <never>this;
     }
 
     withSiteUrl(): QueryMedia<Add<T, { siteUrl: ReqMedia["siteUrl"] }>> {
-        this.#query.push("siteUrl");
+        this.#query.add("siteUrl");
         return <never>this;
     }
 
     withAutoCreateForumThread(): QueryMedia<Add<T, { autoCreateForumThread: ReqMedia["autoCreateForumThread"] }>> {
-        this.#query.push("autoCreateForumThread");
+        this.#query.add("autoCreateForumThread");
         return <never>this;
     }
 
     isRecommendationBlocked(): QueryMedia<Add<T, { isRecommendationBlocked: ReqMedia["isRecommendationBlocked"] }>> {
-        this.#query.push("isRecommendationBlocked");
+        this.#query.add("isRecommendationBlocked");
         return <never>this;
     }
 
     isReviewBlocked(): QueryMedia<Add<T, { isReviewBlocked: ReqMedia["isReviewBlocked"] }>> {
-        this.#query.push("isReviewBlocked");
+        this.#query.add("isReviewBlocked");
         return <never>this;
     }
 
     withModNotes(): QueryMedia<Add<T, { modNotes: ReqMedia["modNotes"] }>> {
-        this.#query.push("modNotes");
+        this.#query.add("modNotes");
         return <never>this;
     }
 
