@@ -2,9 +2,15 @@
   "name": "anilist",
   "version": "0.2.2",
   "description": "",
-  "main": "dist/index.js",
+  "main": "./dist/index.js",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "require": "./dist/index.js"
+    }
+  },
   "scripts": {
-    "build": "rm -rf && tsc",
+    "build": "rm -rf dist && tsc",
     "test": "vitest run --coverage"
   },
   "repository": {
