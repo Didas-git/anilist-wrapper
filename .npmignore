@@ -1,5 +1,14 @@
 node_modules/
 src/
+spec/
+coverage/
 examples/
+.vscode/
+.github/
+TODO.md
+tsconfig.json
+vitest.config.ts
 .DS_Store
 .obsidian
+.gitignore
+.gitattributes

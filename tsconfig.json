@@ -4,6 +4,7 @@
         "module": "CommonJS",
         "moduleResolution": "node",
         "outDir": "dist",
+        "baseUrl": ".",
         "strict": true,
         "allowUnreachableCode": false,
         "allowUnusedLabels": false,
@@ -28,6 +29,12 @@
         "allowSyntheticDefaultImports": true,
         "experimentalDecorators": true,
         "emitDecoratorMetadata": true,
-        "incremental": false
-    }
+        "incremental": false,
+        "types": [
+            "vitest/globals"
+        ]
+    },
+    "include": [
+        "src/**/*"
+    ]
 }
