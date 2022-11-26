@@ -1,11 +1,11 @@
 {
   "name": "anilist",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "",
   "main": "dist/index.js",
   "scripts": {
     "build": "rm -rf && tsc",
-    "test": "echo Not implemented yet"
+    "test": "vitest run --coverage"
   },
   "repository": {
     "type": "git",
@@ -23,7 +23,9 @@
   },
   "devDependencies": {
     "@types/node": "^18.11.9",
+    "@vitest/coverage-c8": "^0.25.3",
     "ts-node": "^10.9.1",
-    "typescript": "^4.9.3"
+    "typescript": "^4.9.3",
+    "vitest": "^0.25.3"
   }
 }
