@@ -2,6 +2,20 @@
 
 An UNOFFICIAL wrapper for the anilist api written in typescript that tries to follow the [builder pattern](https://refactoring.guru/design-patterns/builder) to give a more consised inteface to create objects.
 
+## Table of Contents
+
+- [Anilist Wrapper](#anilist-wrapper)
+  - [Table of Contents](#table-of-contents)
+  - [Status](#status)
+  - [Instalation](#instalation)
+  - [Usage](#usage)
+    - [Creating a query](#creating-a-query)
+    - [Media query arguments](#media-query-arguments)
+    - [Creating the query](#creating-the-query)
+      - [Media Query](#media-query)
+        - [Fetching without building the query](#fetching-without-building-the-query)
+        - [Creating a complete search query](#creating-a-complete-search-query)
+
 ## Status
 
 To see the current status of the wrapper check the [todo](TODO.md) list.
