@@ -22,3 +22,4 @@ export * from "./page-info";
 export * from "./statistic";
 export * from "./status-distribution";
 export * from "./fetch-return-type";
+export * from "./add";

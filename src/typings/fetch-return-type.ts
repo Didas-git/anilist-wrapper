@@ -1,3 +1,1 @@
-import { Media } from "./media";
-
-export type FetchReturnType = { data: { Media: Media } }
+export type FetchReturnType<T> = T extends never ? never : { data: { Media: T } }
