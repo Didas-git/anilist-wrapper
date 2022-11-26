@@ -1,10 +1,11 @@
 {
   "name": "anilist",
-  "version": "0.1.0",
+  "version": "0.2.1",
   "description": "",
-  "main": "index.js",
+  "main": "dist/index.js",
   "scripts": {
-    "build": "rm -rf && tsc"
+    "build": "rm -rf && tsc",
+    "test": "echo Not implemented yet"
   },
   "repository": {
     "type": "git",
@@ -12,15 +13,17 @@
   },
   "keywords": [],
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/Didas-git/anilist-wrapper/issues"
   },
   "homepage": "https://github.com/Didas-git/anilist-wrapper#readme",
   "dependencies": {
+    "tslib": "^2.4.1"
+  },
+  "devDependencies": {
     "@types/node": "^18.11.9",
     "ts-node": "^10.9.1",
-    "tslib": "^2.4.1",
     "typescript": "^4.9.3"
   }
 }
