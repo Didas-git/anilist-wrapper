@@ -17,6 +17,7 @@ An UNOFFICIAL wrapper for the anilist api written in typescript that tries to fo
         - [Fetching without building the query](#fetching-without-building-the-query)
         - [Creating a complete search query](#creating-a-complete-search-query)
         - [Adding query defaults](#adding-query-defaults)
+        - [Passing arguments at run time](#passing-arguments-at-run-time)
 
 ## Status
 
@@ -177,5 +178,31 @@ query.withStatus()
 await query.fetch();
 /*
 { id: 118419, format: 'TV', status: 'FINISHED' }
+*/
+```
+
+##### Passing arguments at run time
+
+Instead of passing the query arguments on query creation you can use `<MediaQuery>.prototype.arguments` to change them every time you want to run fetch. This will avoid creating a new query instance every time you change something on it.
+
+```ts
+const query = Anilist.query.media();
+
+await query.fetch()
+/*
+{ id: 1 }
+*/
+
+query.arguments({
+  search: "Kamisama Ni Natta",
+  type: "MANGA"
+}).withId().withTitles("romaji", "native")
+
+await query.fetch()
+/*
+{
+  id: 135190,
+  title: { romaji: 'Kamisama ni Natta Hi', native: '神様になった日' }
+}
 */
 ```

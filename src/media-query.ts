@@ -67,7 +67,7 @@ export class MediaQuery<T = { empty: never }> extends Query {
 }`
     };
 
-    variables(options: MediaArguments, override: boolean = false) {
+    arguments(options: MediaArguments, override: boolean = false) {
         this.options = override ? options : { ...this.options, ...options }
         return this;
     }
