@@ -7,16 +7,21 @@
 - [x] Ability to chose what fields to return in complex fields
 - [ ] Support nested complex fields
 - [x] Add ability to pass in default fields at query creation
-- [ ] AiringSchedule Query
+- [ ] Support dynamic variables
+- [ ] Improve performance
+- [ ] Page Query
 - [ ] Character Query
 - [ ] Studio Query
 - [ ] Staff Query
 
+## ~
+
+- [ ] AiringSchedule Query
+- [ ] User Query
+
 ## V2
 
 - [ ] Authentication
-- [ ] User Query
-- [ ] Page Query
 - [ ] GenreCollection Query
 - [ ] MediaTagCollection Query
 - [ ] Viewer Query
