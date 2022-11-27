@@ -5,7 +5,7 @@ export interface Page {
     pageInfo?: PageInfo | null;
     /** Not yet implemented */
     users?: undefined;
-    media?: Media | null;
+    media?: Array<Media> | [];
     /** Not yet implemented */
     characters?: undefined;
     /** Not yet implemented */
