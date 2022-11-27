@@ -65,6 +65,7 @@ export class PageQuery<T = { empty: never }> extends Query {
             returns
         }`)
 
+        this.#preQuery.has("media") && this.query.delete(<never>this.#preQuery.get("media"))
         this.#preQuery.set("media", mediaQuery)
         return <never>this;
     }
