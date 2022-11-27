@@ -29,10 +29,7 @@
         "allowSyntheticDefaultImports": true,
         "experimentalDecorators": true,
         "emitDecoratorMetadata": true,
-        "incremental": false,
-        "types": [
-            "vitest/globals"
-        ]
+        "incremental": false
     },
     "include": [
         "src/**/*"

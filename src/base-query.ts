@@ -6,6 +6,7 @@ export abstract class Query {
 
     protected abstract options: Record<PropertyKey, any>;
     protected abstract query: Set<any>;
+    protected abstract preQuery: Map<any, any>;
     protected abstract default: string;
     protected abstract type: string;
 
@@ -24,6 +25,7 @@ export abstract class Query {
     }
 
     protected preBuild() {
+        this.preQuery.forEach(val => this.query.add(<never>val));
         return {
             options: this.transformOptions(),
             returns: Array.from(this.query).join(",\n") || this.default

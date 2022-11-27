@@ -45,6 +45,7 @@ export class MediaQuery<T = { empty: never }> extends Query {
     };
 
     protected query = new Set<keyof Media>();
+    protected preQuery = new Map<keyof Media, string>();
     protected default: string = "id";
     protected type: string = "Media";
     constructor(name?: string, media?: Array<MediaArgs>)
@@ -89,7 +90,8 @@ export class MediaQuery<T = { empty: never }> extends Query {
             romaji
         }`);
 
-        this.query.add(titleQuery);
+        this.preQuery.has("title") && this.query.delete(<never>this.preQuery.get("title"));
+        this.preQuery.set("title", titleQuery);
         return <never>this;
     }
 
@@ -185,7 +187,8 @@ export class MediaQuery<T = { empty: never }> extends Query {
             id
         }`)
 
-        this.query.add(trailerQuery);
+        this.preQuery.has("trailer") && this.query.delete(<never>this.preQuery.get("trailer"));
+        this.preQuery.set("trailer", trailerQuery);
         return <never>this;
     }
 
@@ -204,7 +207,8 @@ export class MediaQuery<T = { empty: never }> extends Query {
             color
         }`)
 
-        this.query.add(coverImageQuery);
+        this.preQuery.has("coverImage") && this.query.delete(<never>this.preQuery.get("coverImage"));
+        this.preQuery.set("coverImage", coverImageQuery);
         return <never>this;
     }
 
@@ -258,8 +262,10 @@ export class MediaQuery<T = { empty: never }> extends Query {
             ${args.join(",\n")}
         }` : `tags {
             id
-        }`)
-        this.query.add(tagsQuery);
+        }`);
+
+        this.preQuery.has("tags") && this.query.delete(<never>this.preQuery.get("tags"));
+        this.preQuery.set("tags", tagsQuery);
         return <never>this;
     }
 
@@ -283,9 +289,10 @@ export class MediaQuery<T = { empty: never }> extends Query {
             edges {
                 id
             }
-        }`)
+        }`);
 
-        this.query.add(relationsQuery);
+        this.preQuery.has("relations") && this.query.delete(<never>this.preQuery.get("relations"));
+        this.preQuery.set("relations", relationsQuery);
         return <never>this;
     }
 
@@ -309,9 +316,10 @@ export class MediaQuery<T = { empty: never }> extends Query {
             edges {
                 id
             }
-        }`)
+        }`);
 
-        this.query.add(charactersQuery);
+        this.preQuery.has("characters") && this.query.delete(<never>this.preQuery.get("characters"));
+        this.preQuery.set("characters", charactersQuery);
         return <never>this;
     }
 
@@ -335,9 +343,10 @@ export class MediaQuery<T = { empty: never }> extends Query {
             edges {
                 id
             }
-        }`)
+        }`);
 
-        this.query.add(staffQuery);
+        this.preQuery.has("staff") && this.query.delete(<never>this.preQuery.get("staff"));
+        this.preQuery.set("staff", staffQuery);
         return <never>this;
     }
 
@@ -361,9 +370,10 @@ export class MediaQuery<T = { empty: never }> extends Query {
             edges {
                 id
             }
-        }`)
+        }`);
 
-        this.query.add(studiosQuery);
+        this.preQuery.has("studios") && this.query.delete(<never>this.preQuery.get("studios"));
+        this.preQuery.set("studios", studiosQuery);
         return <never>this;
     }
 
@@ -387,8 +397,10 @@ export class MediaQuery<T = { empty: never }> extends Query {
             ${args.join(",\n")}
         }` : `nextAiringEpisode {
             id
-        }`)
-        this.query.add(nextAiringEpisodeQuery);
+        }`);
+
+        this.preQuery.has("nextAiringEpisode") && this.query.delete(<never>this.preQuery.get("nextAiringEpisode"));
+        this.preQuery.set("nextAiringEpisode", nextAiringEpisodeQuery);
         return <never>this;
     }
 
@@ -412,9 +424,10 @@ export class MediaQuery<T = { empty: never }> extends Query {
             edges {
                 id
             }
-        }`)
+        }`);
 
-        this.query.add(airingScheduleQuery);
+        this.preQuery.has("airingSchedule") && this.query.delete(<never>this.preQuery.get("airingSchedule"));
+        this.preQuery.set("airingSchedule", airingScheduleQuery);
         return <never>this;
     }
 
@@ -438,9 +451,10 @@ export class MediaQuery<T = { empty: never }> extends Query {
             edges {
                 id
             }
-        }`)
+        }`);
 
-        this.query.add(trendsQuery);
+        this.preQuery.has("trends") && this.query.delete(<never>this.preQuery.get("trends"));
+        this.preQuery.set("trends", trendsQuery);
         return <never>this;
     }
 
@@ -449,9 +463,10 @@ export class MediaQuery<T = { empty: never }> extends Query {
             ${args.join(",\n")}
         }` : `externalLinks {
             id
-        }`)
+        }`);
 
-        this.query.add(externalLinksQuery);
+        this.preQuery.has("externalLinks") && this.query.delete(<never>this.preQuery.get("externalLinks"));
+        this.preQuery.set("externalLinks", externalLinksQuery);
         return <never>this;
     }
 
@@ -463,9 +478,10 @@ export class MediaQuery<T = { empty: never }> extends Query {
             thumbnail,
             url,
             site
-        }`)
+        }`);
 
-        this.query.add(streamingEpisodesQuery);
+        this.preQuery.has("streamingEpisodes") && this.query.delete(<never>this.preQuery.get("streamingEpisodes"));
+        this.preQuery.set("streamingEpisodes", streamingEpisodesQuery);
         return <never>this;
     }
 
@@ -474,8 +490,10 @@ export class MediaQuery<T = { empty: never }> extends Query {
             ${args.join(",\n")}
         }` : `rankings {
             id
-        }`)
-        this.query.add(rankingsQuery);
+        }`);
+
+        this.preQuery.has("rankings") && this.query.delete(<never>this.preQuery.get("rankings"));
+        this.preQuery.set("rankings", rankingsQuery);
         return <never>this;
     }
 
@@ -484,9 +502,10 @@ export class MediaQuery<T = { empty: never }> extends Query {
             ${args.join(",\n")}
         }` : `mediaListEntry {
             id
-        }`)
+        }`);
 
-        this.query.add(mediaListEntryQuery);
+        this.preQuery.has("mediaListEntry") && this.query.delete(<never>this.preQuery.get("mediaListEntry"));
+        this.preQuery.set("mediaListEntry", mediaListEntryQuery);
         return <never>this;
     }
 
@@ -510,9 +529,10 @@ export class MediaQuery<T = { empty: never }> extends Query {
             edges {
                 id
             }
-        }`)
+        }`);
 
-        this.query.add(reviewsQuery);
+        this.preQuery.has("reviews") && this.query.delete(<never>this.preQuery.get("reviews"));
+        this.preQuery.set("reviews", reviewsQuery);
         return <never>this;
     }
 
@@ -536,9 +556,10 @@ export class MediaQuery<T = { empty: never }> extends Query {
             edges {
                 id
             }
-        }`)
+        }`);
 
-        this.query.add(recommendationsQuery);
+        this.preQuery.has("recommendations") && this.query.delete(<never>this.preQuery.get("recommendations"));
+        this.preQuery.set("recommendations", recommendationsQuery);
         return <never>this;
     }
 
@@ -547,7 +568,7 @@ export class MediaQuery<T = { empty: never }> extends Query {
         statusDistribution?: Array<keyof StatusDistribution>;
     } = <never>{}): MediaQuery<Add<T, { stats: ReqMedia["stats"] }>> {
         const { scoreDistribution, statusDistribution } = options;
-        const trailerQuery = <never>(Object.keys(options).length ? `stats {
+        const statsQuery = <never>(Object.keys(options).length ? `stats {
             ${scoreDistribution?.length ? `scoreDistribution {
                 ${scoreDistribution.join(",\n")}
             },` : ""}
@@ -563,8 +584,10 @@ export class MediaQuery<T = { empty: never }> extends Query {
                 status,
                 amount
             }
-        }`)
-        this.query.add(trailerQuery);
+        }`);
+
+        this.preQuery.has("stats") && this.query.delete(<never>this.preQuery.get("stats"));
+        this.preQuery.set("stats", statsQuery);
         return <never>this;
     }
 
