@@ -30,7 +30,8 @@ import {
     StatusDistribution,
     Add,
     MediaArgs,
-    MediaFetchReturnType
+    MediaFetchReturnType,
+    FuzzyDate
 } from "./typings";
 
 type ReqMedia = Required<Media>
@@ -115,13 +116,31 @@ export class MediaQuery<T = { empty: never }> extends Query {
         return <never>this;
     }
 
-    withStartDate(): MediaQuery<Add<T, { startDate: ReqMedia["startDate"] }>> {
-        this.query.add("startDate");
+    withStartDate(...args: Array<keyof FuzzyDate>): MediaQuery<Add<T, { startDate: ReqMedia["startDate"] }>> {
+        const startDateQuery = <never>(args.length ? `startDate {
+            ${args.join(",\n")}
+        }` : `startDate {
+            year,
+            month,
+            day
+        }`)
+
+        this.preQuery.has("startDate") && this.query.delete(<never>this.preQuery.get("startDate"));
+        this.preQuery.set("startDate", startDateQuery);
         return <never>this;
     }
 
-    withEndDate(): MediaQuery<Add<T, { endDate: ReqMedia["endDate"] }>> {
-        this.query.add("endDate");
+    withEndDate(...args: Array<keyof FuzzyDate>): MediaQuery<Add<T, { endDate: ReqMedia["endDate"] }>> {
+        const endDateQuery = <never>(args.length ? `endDate {
+            ${args.join(",\n")}
+        }` : `endDate {
+            year,
+            month,
+            day
+        }`)
+
+        this.preQuery.has("endDate") && this.query.delete(<never>this.preQuery.get("endDate"));
+        this.preQuery.set("endDate", endDateQuery);
         return <never>this;
     }
 
@@ -181,7 +200,7 @@ export class MediaQuery<T = { empty: never }> extends Query {
     }
 
     withTrailer(...args: Array<keyof MediaTrailer>): MediaQuery<Add<T, { trailer: ReqMedia["trailer"] }>> {
-        const trailerQuery: Media["trailer"] = <never>(args.length ? `trailer {
+        const trailerQuery = <never>(args.length ? `trailer {
             ${args.join(",\n")}
         }` : `trailer {
             id

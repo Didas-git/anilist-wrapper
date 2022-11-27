@@ -2,7 +2,7 @@ import { MediaConnection, MediaCoverImage, MediaExternalLink, MediaFormat, Media
 import { AiringSchedule, AiringScheduleConnection } from "../airing";
 import { CharacterConnection } from "../character";
 import { CountryCode } from "../country-code";
-import { FuzzyDateInt } from "../fuzzy-date";
+import { FuzzyDate } from "../fuzzy-date";
 import { RecommendationConnection } from "../recommendation";
 import { ReviewConnection } from "../review";
 import { StaffConnection } from "../staff";
@@ -20,8 +20,8 @@ export interface Media {
     format?: MediaFormat | null;
     status?: MediaStatus | null;
     description?: string | null;
-    startDate?: FuzzyDateInt | null;
-    endDate?: FuzzyDateInt | null;
+    startDate?: FuzzyDate | null;
+    endDate?: FuzzyDate | null;
     season?: MediaSeason | null;
     seasonYear?: number | null;
     seasonInt?: number | null;
