@@ -1,13 +1,13 @@
 # Anilist Wrapper
 
-An UNOFFICIAL wrapper for the anilist api written in typescript that tries to follow the [builder pattern](https://refactoring.guru/design-patterns/builder) to give a more consised inteface to create objects.
+An UNOFFICIAL wrapper for the anilist api written in typescript that tries to follow the [builder pattern](https://refactoring.guru/design-patterns/builder) to give a more consistent interface to create objects.
 
 ## Table of Contents
 
 - [Anilist Wrapper](#anilist-wrapper)
   - [Table of Contents](#table-of-contents)
   - [Status](#status)
-  - [Instalation](#instalation)
+  - [Installation](#installation)
   - [Usage](#usage)
     - [Creating a query](#creating-a-query)
     - [Media query arguments](#media-query-arguments)
@@ -21,7 +21,7 @@ An UNOFFICIAL wrapper for the anilist api written in typescript that tries to fo
 
 To see the current status of the wrapper check the [todo](TODO.md) list.
 
-## Instalation
+## Installation
 
 ```sh
 npm i anilist
