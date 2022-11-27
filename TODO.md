@@ -7,9 +7,9 @@
 - [x] Ability to chose what fields to return in complex fields
 - [ ] Support nested complex fields
 - [x] Add ability to pass in default fields at query creation
-- [ ] Support dynamic variables
+- [x] Support dynamic variables
 - [ ] Improve performance
-- [ ] Page Query
+- [x] Page Query
 - [ ] Character Query
 - [ ] Studio Query
 - [ ] Staff Query
@@ -41,3 +41,4 @@
 - [ ] AniChartUser Query
 - [ ] SiteStatistics Query
 - [ ] ExternalLinkSourceCollection Query
+- [ ] Support all page query types

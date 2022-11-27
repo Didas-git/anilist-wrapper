@@ -12,6 +12,7 @@ An UNOFFICIAL wrapper for the anilist api written in typescript that tries to fo
     - [Creating a query](#creating-a-query)
     - [Media query arguments](#media-query-arguments)
     - [Creating the query](#creating-the-query)
+      - [Page Query](#page-query)
       - [Media Query](#media-query)
         - [Fetching without building the query](#fetching-without-building-the-query)
         - [Creating a complete search query](#creating-a-complete-search-query)
@@ -71,6 +72,47 @@ query {
 ```
 
 ### Creating the query
+
+#### Page Query
+
+if you build the query and fetch it without telling which fields to return it will default to returning `{ media: { id } }` with `{ page: 1, perPage: 10 }`
+
+```ts
+const query = Anilist.query.page()
+
+await query.fetch()
+/*
+{
+  media: [
+    { id: 1 },  { id: 5 }, 
+    { id: 6 },  { id: 7 }, 
+    { id: 8 },  { id: 15 },
+    { id: 16 }, { id: 17 },
+    { id: 18 }, { id: 19 } 
+  ]
+}
+*/
+
+query.withMedia(media => media.withTitles())
+
+await query.fetch()
+/*
+{
+  media: [
+    { title: [Object] },
+    { title: [Object] },
+    { title: [Object] },
+    { title: [Object] },
+    { title: [Object] },
+    { title: [Object] },
+    { title: [Object] },
+    { title: [Object] },
+    { title: [Object] },
+    { title: [Object] } 
+  ]
+}
+*/
+```
 
 #### Media Query
 

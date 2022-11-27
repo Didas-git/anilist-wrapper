@@ -1,0 +1,1 @@
+export type PageFetchReturnType<T> = T extends never ? never : { data: { Page: T } }

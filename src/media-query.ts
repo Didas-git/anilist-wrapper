@@ -1,11 +1,9 @@
-import { inspect } from "node:util";
 import { Query } from "./base-query";
 import {
     AiringSchedule,
     AiringScheduleEdge,
     Character,
     CharacterEdge,
-    FetchReturnType,
     Media,
     MediaArguments,
     MediaCoverImage,
@@ -31,24 +29,30 @@ import {
     ScoreDistribution,
     StatusDistribution,
     Add,
-    MediaArgs
+    MediaArgs,
+    MediaFetchReturnType
 } from "./typings";
 
 type ReqMedia = Required<Media>
 
-export class QueryMedia<T = { empty: never }> extends Query {
+export interface MediaQuery<T> {
+    fetch<R extends boolean = false>(raw?: R): Promise<R extends true ? MediaFetchReturnType<T extends Media ? T : { id: number }> : T extends Media ? T : { id: number }>
+}
+
+export class MediaQuery<T = { empty: never }> extends Query {
     protected options: MediaArguments = {
         type: "ANIME"
     };
 
     protected query = new Set<keyof Media>();
     protected default: string = "id";
-    constructor(name: string, media?: Array<MediaArgs>)
-    constructor(args: MediaArguments, media?: Array<MediaArgs>)
-    constructor(params: MediaArguments | string, media?: Array<MediaArgs>) {
+    protected type: string = "Media";
+    constructor(name?: string, media?: Array<MediaArgs>)
+    constructor(args?: MediaArguments, media?: Array<MediaArgs>)
+    constructor(params?: MediaArguments | string, media?: Array<MediaArgs>) {
         super();
 
-        if (typeof params === "string") this.options = { ...this.options, search: params };
+        if (typeof params === "string") this.options.search = params;
         else this.options = { ...this.options, ...params };
 
         this.createQueryOptions(media);
@@ -60,141 +64,123 @@ export class QueryMedia<T = { empty: never }> extends Query {
     Media(${options}) {
         ${returns}
     }
-}
-    `};
-
-    async fetch<R extends boolean = false>(raw?: R): Promise<R extends true ? FetchReturnType<T extends Media ? T : { id: number }> : T extends Media ? T : { id: number }> {
-        const res = await fetch(Query.url, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                "Accept": "application/json",
-            },
-            body: JSON.stringify({
-                query: this.buildQuery()
-            })
-        })
-        if (!res.ok) throw new Error(inspect(await res.json(), false, null, true));
-
-        const json: FetchReturnType<T> = await res.json();
-
-        return raw ? <never>json : <never>json.data.Media;
-    }
+}`
+    };
 
     variables(options: MediaArguments, override: boolean = false) {
         this.options = override ? options : { ...this.options, ...options }
         return this;
     }
 
-    withId(): QueryMedia<Add<T, { id: ReqMedia["id"] }>> {
+    withId(): MediaQuery<Add<T, { id: ReqMedia["id"] }>> {
         this.query.add("id");
         return <never>this;
     }
 
-    withMalId(): QueryMedia<Add<T, { idMal: ReqMedia["idMal"] }>> {
+    withMalId(): MediaQuery<Add<T, { idMal: ReqMedia["idMal"] }>> {
         this.query.add("idMal");
         return <never>this;
     }
 
-    withTitles(...args: Array<keyof MediaTitle>): QueryMedia<Add<T, { title: ReqMedia["title"] }>> {
+    withTitles(...args: Array<keyof MediaTitle>): MediaQuery<Add<T, { title: ReqMedia["title"] }>> {
         const titleQuery: Media["title"] = <never>(args.length ? `title {
-            ${args.join(",\n            ")}
+            ${args.join(",\n")}
         }` : `title {
             romaji
-        }`)
+        }`);
 
         this.query.add(titleQuery);
         return <never>this;
     }
 
-    withType(): QueryMedia<Add<T, { type: ReqMedia["type"] }>> {
+    withType(): MediaQuery<Add<T, { type: ReqMedia["type"] }>> {
         this.query.add("type");
         return <never>this;
     }
 
-    withFormat(): QueryMedia<Add<T, { format: ReqMedia["format"] }>> {
+    withFormat(): MediaQuery<Add<T, { format: ReqMedia["format"] }>> {
         this.query.add("format");
         return <never>this;
     }
 
-    withStatus(): QueryMedia<Add<T, { status: ReqMedia["status"] }>> {
+    withStatus(): MediaQuery<Add<T, { status: ReqMedia["status"] }>> {
         this.query.add("status");
         return <never>this;
     }
 
-    withDescription(): QueryMedia<Add<T, { description: ReqMedia["description"] }>> {
+    withDescription(): MediaQuery<Add<T, { description: ReqMedia["description"] }>> {
         this.query.add("description");
         return <never>this;
     }
 
-    withStartDate(): QueryMedia<Add<T, { startDate: ReqMedia["startDate"] }>> {
+    withStartDate(): MediaQuery<Add<T, { startDate: ReqMedia["startDate"] }>> {
         this.query.add("startDate");
         return <never>this;
     }
 
-    withEndDate(): QueryMedia<Add<T, { endDate: ReqMedia["endDate"] }>> {
+    withEndDate(): MediaQuery<Add<T, { endDate: ReqMedia["endDate"] }>> {
         this.query.add("endDate");
         return <never>this;
     }
 
-    withSeason(): QueryMedia<Add<T, { season: ReqMedia["season"] }>> {
+    withSeason(): MediaQuery<Add<T, { season: ReqMedia["season"] }>> {
         this.query.add("season");
         return <never>this;
     }
 
-    withSeasonYear(): QueryMedia<Add<T, { seasonYear: ReqMedia["seasonYear"] }>> {
+    withSeasonYear(): MediaQuery<Add<T, { seasonYear: ReqMedia["seasonYear"] }>> {
         this.query.add("seasonYear");
         return <never>this;
     }
 
-    withSeasonInt(): QueryMedia<Add<T, { seasonInt: ReqMedia["seasonInt"] }>> {
+    withSeasonInt(): MediaQuery<Add<T, { seasonInt: ReqMedia["seasonInt"] }>> {
         this.query.add("seasonInt");
         return <never>this;
     }
 
-    withEpisodes(): QueryMedia<Add<T, { episodes: ReqMedia["episodes"] }>> {
+    withEpisodes(): MediaQuery<Add<T, { episodes: ReqMedia["episodes"] }>> {
         this.query.add("episodes");
         return <never>this;
     }
 
-    withDuration(): QueryMedia<Add<T, { duration: ReqMedia["duration"] }>> {
+    withDuration(): MediaQuery<Add<T, { duration: ReqMedia["duration"] }>> {
         this.query.add("duration");
         return <never>this;
     }
 
-    withChapters(): QueryMedia<Add<T, { chapters: ReqMedia["chapters"] }>> {
+    withChapters(): MediaQuery<Add<T, { chapters: ReqMedia["chapters"] }>> {
         this.query.add("chapters");
         return <never>this;
     }
 
-    withVolumes(): QueryMedia<Add<T, { volumes: ReqMedia["volumes"] }>> {
+    withVolumes(): MediaQuery<Add<T, { volumes: ReqMedia["volumes"] }>> {
         this.query.add("volumes");
         return <never>this;
     }
 
-    withCountryOfOrigin(): QueryMedia<Add<T, { countryOfOrigin: ReqMedia["countryOfOrigin"] }>> {
+    withCountryOfOrigin(): MediaQuery<Add<T, { countryOfOrigin: ReqMedia["countryOfOrigin"] }>> {
         this.query.add("countryOfOrigin");
         return <never>this;
     }
 
-    isLicensed(): QueryMedia<Add<T, { isLicensed: ReqMedia["isLicensed"] }>> {
+    isLicensed(): MediaQuery<Add<T, { isLicensed: ReqMedia["isLicensed"] }>> {
         this.query.add("isLicensed");
         return <never>this;
     }
 
-    withSource(): QueryMedia<Add<T, { source: ReqMedia["source"] }>> {
+    withSource(): MediaQuery<Add<T, { source: ReqMedia["source"] }>> {
         this.query.add("source");
         return <never>this;
     }
 
-    withTwitterHashtag(): QueryMedia<Add<T, { hashtag: ReqMedia["hashtag"] }>> {
+    withTwitterHashtag(): MediaQuery<Add<T, { hashtag: ReqMedia["hashtag"] }>> {
         this.query.add("hashtag");
         return <never>this;
     }
 
-    withTrailer(...args: Array<keyof MediaTrailer>): QueryMedia<Add<T, { trailer: ReqMedia["trailer"] }>> {
+    withTrailer(...args: Array<keyof MediaTrailer>): MediaQuery<Add<T, { trailer: ReqMedia["trailer"] }>> {
         const trailerQuery: Media["trailer"] = <never>(args.length ? `trailer {
-            ${args.join(",\n            ")}
+            ${args.join(",\n")}
         }` : `trailer {
             id
         }`)
@@ -203,14 +189,14 @@ export class QueryMedia<T = { empty: never }> extends Query {
         return <never>this;
     }
 
-    updatedAt(): QueryMedia<Add<T, { updatedAt: ReqMedia["updatedAt"] }>> {
+    updatedAt(): MediaQuery<Add<T, { updatedAt: ReqMedia["updatedAt"] }>> {
         this.query.add("updatedAt");
         return <never>this;
     }
 
-    withCoverImage(...args: Array<keyof MediaCoverImage>): QueryMedia<Add<T, { coverImage: ReqMedia["coverImage"] }>> {
+    withCoverImage(...args: Array<keyof MediaCoverImage>): MediaQuery<Add<T, { coverImage: ReqMedia["coverImage"] }>> {
         const coverImageQuery = <never>(args.length ? `coverImage {
-            ${args.join(",\n            ")}
+            ${args.join(",\n")}
         }` : `coverImage {
             extraLarge,
             large,
@@ -222,54 +208,54 @@ export class QueryMedia<T = { empty: never }> extends Query {
         return <never>this;
     }
 
-    withBannerImage(): QueryMedia<Add<T, { bannerImage: ReqMedia["bannerImage"] }>> {
+    withBannerImage(): MediaQuery<Add<T, { bannerImage: ReqMedia["bannerImage"] }>> {
         this.query.add("bannerImage");
         return <never>this;
     }
 
-    withGenres(): QueryMedia<Add<T, { genres: ReqMedia["genres"] }>> {
+    withGenres(): MediaQuery<Add<T, { genres: ReqMedia["genres"] }>> {
         this.query.add("genres");
         return <never>this;
     }
 
-    withSynonyms(): QueryMedia<Add<T, { synonyms: ReqMedia["synonyms"] }>> {
+    withSynonyms(): MediaQuery<Add<T, { synonyms: ReqMedia["synonyms"] }>> {
         this.query.add("synonyms");
         return <never>this;
     }
 
-    withAverageScore(): QueryMedia<Add<T, { averageScore: ReqMedia["averageScore"] }>> {
+    withAverageScore(): MediaQuery<Add<T, { averageScore: ReqMedia["averageScore"] }>> {
         this.query.add("averageScore");
         return <never>this;
     }
 
-    withMeanScore(): QueryMedia<Add<T, { meanScore: ReqMedia["meanScore"] }>> {
+    withMeanScore(): MediaQuery<Add<T, { meanScore: ReqMedia["meanScore"] }>> {
         this.query.add("meanScore");
         return <never>this;
     }
 
-    withPopularity(): QueryMedia<Add<T, { popularity: ReqMedia["popularity"] }>> {
+    withPopularity(): MediaQuery<Add<T, { popularity: ReqMedia["popularity"] }>> {
         this.query.add("popularity");
         return <never>this;
     }
 
-    isLocked(): QueryMedia<Add<T, { isLocked: ReqMedia["isLocked"] }>> {
+    isLocked(): MediaQuery<Add<T, { isLocked: ReqMedia["isLocked"] }>> {
         this.query.add("isLocked");
         return <never>this;
     }
 
-    withTrending(): QueryMedia<Add<T, { trending: ReqMedia["trending"] }>> {
+    withTrending(): MediaQuery<Add<T, { trending: ReqMedia["trending"] }>> {
         this.query.add("trending");
         return <never>this;
     }
 
-    withFavourites(): QueryMedia<Add<T, { favourites: ReqMedia["favourites"] }>> {
+    withFavourites(): MediaQuery<Add<T, { favourites: ReqMedia["favourites"] }>> {
         this.query.add("favourites");
         return <never>this;
     }
 
-    withTags(...args: Array<keyof MediaTag>): QueryMedia<Add<T, { tags: ReqMedia["tags"] }>> {
+    withTags(...args: Array<keyof MediaTag>): MediaQuery<Add<T, { tags: ReqMedia["tags"] }>> {
         const tagsQuery = <never>(args.length ? `tags {
-            ${args.join(",\n            ")}
+            ${args.join(",\n")}
         }` : `tags {
             id
         }`)
@@ -281,17 +267,17 @@ export class QueryMedia<T = { empty: never }> extends Query {
         edges?: Array<keyof MediaEdge>,
         nodes?: Array<keyof Media>,
         pageInfo?: Array<keyof PageInfo>
-    } = <never>{}): QueryMedia<Add<T, { relations: ReqMedia["relations"] }>> {
+    } = <never>{}): MediaQuery<Add<T, { relations: ReqMedia["relations"] }>> {
         const { edges, nodes, pageInfo } = options;
         const relationsQuery = <never>(Object.keys(options).length ? `relations {
             ${edges?.length ? `edges {
-                ${edges.join(",\n                ")}
+                ${edges.join(",\n")}
             },`: ""}
             ${nodes?.length ? `nodes {
-                ${nodes.join(",\n                ")}
+                ${nodes.join(",\n")}
             },`: ""}
             ${pageInfo?.length ? `pageInfo {
-                ${pageInfo.join(",\n                ")}
+                ${pageInfo.join(",\n")}
             }`: ""}
         }` : `relations {
             edges {
@@ -307,17 +293,17 @@ export class QueryMedia<T = { empty: never }> extends Query {
         edges?: Array<keyof CharacterEdge>,
         nodes?: Array<keyof Character>,
         pageInfo?: Array<keyof PageInfo>
-    } = <never>{}): QueryMedia<Add<T, { characters: ReqMedia["characters"] }>> {
+    } = <never>{}): MediaQuery<Add<T, { characters: ReqMedia["characters"] }>> {
         const { edges, nodes, pageInfo } = options;
         const charactersQuery = <never>(Object.keys(options).length ? `characters {
             ${edges?.length ? `edges {
-                ${edges.join(",\n                ")}
+                ${edges.join(",\n")}
             },`: ""}
             ${nodes?.length ? `nodes {
-                ${nodes.join(",\n                ")}
+                ${nodes.join(",\n")}
             },`: ""}
             ${pageInfo?.length ? `pageInfo {
-                ${pageInfo.join(",\n                ")}
+                ${pageInfo.join(",\n")}
             }`: ""}
         }` : `characters {
             edges {
@@ -333,17 +319,17 @@ export class QueryMedia<T = { empty: never }> extends Query {
         edges?: Array<keyof StaffEdge>,
         nodes?: Array<keyof Staff>,
         pageInfo?: Array<keyof PageInfo>
-    } = <never>{}): QueryMedia<Add<T, { staff: ReqMedia["staff"] }>> {
+    } = <never>{}): MediaQuery<Add<T, { staff: ReqMedia["staff"] }>> {
         const { edges, nodes, pageInfo } = options;
         const staffQuery = <never>(Object.keys(options).length ? `staff {
             ${edges?.length ? `edges {
-                ${edges.join(",\n                ")}
+                ${edges.join(",\n")}
             },`: ""}
             ${nodes?.length ? `nodes {
-                ${nodes.join(",\n                ")}
+                ${nodes.join(",\n")}
             },`: ""}
             ${pageInfo?.length ? `pageInfo {
-                ${pageInfo.join(",\n                ")}
+                ${pageInfo.join(",\n")}
             }`: ""}
         }` : `staff {
             edges {
@@ -359,17 +345,17 @@ export class QueryMedia<T = { empty: never }> extends Query {
         edges?: Array<keyof StudioEdge>,
         nodes?: Array<keyof Studio>,
         pageInfo?: Array<keyof PageInfo>
-    } = <never>{}): QueryMedia<Add<T, { studios: ReqMedia["studios"] }>> {
+    } = <never>{}): MediaQuery<Add<T, { studios: ReqMedia["studios"] }>> {
         const { edges, nodes, pageInfo } = options;
         const studiosQuery = <never>(Object.keys(options).length ? `studios {
             ${edges?.length ? `edges {
-                ${edges.join(",\n                ")}
+                ${edges.join(",\n")}
             },`: ""}
             ${nodes?.length ? `nodes {
-                ${nodes.join(",\n                ")}
+                ${nodes.join(",\n")}
             },`: ""}
             ${pageInfo?.length ? `pageInfo {
-                ${pageInfo.join(",\n                ")}
+                ${pageInfo.join(",\n")}
             }`: ""}
         }` : `studios {
             edges {
@@ -381,24 +367,24 @@ export class QueryMedia<T = { empty: never }> extends Query {
         return <never>this;
     }
 
-    isFavourite(): QueryMedia<Add<T, { isFavourite: ReqMedia["isFavourite"] }>> {
+    isFavourite(): MediaQuery<Add<T, { isFavourite: ReqMedia["isFavourite"] }>> {
         this.query.add("isFavourite");
         return <never>this;
     }
 
-    isFavouriteBlocked(): QueryMedia<Add<T, { isFavouriteBlocked: ReqMedia["isFavouriteBlocked"] }>> {
+    isFavouriteBlocked(): MediaQuery<Add<T, { isFavouriteBlocked: ReqMedia["isFavouriteBlocked"] }>> {
         this.query.add("isFavouriteBlocked");
         return <never>this;
     }
 
-    isAdult(): QueryMedia<Add<T, { isAdult: ReqMedia["isAdult"] }>> {
+    isAdult(): MediaQuery<Add<T, { isAdult: ReqMedia["isAdult"] }>> {
         this.query.add("isAdult");
         return <never>this;
     }
 
-    withNextAiringEpisode(...args: Array<keyof AiringSchedule>): QueryMedia<Add<T, { nextAiringEpisode: ReqMedia["nextAiringEpisode"] }>> {
+    withNextAiringEpisode(...args: Array<keyof AiringSchedule>): MediaQuery<Add<T, { nextAiringEpisode: ReqMedia["nextAiringEpisode"] }>> {
         const nextAiringEpisodeQuery = <never>(args.length ? `nextAiringEpisode {
-            ${args.join(",\n            ")}
+            ${args.join(",\n")}
         }` : `nextAiringEpisode {
             id
         }`)
@@ -410,17 +396,17 @@ export class QueryMedia<T = { empty: never }> extends Query {
         edges?: Array<keyof AiringScheduleEdge>,
         nodes?: Array<keyof AiringSchedule>,
         pageInfo?: Array<keyof PageInfo>
-    } = <never>{}): QueryMedia<Add<T, { airingSchedule: ReqMedia["airingSchedule"] }>> {
+    } = <never>{}): MediaQuery<Add<T, { airingSchedule: ReqMedia["airingSchedule"] }>> {
         const { edges, nodes, pageInfo } = options;
         const airingScheduleQuery = <never>(Object.keys(options).length ? `airingSchedule {
             ${edges?.length ? `edges {
-                ${edges.join(",\n                ")}
+                ${edges.join(",\n")}
             },`: ""}
             ${nodes?.length ? `nodes {
-                ${nodes.join(",\n                ")}
+                ${nodes.join(",\n")}
             },`: ""}
             ${pageInfo?.length ? `pageInfo {
-                ${pageInfo.join(",\n                ")}
+                ${pageInfo.join(",\n")}
             }`: ""}
         }` : `airingSchedule {
             edges {
@@ -436,17 +422,17 @@ export class QueryMedia<T = { empty: never }> extends Query {
         edges?: Array<keyof MediaTrendEdge>,
         nodes?: Array<keyof MediaTrend>,
         pageInfo?: Array<keyof PageInfo>
-    } = <never>{}): QueryMedia<Add<T, { trends: ReqMedia["trends"] }>> {
+    } = <never>{}): MediaQuery<Add<T, { trends: ReqMedia["trends"] }>> {
         const { edges, nodes, pageInfo } = options;
         const trendsQuery = <never>(Object.keys(options).length ? `trends {
             ${edges?.length ? `edges {
-                ${edges.join(",\n                ")}
+                ${edges.join(",\n")}
             },`: ""}
             ${nodes?.length ? `nodes {
-                ${nodes.join(",\n                ")}
+                ${nodes.join(",\n")}
             },`: ""}
             ${pageInfo?.length ? `pageInfo {
-                ${pageInfo.join(",\n                ")}
+                ${pageInfo.join(",\n")}
             }`: ""}
         }` : `trends {
             edges {
@@ -458,9 +444,9 @@ export class QueryMedia<T = { empty: never }> extends Query {
         return <never>this;
     }
 
-    withExternalLinks(...args: Array<keyof MediaExternalLink>): QueryMedia<Add<T, { externalLinks: ReqMedia["externalLinks"] }>> {
+    withExternalLinks(...args: Array<keyof MediaExternalLink>): MediaQuery<Add<T, { externalLinks: ReqMedia["externalLinks"] }>> {
         const externalLinksQuery = <never>(args.length ? `externalLinks {
-            ${args.join(",\n            ")}
+            ${args.join(",\n")}
         }` : `externalLinks {
             id
         }`)
@@ -469,9 +455,9 @@ export class QueryMedia<T = { empty: never }> extends Query {
         return <never>this;
     }
 
-    withStreamingEpisodes(...args: Array<keyof MediaStreamingEpisode>): QueryMedia<Add<T, { streamingEpisodes: ReqMedia["streamingEpisodes"] }>> {
+    withStreamingEpisodes(...args: Array<keyof MediaStreamingEpisode>): MediaQuery<Add<T, { streamingEpisodes: ReqMedia["streamingEpisodes"] }>> {
         const streamingEpisodesQuery = <never>(args.length ? `streamingEpisodes {
-            ${args.join(",\n            ")}
+            ${args.join(",\n")}
         }` : `streamingEpisodes {
             title,
             thumbnail,
@@ -483,9 +469,9 @@ export class QueryMedia<T = { empty: never }> extends Query {
         return <never>this;
     }
 
-    withRankings(...args: Array<keyof MediaRank>): QueryMedia<Add<T, { rankings: ReqMedia["rankings"] }>> {
+    withRankings(...args: Array<keyof MediaRank>): MediaQuery<Add<T, { rankings: ReqMedia["rankings"] }>> {
         const rankingsQuery = <never>(args.length ? `rankings {
-            ${args.join(",\n            ")}
+            ${args.join(",\n")}
         }` : `rankings {
             id
         }`)
@@ -493,9 +479,9 @@ export class QueryMedia<T = { empty: never }> extends Query {
         return <never>this;
     }
 
-    withMediaListEntries(...args: Array<keyof MediaList>): QueryMedia<Add<T, { mediaListEntry: ReqMedia["mediaListEntry"] }>> {
+    withMediaListEntries(...args: Array<keyof MediaList>): MediaQuery<Add<T, { mediaListEntry: ReqMedia["mediaListEntry"] }>> {
         const mediaListEntryQuery = <never>(args.length ? `mediaListEntry {
-            ${args.join(",\n            ")}
+            ${args.join(",\n")}
         }` : `mediaListEntry {
             id
         }`)
@@ -508,17 +494,17 @@ export class QueryMedia<T = { empty: never }> extends Query {
         edges?: Array<keyof ReviewEdge>,
         nodes?: Array<keyof Review>,
         pageInfo?: Array<keyof PageInfo>
-    } = <never>{}): QueryMedia<Add<T, { reviews: ReqMedia["reviews"] }>> {
+    } = <never>{}): MediaQuery<Add<T, { reviews: ReqMedia["reviews"] }>> {
         const { edges, nodes, pageInfo } = options;
         const reviewsQuery = <never>(Object.keys(options).length ? `reviews {
             ${edges?.length ? `edges {
-                ${edges.join(",\n                ")}
+                ${edges.join(",\n")}
             },`: ""}
             ${nodes?.length ? `nodes {
-                ${nodes.join(",\n                ")}
+                ${nodes.join(",\n")}
             },`: ""}
             ${pageInfo?.length ? `pageInfo {
-                ${pageInfo.join(",\n                ")}
+                ${pageInfo.join(",\n")}
             }`: ""}
         }` : `reviews {
             edges {
@@ -534,17 +520,17 @@ export class QueryMedia<T = { empty: never }> extends Query {
         edges?: Array<keyof RecommendationEdge>,
         nodes?: Array<keyof Recommendation>,
         pageInfo?: Array<keyof PageInfo>
-    } = <never>{}): QueryMedia<Add<T, { recommendations: ReqMedia["recommendations"] }>> {
+    } = <never>{}): MediaQuery<Add<T, { recommendations: ReqMedia["recommendations"] }>> {
         const { edges, nodes, pageInfo } = options;
         const recommendationsQuery = <never>(Object.keys(options).length ? `recommendations {
             ${edges?.length ? `edges {
-                ${edges.join(",\n                ")}
+                ${edges.join(",\n")}
             },`: ""}
             ${nodes?.length ? `nodes {
-                ${nodes.join(",\n                ")}
+                ${nodes.join(",\n")}
             },`: ""}
             ${pageInfo?.length ? `pageInfo {
-                ${pageInfo.join(",\n                ")}
+                ${pageInfo.join(",\n")}
             }`: ""}
         }` : `recommendations {
             edges {
@@ -559,14 +545,14 @@ export class QueryMedia<T = { empty: never }> extends Query {
     withStats(options: {
         scoreDistribution?: Array<keyof ScoreDistribution>;
         statusDistribution?: Array<keyof StatusDistribution>;
-    } = <never>{}): QueryMedia<Add<T, { stats: ReqMedia["stats"] }>> {
+    } = <never>{}): MediaQuery<Add<T, { stats: ReqMedia["stats"] }>> {
         const { scoreDistribution, statusDistribution } = options;
         const trailerQuery = <never>(Object.keys(options).length ? `stats {
             ${scoreDistribution?.length ? `scoreDistribution {
-                ${scoreDistribution.join(",\n                ")}
+                ${scoreDistribution.join(",\n")}
             },` : ""}
             ${statusDistribution?.length ? `statusDistribution {
-                ${statusDistribution.join(",\n                ")}
+                ${statusDistribution.join(",\n")}
             },` : ""}
         }` : `stats {
             scoreDistribution {
@@ -582,32 +568,28 @@ export class QueryMedia<T = { empty: never }> extends Query {
         return <never>this;
     }
 
-    withSiteUrl(): QueryMedia<Add<T, { siteUrl: ReqMedia["siteUrl"] }>> {
+    withSiteUrl(): MediaQuery<Add<T, { siteUrl: ReqMedia["siteUrl"] }>> {
         this.query.add("siteUrl");
         return <never>this;
     }
 
-    withAutoCreateForumThread(): QueryMedia<Add<T, { autoCreateForumThread: ReqMedia["autoCreateForumThread"] }>> {
+    withAutoCreateForumThread(): MediaQuery<Add<T, { autoCreateForumThread: ReqMedia["autoCreateForumThread"] }>> {
         this.query.add("autoCreateForumThread");
         return <never>this;
     }
 
-    isRecommendationBlocked(): QueryMedia<Add<T, { isRecommendationBlocked: ReqMedia["isRecommendationBlocked"] }>> {
+    isRecommendationBlocked(): MediaQuery<Add<T, { isRecommendationBlocked: ReqMedia["isRecommendationBlocked"] }>> {
         this.query.add("isRecommendationBlocked");
         return <never>this;
     }
 
-    isReviewBlocked(): QueryMedia<Add<T, { isReviewBlocked: ReqMedia["isReviewBlocked"] }>> {
+    isReviewBlocked(): MediaQuery<Add<T, { isReviewBlocked: ReqMedia["isReviewBlocked"] }>> {
         this.query.add("isReviewBlocked");
         return <never>this;
     }
 
-    withModNotes(): QueryMedia<Add<T, { modNotes: ReqMedia["modNotes"] }>> {
+    withModNotes(): MediaQuery<Add<T, { modNotes: ReqMedia["modNotes"] }>> {
         this.query.add("modNotes");
         return <never>this;
-    }
-
-    get raw(): string {
-        return this.buildQuery();
     }
 }
