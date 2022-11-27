@@ -54,7 +54,7 @@ export class PageQuery<T = { empty: never }> extends Query {
         return <never>this;
     }
 
-    withMedia<M extends MediaQuery, K extends MediaQuery<unknown>>(media?: K | ((media: M) => K)): PageQuery<Add<T, { media: ExtractMedia<K> }>> {
+    withMedia<M extends MediaQuery, K extends MediaQuery<unknown>>(media?: K | ((media: M) => K)): PageQuery<Add<T, { media: Array<ExtractMedia<K>> }>> {
         const { options, returns } = typeof media === "function" ? media(<never>new MediaQuery())["preBuild"]() : media?.["preBuild"]() ?? new MediaQuery()["preBuild"]();
 
         const mediaQuery = <never>(options.length ? `media(${options}) {
