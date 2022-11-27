@@ -15,6 +15,7 @@ export class PageQuery<T = { empty: never }> extends Query {
     };
 
     protected query = new Set<keyof Page>();
+    #preQuery = new Map<keyof Page, string>();
     protected default: string = `media {
         id
     }`;
@@ -29,6 +30,7 @@ export class PageQuery<T = { empty: never }> extends Query {
     }
 
     protected buildQuery(): string {
+        this.#preQuery.forEach(val => this.query.add(<never>val))
         const { options, returns } = this.preBuild();
 
         return `query {
@@ -63,7 +65,7 @@ export class PageQuery<T = { empty: never }> extends Query {
             returns
         }`)
 
-        this.query.add(mediaQuery);
+        this.#preQuery.set("media", mediaQuery)
         return <never>this;
     }
 }

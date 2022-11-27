@@ -9,6 +9,7 @@
 - [x] Add ability to pass in default fields at query creation
 - [x] Support dynamic variables
 - [ ] Improve performance
+- [ ] Improve the way dynamic fields work
 - [x] Page Query
 - [ ] Character Query
 - [ ] Studio Query
