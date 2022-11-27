@@ -30,14 +30,14 @@ import {
     StatusDistribution,
     Add,
     MediaArgs,
-    MediaFetchReturnType,
     FuzzyDate
 } from "./typings";
 
 type ReqMedia = Required<Media>
 
 export interface MediaQuery<T> {
-    fetch<R extends boolean = false>(raw?: R): Promise<R extends true ? MediaFetchReturnType<T extends Media ? T : { id: number }> : T extends Media ? T : { id: number }>
+    fetch(raw?: false): Promise<T extends Media ? T : { id: number }>
+    fetch(raw?: true): Promise<T extends Media ? { data: { Media: T } } : { data: { Media: { id: number } } }>
 }
 
 export class MediaQuery<T = { empty: never }> extends Query {

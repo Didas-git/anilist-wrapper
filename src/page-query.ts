@@ -1,11 +1,12 @@
 import { Query } from "./base-query";
 import { MediaQuery } from "./media-query";
-import { Add, ExtractMedia, Page, PageArguments, PageFetchReturnType, PageInfo } from "./typings";
+import { Add, ExtractMedia, Page, PageArguments, PageInfo } from "./typings";
 
 type ReqPage = Required<Page>
 
 export interface PageQuery<T> {
-    fetch<R extends boolean = false>(raw?: R): Promise<R extends true ? PageFetchReturnType<T extends Page ? T : { media: Array<{ id: number }> }> : T extends Page ? T : { media: Array<{ id: number }> }>
+    fetch(raw?: false): Promise<T extends Page ? T : { media: Array<{ id: number }> }>
+    fetch(raw?: true): Promise<T extends Page ? { data: { Page: T } } : { data: { Page: { media: Array<{ id: number }> } } }>
 }
 
 export class PageQuery<T = { empty: never }> extends Query {

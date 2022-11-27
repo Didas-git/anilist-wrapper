@@ -1,1 +1,0 @@
-export type MediaFetchReturnType<T> = T extends never ? never : { data: { Media: T } }

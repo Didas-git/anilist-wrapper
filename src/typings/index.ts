@@ -22,8 +22,6 @@ export * from "./name";
 export * from "./page-info";
 export * from "./statistic";
 export * from "./status-distribution";
-export * from "./media-fetch-return-type";
 export * from "./add";
 export * from "./complex-types";
 export * from "./extract-media-generic";
-export * from "./page-fetch-return-type";
