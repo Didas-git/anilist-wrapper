@@ -14,6 +14,7 @@
 - [ ] Character Query
 - [ ] Studio Query
 - [ ] Staff Query
+- [ ] Set -> Map (`Map<keyof QueryType, null | Array<string> | { arguments: Array<string>, fields: Array<string> }>`)
 
 ## ~
 
@@ -42,4 +43,4 @@
 - [ ] AniChartUser Query
 - [ ] SiteStatistics Query
 - [ ] ExternalLinkSourceCollection Query
-- [ ] Support all page query types
+- [ ] Fully implement Page query
