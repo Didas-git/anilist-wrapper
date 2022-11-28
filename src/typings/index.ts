@@ -25,3 +25,5 @@ export * from "./status-distribution";
 export * from "./add";
 export * from "./complex-types";
 export * from "./extract-media-generic";
+export * from "./complex-internal-query";
+export * from "./internal-connection";

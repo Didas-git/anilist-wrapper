@@ -30,7 +30,13 @@ import {
     StatusDistribution,
     Add,
     MediaArgs,
-    FuzzyDate
+    FuzzyDate,
+    InternalConnection,
+    CharacterSort,
+    CharacterRole,
+    Complex,
+    StaffSort,
+    StudioSort
 } from "./typings";
 
 type ReqMedia = Required<Media>
@@ -40,13 +46,11 @@ export interface MediaQuery<T> {
     fetch(raw?: true): Promise<T extends Media ? { data: { Media: T } } : { data: { Media: { id: number } } }>
 }
 
-export class MediaQuery<T = { empty: never }> extends Query {
+export class MediaQuery<T = { empty: never }> extends Query<Media> {
     protected options: MediaArguments = {
         type: "ANIME"
     };
 
-    protected query = new Set<keyof Media>();
-    protected preQuery = new Map<keyof Media, string>();
     protected default: string = "id";
     protected type: string = "Media";
     constructor(name?: string, media?: Array<MediaArgs>)
@@ -61,10 +65,10 @@ export class MediaQuery<T = { empty: never }> extends Query {
     }
 
     protected buildQuery() {
-        const { options, returns } = this.preBuild()
+        const { options, fields } = this.preBuild()
         return `query {
     Media(${options}) {
-        ${returns}
+        ${fields}
     }
 }`
     };
@@ -75,216 +79,167 @@ export class MediaQuery<T = { empty: never }> extends Query {
     }
 
     withId(): MediaQuery<Add<T, { id: ReqMedia["id"] }>> {
-        this.query.add("id");
+        this.query.set("id", void 0);
         return <never>this;
     }
 
     withMalId(): MediaQuery<Add<T, { idMal: ReqMedia["idMal"] }>> {
-        this.query.add("idMal");
+        this.query.set("idMal", void 0);
         return <never>this;
     }
 
     withTitles(...args: Array<keyof MediaTitle>): MediaQuery<Add<T, { title: ReqMedia["title"] }>> {
-        const titleQuery: Media["title"] = <never>(args.length ? `title {
-            ${args.join(",\n")}
-        }` : `title {
-            romaji
-        }`);
-
-        this.preQuery.has("title") && this.query.delete(<never>this.preQuery.get("title"));
-        this.preQuery.set("title", titleQuery);
+        this.query.set("title", args.length ? args : ["romaji"])
         return <never>this;
     }
 
     withType(): MediaQuery<Add<T, { type: ReqMedia["type"] }>> {
-        this.query.add("type");
+        this.query.set("type", void 0);
         return <never>this;
     }
 
     withFormat(): MediaQuery<Add<T, { format: ReqMedia["format"] }>> {
-        this.query.add("format");
+        this.query.set("format", void 0);
         return <never>this;
     }
 
-    withStatus(): MediaQuery<Add<T, { status: ReqMedia["status"] }>> {
-        this.query.add("status");
+    withStatus(version?: number): MediaQuery<Add<T, { status: ReqMedia["status"] }>> {
+        this.query.set("status", { args: version ? { version } : void 0, fields: void 0 });
         return <never>this;
     }
 
-    withDescription(): MediaQuery<Add<T, { description: ReqMedia["description"] }>> {
-        this.query.add("description");
+    withDescription(asHtml?: boolean): MediaQuery<Add<T, { description: ReqMedia["description"] }>> {
+        this.query.set("description", { args: asHtml ? { asHtml } : void 0, fields: void 0 });
         return <never>this;
     }
 
     withStartDate(...args: Array<keyof FuzzyDate>): MediaQuery<Add<T, { startDate: ReqMedia["startDate"] }>> {
-        const startDateQuery = <never>(args.length ? `startDate {
-            ${args.join(",\n")}
-        }` : `startDate {
-            year,
-            month,
-            day
-        }`)
-
-        this.preQuery.has("startDate") && this.query.delete(<never>this.preQuery.get("startDate"));
-        this.preQuery.set("startDate", startDateQuery);
+        this.query.set("startDate", args.length ? args : ["year", "month", "day"])
         return <never>this;
     }
 
     withEndDate(...args: Array<keyof FuzzyDate>): MediaQuery<Add<T, { endDate: ReqMedia["endDate"] }>> {
-        const endDateQuery = <never>(args.length ? `endDate {
-            ${args.join(",\n")}
-        }` : `endDate {
-            year,
-            month,
-            day
-        }`)
-
-        this.preQuery.has("endDate") && this.query.delete(<never>this.preQuery.get("endDate"));
-        this.preQuery.set("endDate", endDateQuery);
+        this.query.set("endDate", args.length ? args : ["year", "month", "day"])
         return <never>this;
     }
 
     withSeason(): MediaQuery<Add<T, { season: ReqMedia["season"] }>> {
-        this.query.add("season");
+        this.query.set("season", void 0);
         return <never>this;
     }
 
     withSeasonYear(): MediaQuery<Add<T, { seasonYear: ReqMedia["seasonYear"] }>> {
-        this.query.add("seasonYear");
+        this.query.set("seasonYear", void 0);
         return <never>this;
     }
 
     withSeasonInt(): MediaQuery<Add<T, { seasonInt: ReqMedia["seasonInt"] }>> {
-        this.query.add("seasonInt");
+        this.query.set("seasonInt", void 0);
         return <never>this;
     }
 
     withEpisodes(): MediaQuery<Add<T, { episodes: ReqMedia["episodes"] }>> {
-        this.query.add("episodes");
+        this.query.set("episodes", void 0);
         return <never>this;
     }
 
     withDuration(): MediaQuery<Add<T, { duration: ReqMedia["duration"] }>> {
-        this.query.add("duration");
+        this.query.set("duration", void 0);
         return <never>this;
     }
 
     withChapters(): MediaQuery<Add<T, { chapters: ReqMedia["chapters"] }>> {
-        this.query.add("chapters");
+        this.query.set("chapters", void 0);
         return <never>this;
     }
 
     withVolumes(): MediaQuery<Add<T, { volumes: ReqMedia["volumes"] }>> {
-        this.query.add("volumes");
+        this.query.set("volumes", void 0);
         return <never>this;
     }
 
     withCountryOfOrigin(): MediaQuery<Add<T, { countryOfOrigin: ReqMedia["countryOfOrigin"] }>> {
-        this.query.add("countryOfOrigin");
+        this.query.set("countryOfOrigin", void 0);
         return <never>this;
     }
 
     isLicensed(): MediaQuery<Add<T, { isLicensed: ReqMedia["isLicensed"] }>> {
-        this.query.add("isLicensed");
+        this.query.set("isLicensed", void 0);
         return <never>this;
     }
 
-    withSource(): MediaQuery<Add<T, { source: ReqMedia["source"] }>> {
-        this.query.add("source");
+    withSource(version?: number): MediaQuery<Add<T, { source: ReqMedia["source"] }>> {
+        this.query.set("source", { args: version ? { version } : void 0, fields: void 0 });
         return <never>this;
     }
 
     withTwitterHashtag(): MediaQuery<Add<T, { hashtag: ReqMedia["hashtag"] }>> {
-        this.query.add("hashtag");
+        this.query.set("hashtag", void 0);
         return <never>this;
     }
 
     withTrailer(...args: Array<keyof MediaTrailer>): MediaQuery<Add<T, { trailer: ReqMedia["trailer"] }>> {
-        const trailerQuery = <never>(args.length ? `trailer {
-            ${args.join(",\n")}
-        }` : `trailer {
-            id
-        }`)
-
-        this.preQuery.has("trailer") && this.query.delete(<never>this.preQuery.get("trailer"));
-        this.preQuery.set("trailer", trailerQuery);
+        this.query.set("trailer", args.length ? args : ["id"])
         return <never>this;
     }
 
     updatedAt(): MediaQuery<Add<T, { updatedAt: ReqMedia["updatedAt"] }>> {
-        this.query.add("updatedAt");
+        this.query.set("updatedAt", void 0);
         return <never>this;
     }
 
     withCoverImage(...args: Array<keyof MediaCoverImage>): MediaQuery<Add<T, { coverImage: ReqMedia["coverImage"] }>> {
-        const coverImageQuery = <never>(args.length ? `coverImage {
-            ${args.join(",\n")}
-        }` : `coverImage {
-            extraLarge,
-            large,
-            medium,
-            color
-        }`)
-
-        this.preQuery.has("coverImage") && this.query.delete(<never>this.preQuery.get("coverImage"));
-        this.preQuery.set("coverImage", coverImageQuery);
+        this.query.set("coverImage", args.length ? args : ["extraLarge", "large", "medium", "color"])
         return <never>this;
     }
 
     withBannerImage(): MediaQuery<Add<T, { bannerImage: ReqMedia["bannerImage"] }>> {
-        this.query.add("bannerImage");
+        this.query.set("bannerImage", void 0);
         return <never>this;
     }
 
     withGenres(): MediaQuery<Add<T, { genres: ReqMedia["genres"] }>> {
-        this.query.add("genres");
+        this.query.set("genres", void 0);
         return <never>this;
     }
 
     withSynonyms(): MediaQuery<Add<T, { synonyms: ReqMedia["synonyms"] }>> {
-        this.query.add("synonyms");
+        this.query.set("synonyms", void 0);
         return <never>this;
     }
 
     withAverageScore(): MediaQuery<Add<T, { averageScore: ReqMedia["averageScore"] }>> {
-        this.query.add("averageScore");
+        this.query.set("averageScore", void 0);
         return <never>this;
     }
 
     withMeanScore(): MediaQuery<Add<T, { meanScore: ReqMedia["meanScore"] }>> {
-        this.query.add("meanScore");
+        this.query.set("meanScore", void 0);
         return <never>this;
     }
 
     withPopularity(): MediaQuery<Add<T, { popularity: ReqMedia["popularity"] }>> {
-        this.query.add("popularity");
+        this.query.set("popularity", void 0);
         return <never>this;
     }
 
     isLocked(): MediaQuery<Add<T, { isLocked: ReqMedia["isLocked"] }>> {
-        this.query.add("isLocked");
+        this.query.set("isLocked", void 0);
         return <never>this;
     }
 
     withTrending(): MediaQuery<Add<T, { trending: ReqMedia["trending"] }>> {
-        this.query.add("trending");
+        this.query.set("trending", void 0);
         return <never>this;
     }
 
     withFavourites(): MediaQuery<Add<T, { favourites: ReqMedia["favourites"] }>> {
-        this.query.add("favourites");
+        this.query.set("favourites", void 0);
         return <never>this;
     }
 
     withTags(...args: Array<keyof MediaTag>): MediaQuery<Add<T, { tags: ReqMedia["tags"] }>> {
-        const tagsQuery = <never>(args.length ? `tags {
-            ${args.join(",\n")}
-        }` : `tags {
-            id
-        }`);
-
-        this.preQuery.has("tags") && this.query.delete(<never>this.preQuery.get("tags"));
-        this.preQuery.set("tags", tagsQuery);
+        this.query.set("tags", args.length ? args : ["id"])
         return <never>this;
     }
 
@@ -292,122 +247,73 @@ export class MediaQuery<T = { empty: never }> extends Query {
         edges?: Array<keyof MediaEdge>,
         nodes?: Array<keyof Media>,
         pageInfo?: Array<keyof PageInfo>
-    } = <never>{}): MediaQuery<Add<T, { relations: ReqMedia["relations"] }>> {
-        const { edges, nodes, pageInfo } = options;
-        const relationsQuery = <never>(Object.keys(options).length ? `relations {
-            ${edges?.length ? `edges {
-                ${edges.join(",\n")}
-            },`: ""}
-            ${nodes?.length ? `nodes {
-                ${nodes.join(",\n")}
-            },`: ""}
-            ${pageInfo?.length ? `pageInfo {
-                ${pageInfo.join(",\n")}
-            }`: ""}
-        }` : `relations {
-            edges {
-                id
-            }
-        }`);
+    } = { edges: ["id"] }): MediaQuery<Add<T, { relations: ReqMedia["relations"] }>> {
+        const { edges, nodes, pageInfo } = options as InternalConnection;
 
-        this.preQuery.has("relations") && this.query.delete(<never>this.preQuery.get("relations"));
-        this.preQuery.set("relations", relationsQuery);
+        this.query.set("relations", { edges, nodes, pageInfo })
         return <never>this;
     }
 
     withCharacters(options: {
+        args?: {
+            sort?: Array<CharacterSort>,
+            role?: CharacterRole,
+            page?: number,
+            perPage?: number
+        },
         edges?: Array<keyof CharacterEdge>,
         nodes?: Array<keyof Character>,
         pageInfo?: Array<keyof PageInfo>
-    } = <never>{}): MediaQuery<Add<T, { characters: ReqMedia["characters"] }>> {
-        const { edges, nodes, pageInfo } = options;
-        const charactersQuery = <never>(Object.keys(options).length ? `characters {
-            ${edges?.length ? `edges {
-                ${edges.join(",\n")}
-            },`: ""}
-            ${nodes?.length ? `nodes {
-                ${nodes.join(",\n")}
-            },`: ""}
-            ${pageInfo?.length ? `pageInfo {
-                ${pageInfo.join(",\n")}
-            }`: ""}
-        }` : `characters {
-            edges {
-                id
-            }
-        }`);
+    } = { edges: ["id"] }): MediaQuery<Add<T, { characters: ReqMedia["characters"] }>> {
+        const { edges, nodes, pageInfo, args } = options as InternalConnection & Complex;
 
-        this.preQuery.has("characters") && this.query.delete(<never>this.preQuery.get("characters"));
-        this.preQuery.set("characters", charactersQuery);
+        this.query.set("characters", { edges, nodes, pageInfo, args })
         return <never>this;
     }
 
     withStaff(options: {
+        args?: {
+            sort: Array<StaffSort>,
+            page: number,
+            perPage: number
+        },
         edges?: Array<keyof StaffEdge>,
         nodes?: Array<keyof Staff>,
         pageInfo?: Array<keyof PageInfo>
-    } = <never>{}): MediaQuery<Add<T, { staff: ReqMedia["staff"] }>> {
-        const { edges, nodes, pageInfo } = options;
-        const staffQuery = <never>(Object.keys(options).length ? `staff {
-            ${edges?.length ? `edges {
-                ${edges.join(",\n")}
-            },`: ""}
-            ${nodes?.length ? `nodes {
-                ${nodes.join(",\n")}
-            },`: ""}
-            ${pageInfo?.length ? `pageInfo {
-                ${pageInfo.join(",\n")}
-            }`: ""}
-        }` : `staff {
-            edges {
-                id
-            }
-        }`);
+    } = { edges: ["id"] }): MediaQuery<Add<T, { staff: ReqMedia["staff"] }>> {
+        const { edges, nodes, pageInfo, args } = options as InternalConnection & Complex;
 
-        this.preQuery.has("staff") && this.query.delete(<never>this.preQuery.get("staff"));
-        this.preQuery.set("staff", staffQuery);
+        this.query.set("staff", { edges, nodes, pageInfo, args })
         return <never>this;
     }
 
     withStudios(options: {
+        args?: {
+            sort?: Array<StudioSort>,
+            isMain?: boolean
+        }
         edges?: Array<keyof StudioEdge>,
         nodes?: Array<keyof Studio>,
         pageInfo?: Array<keyof PageInfo>
-    } = <never>{}): MediaQuery<Add<T, { studios: ReqMedia["studios"] }>> {
-        const { edges, nodes, pageInfo } = options;
-        const studiosQuery = <never>(Object.keys(options).length ? `studios {
-            ${edges?.length ? `edges {
-                ${edges.join(",\n")}
-            },`: ""}
-            ${nodes?.length ? `nodes {
-                ${nodes.join(",\n")}
-            },`: ""}
-            ${pageInfo?.length ? `pageInfo {
-                ${pageInfo.join(",\n")}
-            }`: ""}
-        }` : `studios {
-            edges {
-                id
-            }
-        }`);
+    } = { edges: ["id"] }): MediaQuery<Add<T, { studios: ReqMedia["studios"] }>> {
+        const { edges, nodes, pageInfo, args } = options as InternalConnection & Complex;
 
-        this.preQuery.has("studios") && this.query.delete(<never>this.preQuery.get("studios"));
-        this.preQuery.set("studios", studiosQuery);
+        this.query.set("studios", { edges, nodes, pageInfo, args })
         return <never>this;
     }
 
     isFavourite(): MediaQuery<Add<T, { isFavourite: ReqMedia["isFavourite"] }>> {
-        this.query.add("isFavourite");
+        this.query.set("isFavourite", void 0);
         return <never>this;
     }
 
     isFavouriteBlocked(): MediaQuery<Add<T, { isFavouriteBlocked: ReqMedia["isFavouriteBlocked"] }>> {
-        this.query.add("isFavouriteBlocked");
+        this.query.set("isFavouriteBlocked", void 0);
         return <never>this;
     }
 
     isAdult(): MediaQuery<Add<T, { isAdult: ReqMedia["isAdult"] }>> {
-        this.query.add("isAdult");
+        this.query.set("isAdult", void 0);
         return <never>this;
     }
 
