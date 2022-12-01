@@ -9,14 +9,12 @@ export interface PageQuery<T> {
     fetch(raw?: true): Promise<T extends Page ? { data: { Page: T } } : { data: { Page: { media: Array<{ id: number }> } } }>
 }
 
-export class PageQuery<T = { empty: never }> extends Query {
+export class PageQuery<T = { empty: never }> extends Query<Page> {
     protected options: PageArguments = {
         page: 1,
         perPage: 10
     };
 
-    protected query = new Set<keyof Page>();
-    protected preQuery = new Map<keyof Page, string>();
     protected default: string = `media {
         id
     }`;
@@ -31,42 +29,24 @@ export class PageQuery<T = { empty: never }> extends Query {
     }
 
     protected buildQuery(): string {
-        const { options, returns } = this.preBuild();
+        const { args, fields } = this.preBuild();
 
         return `query {
-    Page(${options}) {
-        ${returns}
+    Page(${args}) {
+        ${fields}
     }
 }`
     }
 
     withPageInfo(...args: Array<keyof PageInfo>): PageQuery<Add<T, { pageInfo: ReqPage["pageInfo"] }>> {
-
-        const pageQuery = <never>(args.length ? `pageInfo {
-            ${args.join(",\n")}
-        }` : `pageInfo {
-            total,
-            perPage,
-            currentPage,
-            lastPage,
-            hasNextPage
-        }`);
-
-        this.query.add(pageQuery);
+        this.query.set("pageInfo", args.length ? args : ["total", "perPage", "currentPage", "lastPage", "hasNextPage"]);
         return <never>this;
     }
 
     withMedia<M extends MediaQuery, K extends MediaQuery<unknown>>(media?: K | ((media: M) => K)): PageQuery<Add<T, { media: Array<ExtractMedia<K>> }>> {
-        const { options, returns } = typeof media === "function" ? media(<never>new MediaQuery())["preBuild"]() : media?.["preBuild"]() ?? new MediaQuery()["preBuild"]();
+        const { args, fields } = typeof media === "function" ? media(<never>new MediaQuery())["preBuild"]() : media?.["preBuild"]() ?? new MediaQuery()["preBuild"]();
 
-        const mediaQuery = <never>(options.length ? `media(${options}) {
-            ${returns}
-        }` : `media {
-            returns
-        }`)
-
-        this.preQuery.has("media") && this.query.delete(<never>this.preQuery.get("media"))
-        this.preQuery.set("media", mediaQuery)
+        this.query.set("media", { args, fields: [fields] })
         return <never>this;
     }
 }

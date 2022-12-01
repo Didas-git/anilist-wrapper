@@ -35,18 +35,19 @@ export abstract class Query<T> {
 
             } else if (this.#isConnection(val)) {
                 return arr.push(this.#parseFieldArray(<string>key, this.#parseConnection(val)))
-            } else {
-                if (typeof val.args === "undefined" && typeof val.fields === "undefined") return arr.push(<string>key);
-                if (typeof val.fields === "undefined") {
-                    return arr.push(this.#parseComplexField(<string>key, val.args));
-                }
-
-                return arr.push(this.#parseFieldArray(this.#parseComplexField(<string>key, val.args), val.fields))
             }
+
+            if (typeof val.args === "undefined" && typeof val.fields === "undefined") return arr.push(<string>key);
+            if (typeof val.fields === "undefined" && val.args) {
+                if (typeof val.args === "string") return arr.push(this.#parseSimpleArgs(<string>key, val.args))
+                return arr.push(this.#parseComplexArgs(<string>key, val.args));
+            }
+
+            return arr.push(this.#parseFieldArray(typeof val.args === "string" ? this.#parseSimpleArgs(<string>key, val.args!) : this.#parseComplexArgs(<string>key, val.args!), val.fields!));
         })
 
         return {
-            options: this.transformOptions(),
+            args: this.transformOptions(),
             fields: arr.join(",\n") || this.default
         }
     }
@@ -63,7 +64,7 @@ export abstract class Query<T> {
 
     #parseConnection(val: InternalConnection): Array<string> {
         const arr: Array<string> = []
-        Object.keys(val).forEach((k) => arr.push(this.#parseFieldArray(k, val[<never>k])))
+        Object.entries(val).forEach(([k, val]) => arr.push(this.#parseFieldArray(k, val)))
 
         return arr;
     }
@@ -74,9 +75,24 @@ export abstract class Query<T> {
         }`
     }
 
-    #parseComplexField(key: string, args: Record<string, unknown>): string {
+    #parseSimpleArgs(key: string, args: string): string {
+        return `${key}(${args})`
+    }
 
-        // return `${key}(${args.join(", ")})`
+    #parseComplexArgs(key: string, args: Record<string, unknown>): string {
+        const arr: Array<string> = Object.entries(args).map(([k, val]) => {
+            if (Array.isArray(val)) {
+                return `${k}: [${val.join(", ")}]`
+            } else if (typeof val === "boolean") {
+                return `${k}: ${`${val}`}`
+            } else if (typeof val === "number") {
+                return `${k}: ${val.toString()}`
+            }
+
+            throw new Error("Something went wrong parsing the value")
+        })
+
+        return `${key} (${arr.join(", ")})`
     }
 
     protected abstract buildQuery(): string;

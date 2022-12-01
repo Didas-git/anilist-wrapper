@@ -1,4 +1,4 @@
 export interface Complex {
-    args: Record<string, unknown> | undefined;
+    args: string | Record<string, unknown> | undefined;
     fields: Array<string> | undefined
 }
