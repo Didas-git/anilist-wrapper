@@ -5,16 +5,16 @@
 - [x] Media Query
 - [x] Support complex fields
 - [x] Ability to chose what fields to return in complex fields
-- [ ] Support nested complex fields
+- [x] Support nested complex fields
 - [x] Add ability to pass in default fields at query creation
 - [x] Support dynamic variables
-- [ ] Improve performance
+- [x] Improve performance
 - [ ] Improve the way dynamic fields work
 - [x] Page Query
 - [ ] Character Query
 - [ ] Studio Query
 - [ ] Staff Query
-- [ ] Set -> Map (`Map<keyof QueryType, null | Array<string> | { arguments: Array<string>, fields: Array<string> }>`)
+- [x] Set -> Map
 
 ## ~
 
