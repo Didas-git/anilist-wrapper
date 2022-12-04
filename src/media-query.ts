@@ -55,7 +55,7 @@ export class MediaQuery<T = { empty: never }> extends Query {
         super();
 
         if (typeof params === "string") this.options.search = params;
-        else this.options = { ...this.options, ...params };
+        else if (params) this.options = params;
 
         this.createQueryOptions(media);
     }
