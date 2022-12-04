@@ -36,7 +36,7 @@ import {
 type ReqMedia = Required<Media>
 
 export interface MediaQuery<T> {
-    fetch(raw?: false): Promise<T extends Media ? T : { id: number }>
+    fetch(raw?: false): Promise<T extends Media ? { data: T }["data"] : { id: number }>
     fetch(raw?: true): Promise<T extends Media ? { data: { Media: T } } : { data: { Media: { id: number } } }>
 }
 

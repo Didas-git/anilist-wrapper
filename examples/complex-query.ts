@@ -16,5 +16,5 @@ const query = Anilist.query.media()
     .withCoverImage("color", "extraLarge");
 
 (async () => {
-    console.log(await query.fetch(true))
+    console.log(await query.fetch())
 })()
