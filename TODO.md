@@ -5,15 +5,17 @@
 - [x] Media Query
 - [x] Support complex fields
 - [x] Ability to chose what fields to return in complex fields
-- [ ] Support nested complex fields
+- [x] Support nested complex fields
 - [x] Add ability to pass in default fields at query creation
 - [x] Support dynamic variables
-- [ ] Improve performance
-- [ ] Improve the way dynamic fields work
-- [x] Page Query
+- [x] Improve performance
+- [ ] Fix how relations work
+- [ ] Support nested complex fields
+- [x] Page Query (Partially)
 - [ ] Character Query
 - [ ] Studio Query
 - [ ] Staff Query
+- [x] Set -> Map
 
 ## ~
 
@@ -42,4 +44,4 @@
 - [ ] AniChartUser Query
 - [ ] SiteStatistics Query
 - [ ] ExternalLinkSourceCollection Query
-- [ ] Support all page query types
+- [ ] Fully implement Page query

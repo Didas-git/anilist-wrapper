@@ -1,0 +1,1 @@
+export type RecommendationSort = "ID" | "ID_DESC" | "RATING" | "RATING_DESC";

@@ -25,3 +25,4 @@ export * from "./media-trend-connection";
 export * from "./media-trend-edge";
 export * from "./media-tag";
 export * from "./media-type";
+export * from "./media-trend-sort";
