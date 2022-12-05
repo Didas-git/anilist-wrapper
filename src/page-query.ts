@@ -7,7 +7,7 @@ export interface PageQuery<T> {
     fetch(raw?: true): Promise<T extends Page ? { data: { Page: { [K in keyof T]: T[K] } } } : { data: { Page: { media: Array<{ id: number }> } } }>
 }
 
-export class PageQuery<T = { empty: never }> extends Query {
+export class PageQuery<T = {}> extends Query {
     protected options: PageArguments = {
         page: 1,
         perPage: 10
