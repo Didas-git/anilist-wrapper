@@ -1,6 +1,6 @@
 import { MediaQuery } from "./media-query";
 import { PageQuery } from "./page-query";
-import { MediaArgs, MediaArguments, PageArguments } from "./typings";
+import { MediaArguments, PageArguments } from "./typings";
 
 export * from "./media-query";
 export * from "./page-query";
@@ -16,10 +16,10 @@ export const Anilist = {
 }
 
 // Sugar to avoid using `new` in the code
-function mediaQuery(search?: string, media?: Array<MediaArgs>): MediaQuery;
-function mediaQuery(args?: MediaArguments, media?: Array<MediaArgs>): MediaQuery;
-function mediaQuery(options?: string | MediaArguments, media?: Array<MediaArgs>): MediaQuery {
-    return new MediaQuery(<never>options, media);
+function mediaQuery(search?: string): MediaQuery;
+function mediaQuery(args?: MediaArguments): MediaQuery;
+function mediaQuery(options?: string | MediaArguments): MediaQuery {
+    return new MediaQuery(<never>options);
 }
 
 function pageQuery(page?: number): PageQuery

@@ -8,10 +8,6 @@ import { ReviewConnection } from "../review";
 import { StaffConnection } from "../staff";
 import { StudioConnection } from "../studio";
 
-export const ComplexTypesArray = ["trailer", "coverImage", "tags", "relations", "characters", "staff", "studios", "nextAiringEpisode", "airingSchedule", "trends", "externalLinks", "streamingEpisodes", "rankings", "mediaListEntry", "reviews", "recommendations", "stats"] as const;
-
-export type MediaArgs = Exclude<keyof Media, typeof ComplexTypesArray[number]>
-
 export interface Media {
     id?: number;
     idMal?: number | null;
