@@ -1,1 +1,0 @@
-export type Add<T, P> = T extends never ? never : { [K in keyof (T & P) as K extends "empty" ? never : K]: (T & P)[K] }

@@ -1,5 +1,5 @@
 import { inspect } from "node:util";
-import { ComplexTypes, EnumTypes } from "./typings";
+import { EnumTypes } from "./typings";
 
 export abstract class Query {
     static url = "https://graphql.anilist.co";
@@ -12,16 +12,6 @@ export abstract class Query {
 
     protected transformOptions() {
         return Object.keys(this.options).map((key) => `${key}: ${EnumTypes.has(key) ? this.options[key] : Array.isArray(this.options[key]) ? `[${this.options[key]}]` : JSON.stringify(this.options[key])}`).join(", ")
-    }
-
-    protected createQueryOptions(ops?: Array<any>) {
-        if (!ops || !ops.length) return;
-
-        // Casting to never in case someone who uses js tries to use one of the complex types (support in the future)
-        for (let i = 0; i < ops.length; i++) {
-            if (ComplexTypes.has(<never>ops[i])) throw new Error(`'${ops[i]}' cannot be passed to the constructor, use the builder method instead`);
-            this.query.add(ops[i]);
-        }
     }
 
     protected preBuild() {

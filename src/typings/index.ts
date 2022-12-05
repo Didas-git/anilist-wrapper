@@ -22,6 +22,6 @@ export * from "./name";
 export * from "./page-info";
 export * from "./statistic";
 export * from "./status-distribution";
-export * from "./add";
-export * from "./complex-types";
+export * from "./add-media";
+export * from "./add-page";
 export * from "./extract-media-generic";

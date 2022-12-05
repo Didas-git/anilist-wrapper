@@ -1,12 +1,10 @@
 import { Query } from "./base-query";
 import { MediaQuery } from "./media-query";
-import { Add, ExtractMedia, Page, PageArguments, PageInfo } from "./typings";
-
-type ReqPage = Required<Page>
+import { AddPage, ExtractMedia, Page, PageArguments, PageInfo } from "./typings";
 
 export interface PageQuery<T> {
-    fetch(raw?: false): Promise<T extends Page ? T : { media: Array<{ id: number }> }>
-    fetch(raw?: true): Promise<T extends Page ? { data: { Page: T } } : { data: { Page: { media: Array<{ id: number }> } } }>
+    fetch(raw?: false): Promise<T extends Page ? { [K in keyof T]: T[K] } : { media: Array<{ id: number }> }>
+    fetch(raw?: true): Promise<T extends Page ? { data: { Page: { [K in keyof T]: T[K] } } } : { data: { Page: { media: Array<{ id: number }> } } }>
 }
 
 export class PageQuery<T = { empty: never }> extends Query {
@@ -40,7 +38,7 @@ export class PageQuery<T = { empty: never }> extends Query {
 }`
     }
 
-    withPageInfo(...args: Array<keyof PageInfo>): PageQuery<Add<T, { pageInfo: ReqPage["pageInfo"] }>> {
+    withPageInfo(...args: Array<keyof PageInfo>): PageQuery<AddPage<T, "pageInfo">> {
 
         const pageQuery = <never>(args.length ? `pageInfo {
             ${args.join(",\n")}
@@ -56,7 +54,7 @@ export class PageQuery<T = { empty: never }> extends Query {
         return <never>this;
     }
 
-    withMedia<M extends MediaQuery, K extends MediaQuery<unknown>>(media?: K | ((media: M) => K)): PageQuery<Add<T, { media: Array<ExtractMedia<K>> }>> {
+    withMedia<M extends MediaQuery, K extends MediaQuery<unknown>>(media?: K | ((media: M) => K)): PageQuery<T & { media: Array<ExtractMedia<K>> }> {
         const { options, returns } = typeof media === "function" ? media(<never>new MediaQuery())["preBuild"]() : media?.["preBuild"]() ?? new MediaQuery()["preBuild"]();
 
         const mediaQuery = <never>(options.length ? `media(${options}) {
