@@ -1,4 +1,4 @@
-import { inspect } from "node:util";
+import { AnilistError } from "./anilist-error";
 import { EnumTypes } from "./typings";
 
 export abstract class Query {
@@ -35,9 +35,9 @@ export abstract class Query {
                 query: this.buildQuery()
             })
         })
-        if (!res.ok) throw new Error(inspect(await res.json(), false, null, true));
-
         const json = await res.json();
+
+        if (!res.ok) throw new AnilistError(json);
 
         return raw ? <never>json : <never>json.data[this.type];
     }
