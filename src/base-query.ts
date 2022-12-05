@@ -54,7 +54,7 @@ export abstract class Query<T> {
 
     #parseConnection(val: InternalConnection): Array<string> {
         const arr: Array<string> = []
-        Object.entries(val).forEach(([k, val]) => arr.push(this.#parseFieldArray(k, val)))
+        Object.entries(val).forEach(([k, val]) => arr.push(val && this.#parseFieldArray(k, val)))
 
         return arr;
     }
