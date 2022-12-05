@@ -9,8 +9,9 @@
 - [x] Add ability to pass in default fields at query creation
 - [x] Support dynamic variables
 - [x] Improve performance
-- [ ] Improve the way dynamic fields work
-- [x] Page Query
+- [ ] Fix how relations work
+- [ ] Support nested complex fields
+- [x] Page Query (Partially)
 - [ ] Character Query
 - [ ] Studio Query
 - [ ] Staff Query
