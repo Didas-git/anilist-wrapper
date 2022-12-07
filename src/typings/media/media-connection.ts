@@ -1,4 +1,4 @@
 import { Connection } from "../connection";
-import { Media, MediaEdge } from ".";
+import { Media, IMediaEdge } from ".";
 
-export interface MediaConnection extends Connection<MediaEdge, Media> { }
+export interface MediaConnection extends Connection<IMediaEdge, Media> { }

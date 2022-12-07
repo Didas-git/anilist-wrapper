@@ -1,8 +1,8 @@
 import { Media } from "../media";
-import { PageInfo } from "../page-info";
+import { IPageInfo } from "../page-info";
 
 export interface Page {
-    pageInfo?: PageInfo | null;
+    pageInfo?: IPageInfo | null;
     /** Not yet implemented */
     users?: undefined;
     media?: Array<Media> | [];

@@ -1,7 +1,7 @@
-import { Anilist } from "../src";
+import { anilist } from "../src";
 
-const media = Anilist.query.media().withTitles();
-const page = Anilist.query.page({ perPage: 1 }).withMedia(media);
+const media = anilist.query.media().withTitles();
+const page = anilist.query.page({ perPage: 1 }).withMedia(media);
 
 (async () => {
     media.arguments({

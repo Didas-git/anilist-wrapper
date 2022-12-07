@@ -1,6 +1,6 @@
-import { Edge } from "../edge";
+import { IEdge } from "../edge";
 import { AiringSchedule } from "./airing-schedule";
 
-export interface AiringScheduleEdge extends Edge<AiringSchedule> {
+export interface AiringScheduleEdge extends IEdge<AiringSchedule> {
     id?: number | null;
 }

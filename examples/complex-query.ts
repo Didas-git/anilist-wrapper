@@ -1,6 +1,6 @@
-import { Anilist } from "../src";
+import { anilist } from "../src";
 
-const query = Anilist.query.media()
+const query = anilist.query.media()
     .withId()
     .withMalId()
     .withTitles()
@@ -35,22 +35,14 @@ const query = Anilist.query.media()
     .withFavourites()
     .withTags()
     .withRelations()
-    .withCharacters()
-    .withStaff()
-    .withStudios()
     .isFavourite()
     .isFavouriteBlocked()
     .isAdult()
     .withNextAiringEpisode()
-    .withAiringSchedule()
-    .withTrends()
     .withExternalLinks()
     .withStreamingEpisodes()
     .withRankings()
-    .withMediaListEntries()
-    .withReviews()
-    .withRecommendations()
-    .withStats();
+    .withMediaListEntries();
 (async () => {
     console.log(await query.fetch())
 })()

@@ -9,17 +9,18 @@
 - [x] Add ability to pass in default fields at query creation
 - [x] Support dynamic variables
 - [x] Improve performance
-- [ ] Fix how relations work
-- [ ] Support nested complex fields
+- [x] Fix how relations work
+- [x] Support nested complex fields
 - [x] Page Query (Partially)
+- [x] Set -> Map
 - [ ] Character Query
 - [ ] Studio Query
 - [ ] Staff Query
-- [x] Set -> Map
 
 ## ~
 
 - [ ] AiringSchedule Query
+- [ ] Recommendation Query
 - [ ] User Query
 
 ## V2
@@ -39,7 +40,6 @@
 - [ ] Follower Query
 - [ ] Thread Query
 - [ ] ThreadComment Query
-- [ ] Recommendation Query
 - [ ] Like Query
 - [ ] AniChartUser Query
 - [ ] SiteStatistics Query

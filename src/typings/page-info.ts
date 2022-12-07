@@ -1,4 +1,4 @@
-export interface PageInfo {
+export interface IPageInfo {
     total?: number | null;
     perPage?: number | null;
     currentPage?: number | null;

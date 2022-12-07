@@ -1,6 +1,7 @@
-import { Query } from "./base-query";
+import { Query } from "./query";
 import { MediaQuery } from "./media-query";
-import { AddPage, ExtractMedia, Page, PageArguments, PageInfo } from "./typings";
+import { AddPage, ExtractMedia, Page, PageArguments } from "./typings";
+import { PageInfo } from "./connection/page-info";
 
 export interface PageQuery<T> {
     fetch(raw?: false): Promise<T extends Page ? { [K in keyof T]: T[K] } : { media: Array<{ id: number }> }>
@@ -8,7 +9,7 @@ export interface PageQuery<T> {
 }
 
 export class PageQuery<T = {}> extends Query<Page> {
-    protected options: PageArguments = {
+    protected args: PageArguments = {
         page: 1,
         perPage: 10
     };
@@ -18,16 +19,16 @@ export class PageQuery<T = {}> extends Query<Page> {
     }`;
     protected type: string = "Page";
     constructor(page?: number)
-    constructor(options?: PageArguments)
-    constructor(options?: number | PageArguments) {
+    constructor(args?: PageArguments)
+    constructor(args?: number | PageArguments) {
         super();
 
-        if (typeof options === "number") this.options.page = options;
-        else this.options = { ...this.options, ...options };
+        if (typeof args === "number") this.args.page = args;
+        else this.args = { ...this.args, ...args };
     }
 
     protected buildQuery(): string {
-        const { args, fields } = this.preBuild();
+        const { args, fields } = this.parse();
 
         return `query {
     Page(${args}) {
@@ -36,13 +37,15 @@ export class PageQuery<T = {}> extends Query<Page> {
 }`
     }
 
-    withPageInfo(...args: Array<keyof PageInfo>): PageQuery<AddPage<T, "pageInfo">> {
-        this.query.set("pageInfo", args.length ? args : ["total", "perPage", "currentPage", "lastPage", "hasNextPage"]);
+    withPageInfo<P extends PageInfo, K extends PageInfo>(page: K | ((page: P) => K)): PageQuery<AddPage<T, "pageInfo">> {
+        const { args, fields } = typeof page === "function" ? page(<P>new PageInfo()).parse() : page.parse() ?? new PageInfo().parse();
+
+        this.query.set("pageInfo", { args, fields: [fields] });
         return <never>this;
     }
 
-    withMedia<M extends MediaQuery, K extends MediaQuery<unknown>>(media?: K | ((media: M) => K)): PageQuery<T & { media: Array<ExtractMedia<K>> }> {
-        const { args, fields } = typeof media === "function" ? media(<never>new MediaQuery())["preBuild"]() : media?.["preBuild"]() ?? new MediaQuery()["preBuild"]();
+    withMedia<M extends MediaQuery>(media: M | ((media: MediaQuery) => M)): PageQuery<T & { media: Array<ExtractMedia<M>> }> {
+        const { args, fields } = typeof media === "function" ? media(<never>new MediaQuery()).parse() : media.parse() ?? new MediaQuery().parse();
 
         this.query.set("media", { args, fields: [fields] })
         return <never>this;
