@@ -45,3 +45,4 @@
 - [ ] SiteStatistics Query
 - [ ] ExternalLinkSourceCollection Query
 - [ ] Fully implement Page query
+- [ ] Fully implement Media Query
