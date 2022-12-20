@@ -41,7 +41,7 @@ export abstract class Parser {
     }
 
     #parseSimpleArgs(key: string, args: string): string {
-        return `${key}(${args})`
+        return args.length ? `${key}(${args})` : `${key}`;
     }
 
     #parseComplexArgs(key: string, args: Record<string, unknown>): string {

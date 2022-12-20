@@ -9,7 +9,7 @@ export interface MediaEdge<T> {
 export class MediaEdge<T = {}> extends Edge<MediaQuery, IMediaEdge> {
 
     constructor() {
-        super(new MediaQuery())
+        super(new MediaQuery({}))
     }
     public withId(): MediaEdge<AddMediaEdge<T, "id">> {
         this.query.set("id", void 0);

@@ -34,9 +34,9 @@ export class MediaQuery<T = {}> extends Query<Media> {
     constructor(args?: MediaArguments)
     constructor(params?: MediaArguments | string) {
         super();
-
+        if (params === undefined) return;
         if (typeof params === "string") this.args.search = params;
-        else if (params) this.args = params;
+        else this.args = params;
     }
 
     protected buildQuery() {
@@ -230,14 +230,14 @@ export class MediaQuery<T = {}> extends Query<Media> {
 
         const arr: Array<string> = [];
         const edges = typeof options?.edges === "function" ? options.edges(new MediaEdge()).parse() : options.edges?.parse();
-        const nodes = typeof options?.nodes === "function" ? options.nodes(new MediaQuery()).parse() : options.nodes?.parse();
+        const nodes = typeof options?.nodes === "function" ? options.nodes(new MediaQuery({})).parse() : options.nodes?.parse();
         const pageInfo = typeof options?.pageInfo === "function" ? options.pageInfo(new PageInfo()).parse() : options.pageInfo?.parse();
 
-        edges && arr.push(`edges: { ${edges.fields} }`);
-        nodes && arr.push(`nodes: { ${nodes.fields} }`);
-        pageInfo && arr.push(`pageInfo: { ${pageInfo.fields} }`)
+        edges && arr.push(`edges { ${edges.fields} }`);
+        nodes && arr.push(`nodes { ${nodes.fields} }`);
+        pageInfo && arr.push(`pageInfo { ${pageInfo.fields} }`)
 
-        this.query.set("relations", arr.length ? arr : [`edges: { id }`]);
+        this.query.set("relations", arr.length ? arr : [`edges { id }`]);
         return <never>this;
     }
 

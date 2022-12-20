@@ -34,7 +34,11 @@ const query = anilist.query.media()
     .withTrending()
     .withFavourites()
     .withTags()
-    .withRelations()
+    .withRelations({
+        edges: (e) => e.withNode((n) => n.withId()),
+        nodes: (n) => n.withId(),
+        pageInfo: (p) => p.withTotal()
+    })
     .isFavourite()
     .isFavouriteBlocked()
     .isAdult()
