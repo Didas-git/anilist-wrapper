@@ -1,20 +1,12 @@
 import { AnilistErrorType } from "./typings";
 
-export interface AnilistError {
-    message: AnilistErrorType
-}
+export class AnilistError extends Error {
+    public errors: AnilistErrorType["errors"];
 
-export interface AnilistSubError {
-    message: any
-}
-
-export class AnilistSubError extends Error { }
-
-export class AnilistError extends AnilistSubError {
     constructor(message: AnilistErrorType) {
         super()
 
-        this.message = message;
+        this.errors = message.errors;
         this.name = "AnilistError"
     }
 }
