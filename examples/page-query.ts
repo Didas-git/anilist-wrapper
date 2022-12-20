@@ -1,6 +1,6 @@
-import { Anilist } from "../src";
+import { anilist } from "../src";
 
-const query = Anilist.query.page({ perPage: 1 }).withMedia(media => media.withTitles().withId().withDescription())
+const query = anilist.query.page({ perPage: 1 }).withMedia(media => media.withTitles().withId().withDescription())
 
 console.log(query.raw);
 /*

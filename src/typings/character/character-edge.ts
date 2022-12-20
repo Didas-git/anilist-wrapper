@@ -1,9 +1,9 @@
 import { Character, CharacterRole } from ".";
-import { Edge } from "../edge";
+import { IEdge } from "../edge";
 import { Media } from "../media";
 import { Staff, StaffRoleType } from "../staff";
 
-export interface CharacterEdge extends Edge<Character> {
+export interface CharacterEdge extends IEdge<Character> {
     id?: number | null;
     role?: CharacterRole | null;
     name?: string | null;

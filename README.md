@@ -2,6 +2,8 @@
 
 An UNOFFICIAL wrapper for the anilist api written in typescript that tries to follow the [builder pattern](https://refactoring.guru/design-patterns/builder) to give a more consistent interface to create objects.
 
+You can visit the official graphql docs for anilist [here](https://anilist.github.io/ApiV2-GraphQL-Docs/) to find out everything you can do[^*].
+
 ## Table of Contents
 
 - [Anilist Wrapper](#anilist-wrapper)
@@ -16,7 +18,7 @@ An UNOFFICIAL wrapper for the anilist api written in typescript that tries to fo
       - [Media Query](#media-query)
         - [Fetching without building the query](#fetching-without-building-the-query)
         - [Creating a complete search query](#creating-a-complete-search-query)
-        - [Adding query defaults](#adding-query-defaults)
+        - [Relations](#relations)
         - [Passing arguments at run time](#passing-arguments-at-run-time)
 
 ## Status
@@ -36,10 +38,10 @@ npm i anilist
 The exported `Anilist` object gives you 2 ways of creating a query, either by calling `query.<type>()` or `<type>Query()`.
 
 ```ts
-const query = Anilist.mediaQuery();
+const query = anilist.mediaQuery();
 ```
 ```ts
-const query = Anilist.query.media();
+const query = anilist.query.media();
 ```
 
 I will be using `query.<type>()` for the examples moving forward
@@ -51,7 +53,7 @@ The media query can accept either an object of `MediaArguments` or a string.
 If you pass in a string it will be transformed into `{ search: string }` internally.
 
 ```ts
-const queryByName = Anilist.query.media("Kamisama Ni Natta Hi");
+const queryByName = anilist.query.media("Kamisama Ni Natta Hi");
 /*
 query {
     Media(type: ANIME, search: "Kamisama Ni Natta Hi") {
@@ -60,7 +62,7 @@ query {
 }
 */
 
-const queryById = Anilist.query.media({
+const queryById = anilist.query.media({
     id: 118419
 });
 /*
@@ -79,7 +81,7 @@ query {
 if you build the query and fetch it without telling which fields to return it will default to returning `{ media: { id } }` with `{ page: 1, perPage: 10 }`
 
 ```ts
-const query = Anilist.query.page()
+const query = anilist.query.page()
 
 await query.fetch()
 /*
@@ -122,7 +124,7 @@ await query.fetch()
 If you build the query and try to fetch it without telling which fields to return it will default to returning `id` to avoid errors.
 
 ```ts
-const query = Anilist.query.media("Kamisama Ni Natta Hi");
+const query = anilist.query.media("Kamisama Ni Natta Hi");
 
 await query.fetch();
 /*
@@ -142,7 +144,7 @@ await query.fetch();
 As the library follows the builder pattern you can just nest functions until you have every field you want.
 
 ```ts
-const query = Anilist.query.media("Kamisama Ni Natta Hi")
+const query = anilist.query.media("Kamisama Ni Natta Hi")
         .withId()
         .withSiteUrl()
         .withTitles()
@@ -161,24 +163,17 @@ await query.fetch();
 */
 ```
 
-##### Adding query defaults
+##### Relations
 
-The query builder supports default values to be passed in for the ones who wish to either avoid using multiple functions or want to change the query at run type while keeping certain fields.
+All relations that use edges and nodes will have the following structure
 
 ```ts
-const query = Anilist.query.media("Kamisama Ni Natta Hi", ["id", "format"]);
-
-await query.fetch();
-/*
-{ id: 118419, format: 'TV' }
-*/
-
-query.withStatus()
-
-await query.fetch();
-/*
-{ id: 118419, format: 'TV', status: 'FINISHED' }
-*/
+anilist.query.media().withRelations({
+  edges: (edge) => edge.withId().withNode((node) => node.withId()),
+  nodes: (node) => node.withId(),
+  pageInfo: (page) => page.withTotal(),
+  // And optionally they will have an args object
+})
 ```
 
 ##### Passing arguments at run time
@@ -186,7 +181,7 @@ await query.fetch();
 Instead of passing the query arguments on query creation you can use `<MediaQuery>.prototype.arguments` to change them every time you want to run fetch. This will avoid creating a new query instance every time you change something on it.
 
 ```ts
-const query = Anilist.query.media();
+const query = anilist.query.media();
 
 await query.fetch()
 /*
@@ -206,3 +201,5 @@ await query.fetch()
 }
 */
 ```
+
+[^*]: Not everything is supported as of yet, please refer to the todo list to see what has full implementation or open an issue to talk about it 

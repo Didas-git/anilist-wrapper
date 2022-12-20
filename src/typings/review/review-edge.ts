@@ -1,4 +1,4 @@
-import { Edge } from "../edge";
+import { IEdge } from "../edge";
 import { Review } from ".";
 
-export interface ReviewEdge extends Edge<Review> { }
+export interface ReviewEdge extends IEdge<Review> { }

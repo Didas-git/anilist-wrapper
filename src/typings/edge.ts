@@ -1,3 +1,3 @@
-export interface Edge<T> {
+export interface IEdge<T> {
     node?: T | null;
 }

@@ -1,9 +1,9 @@
-import { Edge } from "../edge";
+import { IEdge } from "../edge";
 import { Media, MediaRelation } from ".";
 import { Character, CharacterRole } from "../character";
 import { Staff, StaffRoleType } from "../staff";
 
-export interface MediaEdge extends Edge<Media> {
+export interface IMediaEdge extends IEdge<Media> {
     id?: number | null;
     relationType?: MediaRelation | null;
     isMainStudio?: boolean;

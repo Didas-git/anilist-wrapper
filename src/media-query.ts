@@ -1,43 +1,21 @@
-import { Query } from "./base-query";
+import { MediaEdge } from "./connection/media-edge";
+import { PageInfo } from "./connection/page-info";
+import { Query } from "./query";
 import {
     AiringSchedule,
-    AiringScheduleEdge,
-    Character,
-    CharacterEdge,
     Media,
     MediaArguments,
     MediaCoverImage,
-    MediaEdge,
     MediaExternalLink,
     MediaRank,
     MediaStreamingEpisode,
     MediaTag,
     MediaTitle,
     MediaTrailer,
-    MediaTrend,
-    MediaTrendEdge,
-    PageInfo,
-    Staff,
-    StaffEdge,
-    Studio,
-    StudioEdge,
     MediaList,
-    Review,
-    ReviewEdge,
-    RecommendationEdge,
-    Recommendation,
-    ScoreDistribution,
-    StatusDistribution,
     AddMedia,
     FuzzyDate,
-    InternalConnection,
-    CharacterSort,
-    CharacterRole,
-    Complex,
-    StaffSort,
-    StudioSort,
-    MediaTrendSort,
-    RecommendationSort
+    MapRelation
 } from "./typings";
 
 export interface MediaQuery<T> {
@@ -46,7 +24,7 @@ export interface MediaQuery<T> {
 }
 
 export class MediaQuery<T = {}> extends Query<Media> {
-    protected options: MediaArguments = {
+    protected args: MediaArguments = {
         type: "ANIME"
     };
 
@@ -56,13 +34,13 @@ export class MediaQuery<T = {}> extends Query<Media> {
     constructor(args?: MediaArguments)
     constructor(params?: MediaArguments | string) {
         super();
-
-        if (typeof params === "string") this.options.search = params;
-        else if (params) this.options = params;
+        if (params === undefined) return;
+        if (typeof params === "string") this.args.search = params;
+        else this.args = params;
     }
 
     protected buildQuery() {
-        const { args, fields } = this.preBuild()
+        const { args, fields } = this.parse()
         return `query {
     Media(${args}) {
         ${fields}
@@ -70,8 +48,8 @@ export class MediaQuery<T = {}> extends Query<Media> {
 }`
     };
 
-    arguments(options: MediaArguments, override: boolean = false) {
-        this.options = override ? options : { ...this.options, ...options }
+    arguments(args: MediaArguments, override: boolean = false) {
+        this.args = override ? args : { ...this.args, ...args }
         return this;
     }
 
@@ -240,64 +218,35 @@ export class MediaQuery<T = {}> extends Query<Media> {
         return <never>this;
     }
 
-    withRelations(options: {
-        edges?: Array<keyof MediaEdge>,
-        nodes?: Array<keyof Media>,
-        pageInfo?: Array<keyof PageInfo>
-    } = { edges: ["id"] }): MediaQuery<AddMedia<T, "relations">> {
-        const { edges, nodes, pageInfo } = options as InternalConnection;
-
-        this.query.set("relations", { edges, nodes, pageInfo })
-        return <never>this;
-    }
-
-    withCharacters(options: {
-        args?: {
-            sort?: Array<CharacterSort>,
-            role?: CharacterRole,
-            page?: number,
-            perPage?: number
-        },
-        edges?: Array<keyof CharacterEdge>,
-        nodes?: Array<keyof Character>,
-        pageInfo?: Array<keyof PageInfo>
-    } = { edges: ["id"] }): MediaQuery<AddMedia<T, "characters">> {
-        const { edges, nodes, pageInfo, args } = options as InternalConnection & Complex;
-
-        this.query.set("characters", { edges, nodes, pageInfo, args })
-        return <never>this;
-    }
-
-    withStaff(options: {
-        args?: {
-            sort: Array<StaffSort>,
-            page: number,
-            perPage: number
-        },
-        edges?: Array<keyof StaffEdge>,
-        nodes?: Array<keyof Staff>,
-        pageInfo?: Array<keyof PageInfo>
-    } = { edges: ["id"] }): MediaQuery<AddMedia<T, "staff">> {
-        const { edges, nodes, pageInfo, args } = options as InternalConnection & Complex;
-
-        this.query.set("staff", { edges, nodes, pageInfo, args })
-        return <never>this;
-    }
-
-    withStudios(options: {
-        args?: {
-            sort?: Array<StudioSort>,
-            isMain?: boolean
+    withRelations<E extends MediaEdge, M extends MediaQuery, P extends PageInfo>(options?: {
+        edges?: E | ((edge: MediaEdge) => E),
+        nodes?: M | ((node: MediaQuery) => M),
+        pageInfo?: P | ((page: PageInfo) => P)
+    }): MediaQuery<T & MapRelation<E, M, P>> {
+        if (!options) {
+            this.query.set("relations", [`edges { id }`])
+            return <never>this;
         }
-        edges?: Array<keyof StudioEdge>,
-        nodes?: Array<keyof Studio>,
-        pageInfo?: Array<keyof PageInfo>
-    } = { edges: ["id"] }): MediaQuery<AddMedia<T, "studios">> {
-        const { edges, nodes, pageInfo, args } = options as InternalConnection & Complex;
 
-        this.query.set("studios", { edges, nodes, pageInfo, args })
+        const arr: Array<string> = [];
+        const edges = typeof options?.edges === "function" ? options.edges(new MediaEdge()).parse() : options.edges?.parse();
+        const nodes = typeof options?.nodes === "function" ? options.nodes(new MediaQuery({})).parse() : options.nodes?.parse();
+        const pageInfo = typeof options?.pageInfo === "function" ? options.pageInfo(new PageInfo()).parse() : options.pageInfo?.parse();
+
+        edges && arr.push(`edges { ${edges.fields} }`);
+        nodes && arr.push(`nodes { ${nodes.fields} }`);
+        pageInfo && arr.push(`pageInfo { ${pageInfo.fields} }`)
+
+        this.query.set("relations", arr.length ? arr : [`edges { id }`]);
         return <never>this;
     }
+
+    //! PENDING!!!
+    // withCharacters() {}
+    //! PENDING!!!
+    // withStaff() {}
+    //! PENDING!!!
+    // withStudios() { }
 
     isFavourite(): MediaQuery<AddMedia<T, "isFavourite">> {
         this.query.set("isFavourite", void 0);
@@ -319,44 +268,10 @@ export class MediaQuery<T = {}> extends Query<Media> {
         return <never>this;
     }
 
-    withAiringSchedule(options: {
-        args?: {
-            notYetAired?: boolean,
-            page?: number,
-            perPage?: number
-        }
-        edges?: Array<keyof AiringScheduleEdge>,
-        nodes?: Array<keyof AiringSchedule>,
-        pageInfo?: Array<keyof PageInfo>
-    } = { edges: ["id"] }): MediaQuery<AddMedia<T, "airingSchedule">> {
-        const { edges, nodes, pageInfo, args } = options as InternalConnection & Complex;
-
-        this.query.set("airingSchedule", { edges, nodes, pageInfo, args })
-        return <never>this;
-    }
-
-    withTrends(options: {
-        args?: {
-            sort?: Array<MediaTrendSort>,
-            releasing?: boolean,
-            page?: number,
-            perPage?: number
-        }
-        edges?: Array<keyof MediaTrendEdge>,
-        nodes?: Array<keyof MediaTrend>,
-        pageInfo?: Array<keyof PageInfo>
-    } = {
-            edges: [<never>`node {
-        averageScore
-        popularity
-        inProgress
-        episode`]
-        }): MediaQuery<AddMedia<T, "trends">> {
-        const { edges, nodes, pageInfo, args } = options as InternalConnection & Complex;
-
-        this.query.set("trends", { edges, nodes, pageInfo, args })
-        return <never>this;
-    }
+    //! PENDING!!!
+    // withAiringSchedule() {}
+    //! PENDING!!!
+    // withTrends() {}
 
     withExternalLinks(...args: Array<keyof MediaExternalLink>): MediaQuery<AddMedia<T, "externalLinks">> {
         this.query.set("externalLinks", args.length ? args : ["id"])
@@ -378,63 +293,12 @@ export class MediaQuery<T = {}> extends Query<Media> {
         return <never>this;
     }
 
-    withReviews(options: {
-        edges?: Array<keyof ReviewEdge>,
-        nodes?: Array<keyof Review>,
-        pageInfo?: Array<keyof PageInfo>
-    } = {
-            edges: [<never>`node {
-        id
-    }`]
-        }): MediaQuery<AddMedia<T, "reviews">> {
-        const { edges, nodes, pageInfo, args } = options as InternalConnection & Complex;
-
-        this.query.set("reviews", { edges, nodes, pageInfo, args })
-        return <never>this;
-    }
-
-    withRecommendations(options: {
-        args?: {
-            sort?: Array<RecommendationSort>,
-            page?: number,
-            perPage?: number
-        },
-        edges?: Array<keyof RecommendationEdge>,
-        nodes?: Array<keyof Recommendation>,
-        pageInfo?: Array<keyof PageInfo>
-    } = {
-            edges: [<never>`node {
-        id
-    }`]
-        }): MediaQuery<AddMedia<T, "recommendations">> {
-        const { edges, nodes, pageInfo, args } = options as InternalConnection & Complex;
-
-        this.query.set("recommendations", { edges, nodes, pageInfo, args })
-        return <never>this;
-    }
-
-    withStats(options: {
-        scoreDistribution?: Array<keyof ScoreDistribution>;
-        statusDistribution?: Array<keyof StatusDistribution>;
-    } = <never>{}): MediaQuery<AddMedia<T, "stats">> {
-        const { scoreDistribution, statusDistribution } = options;
-
-        this.query.set("stats", Object.keys(options).length ? [`stats {
-            ${scoreDistribution?.length ? `scoreDistribution {
-                ${scoreDistribution.join(",\n")}
-            },` : ""}
-            ${statusDistribution?.length ? `statusDistribution {
-                ${statusDistribution.join(",\n")}
-            },` : ""}
-        }`] : [`scoreDistribution {
-            score,
-            amount
-        },`, `statusDistribution {
-            status,
-            amount
-        }`])
-        return <never>this;
-    }
+    //! PENDING!!!
+    // withReviews() {}
+    //! PENDING!!!
+    // withRecommendations() {}
+    //! PENDING!!!
+    // withStats() {}
 
     withSiteUrl(): MediaQuery<AddMedia<T, "siteUrl">> {
         this.query.set("siteUrl", void 0);
