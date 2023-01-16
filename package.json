@@ -1,13 +1,15 @@
 {
   "name": "anilist",
-  "version": "0.6.0",
-  "description": "",
+  "version": "0.6.1",
+  "description": "An UNOFFICIAL wrapper for the anilist api written in typescript",
   "main": "./dist/index.js",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
-      "require": "./dist/index.js"
-    }
+      "require": "./dist/index.js",
+      "default": "./dist/index.js"
+    },
+    "./package.json": "./package.json"
   },
   "scripts": {
     "build": "rm -rf dist && tsc",
@@ -17,8 +19,14 @@
     "type": "git",
     "url": "git+https://github.com/Didas-git/anilist-wrapper.git"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "anilist",
+    "wrapper",
+    "api",
+    "anilist-api",
+    "anilist-wrapper"
+  ],
+  "author": "DidaS",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/Didas-git/anilist-wrapper/issues"
