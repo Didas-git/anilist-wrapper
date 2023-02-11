@@ -1,8 +1,4 @@
-import { MediaEdge, PageInfo } from "../../connection";
-import { MediaQuery } from "../../media-query";
-import { ExtractMedia, ExtractMediaEdge, ExtractPageInfo } from "../extract";
-
-export type MapRelation<E extends MediaEdge, M extends MediaQuery, P extends PageInfo, KE = ExtractMediaEdge<E>, KM = ExtractMedia<M>, KP = ExtractPageInfo<P>> = {
+export type MapRelation<KE, KM, KP> = {
     relations: {
         [K in "edges" | "nodes" | "pageInfo" as keyof KE extends never
         ? keyof KM extends never

@@ -1,4 +1,4 @@
 import { Connection } from "../connection";
-import { Character, CharacterEdge } from ".";
+import { Character, ICharacterEdge } from ".";
 
-export interface CharacterConnection extends Connection<CharacterEdge, Character> { }
+export interface CharacterConnection extends Connection<ICharacterEdge, Character> { }

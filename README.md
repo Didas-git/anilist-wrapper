@@ -20,6 +20,7 @@ You can visit the official graphql docs for anilist [here](https://anilist.githu
         - [Creating a complete search query](#creating-a-complete-search-query)
         - [Relations](#relations)
         - [Passing arguments at run time](#passing-arguments-at-run-time)
+      - [Character Query](#character-query)
 
 ## Status
 
@@ -102,16 +103,16 @@ await query.fetch()
 /*
 {
   media: [
-    { title: [Object] },
-    { title: [Object] },
-    { title: [Object] },
-    { title: [Object] },
-    { title: [Object] },
-    { title: [Object] },
-    { title: [Object] },
-    { title: [Object] },
-    { title: [Object] },
-    { title: [Object] } 
+    { title: { romaji: 'Cowboy Bebop' } },
+    { title: { romaji: 'Cowboy Bebop: Tengoku no Tobira' } },
+    { title: { romaji: 'TRIGUN' } },
+    { title: { romaji: 'Witch Hunter ROBIN' } },
+    { title: { romaji: 'Bouken Ou Beet' } },
+    { title: { romaji: 'Eyeshield 21' } },
+    { title: { romaji: 'Hachimitsu to Clover' } },
+    { title: { romaji: 'Hungry Heart: Wild Striker' } },
+    { title: { romaji: 'Initial D FOURTH STAGE' } },
+    { title: { romaji: 'MONSTER' } }
   ]
 }
 */
@@ -201,5 +202,9 @@ await query.fetch()
 }
 */
 ```
+
+#### Character Query
+
+The usage is the same as the [MediaQuery](#media-query);
 
 [^*]: Not everything is supported as of yet, please refer to the todo list to see what has full implementation or open an issue to talk about it 

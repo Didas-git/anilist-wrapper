@@ -13,7 +13,7 @@
 - [x] Support nested complex fields
 - [x] Page Query (Partially)
 - [x] Set -> Map
-- [ ] Character Query
+- [x] Character Query
 - [ ] Studio Query
 - [ ] Staff Query
 

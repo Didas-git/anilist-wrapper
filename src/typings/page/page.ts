@@ -1,3 +1,4 @@
+import { Character } from "../character";
 import { Media } from "../media";
 import { IPageInfo } from "../page-info";
 
@@ -6,8 +7,7 @@ export interface Page {
     /** Not yet implemented */
     users?: undefined;
     media?: Array<Media> | [];
-    /** Not yet implemented */
-    characters?: undefined;
+    characters?: Array<Character> | [];
     /** Not yet implemented */
     staff?: undefined;
     /** Not yet implemented */

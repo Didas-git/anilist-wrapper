@@ -12,3 +12,4 @@ vitest.config.ts
 .obsidian
 .gitignore
 .gitattributes
+.dccache

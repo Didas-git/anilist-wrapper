@@ -1,0 +1,1 @@
+export type ExtractArgs<T, K extends keyof T> = { [Q in K]: T[K] };

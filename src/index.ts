@@ -1,6 +1,7 @@
+import { CharacterQuery } from "./character-query";
 import { MediaQuery } from "./media-query";
 import { PageQuery } from "./page-query";
-import { MediaArguments, PageArguments } from "./typings";
+import { CharacterArguments, MediaArguments, PageArguments } from "./typings";
 
 export * from "./media-query";
 export * from "./page-query";
@@ -11,7 +12,8 @@ export * from "./connection";
 export class Anilist {
     public query = {
         media: this.mediaQuery,
-        page: this.pageQuery
+        page: this.pageQuery,
+        character: this.characterQuery
     }
     // Sugar to avoid using `new` in the code
     public mediaQuery(search?: string): MediaQuery;
@@ -24,6 +26,12 @@ export class Anilist {
     public pageQuery(options?: PageArguments): PageQuery
     public pageQuery(options?: number | PageArguments): PageQuery {
         return new PageQuery(<never>options);
+    }
+
+    public characterQuery(id?: number): CharacterQuery
+    public characterQuery(args?: CharacterArguments): CharacterQuery
+    public characterQuery(params?: CharacterArguments | number): CharacterQuery {
+        return new CharacterQuery(<never>params)
     }
 }
 

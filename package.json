@@ -1,6 +1,6 @@
 {
   "name": "anilist",
-  "version": "0.6.1",
+  "version": "0.7.0",
   "description": "An UNOFFICIAL wrapper for the anilist api written in typescript",
   "main": "./dist/index.js",
   "exports": {

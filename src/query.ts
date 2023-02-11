@@ -2,7 +2,7 @@ import { AnilistError } from "./anilist-error";
 import { Parser } from "./parser";
 import { QueryType } from "./typings";
 
-export abstract class Query<T> extends Parser {
+export abstract class Query<T, K> extends Parser {
     static url = "https://graphql.anilist.co";
 
     protected query: QueryType<T> = new Map()
@@ -10,7 +10,7 @@ export abstract class Query<T> extends Parser {
 
     protected abstract buildQuery(): string;
 
-    async fetch(raw?: boolean): Promise<any> {
+    public async fetch(raw?: boolean): Promise<any> {
         const res = await fetch(Query.url, {
             method: "POST",
             headers: {
@@ -28,7 +28,12 @@ export abstract class Query<T> extends Parser {
         return raw ? <never>json : <never>json.data[this.type];
     }
 
-    get raw(): string {
+    public arguments(args: K, override: boolean = false) {
+        this.args = <never>(override ? args : { ...this.args, ...args });
+        return this;
+    }
+
+    public get raw(): string {
         return this.buildQuery();
     }
 }

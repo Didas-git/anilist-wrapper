@@ -3,7 +3,7 @@ import { IEdge } from "../edge";
 import { Media } from "../media";
 import { Staff, StaffRoleType } from "../staff";
 
-export interface CharacterEdge extends IEdge<Character> {
+export interface ICharacterEdge extends IEdge<Character> {
     id?: number | null;
     role?: CharacterRole | null;
     name?: string | null;

@@ -5,6 +5,9 @@ export abstract class Parser {
     protected abstract default: string;
     protected abstract args: Record<PropertyKey, any> | undefined;
 
+    /**
+     * @internal
+     */
     public parse() {
         const arr: Array<string> = [];
 
