@@ -207,4 +207,4 @@ await query.fetch()
 
 The usage is the same as the [MediaQuery](#media-query);
 
-[^*]: Not everything is supported as of yet, please refer to the todo list to see what has full implementation or open an issue to talk about it 
+[^*]: Not everything is supported yet, please refer to the todo list to see what has full implementation or open an issue to talk about it 
