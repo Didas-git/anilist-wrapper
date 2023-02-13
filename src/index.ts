@@ -1,8 +1,7 @@
-import { CharacterQuery, MediaQuery, PageQuery } from "./queries";
-import { CharacterArguments, MediaArguments, PageArguments } from "./typings";
+import { CharacterQuery, MediaQuery, PageQuery, StudioQuery } from "./queries";
+import { CharacterArguments, MediaArguments, PageArguments, StudioArguments } from "./typings";
 
-export * from "./queries/media-query";
-export * from "./queries/page-query";
+export * from "./queries";
 export * from "./typings";
 export * from "./anilist-error";
 export * from "./connection";
@@ -11,7 +10,8 @@ export class Anilist {
     public query = {
         media: this.mediaQuery,
         page: this.pageQuery,
-        character: this.characterQuery
+        character: this.characterQuery,
+        studio: this.studioQuery
     }
     // Sugar to avoid using `new` in the code
     public mediaQuery(search?: string): MediaQuery;
@@ -30,6 +30,12 @@ export class Anilist {
     public characterQuery(args?: CharacterArguments): CharacterQuery
     public characterQuery(params?: CharacterArguments | number): CharacterQuery {
         return new CharacterQuery(<never>params)
+    }
+
+    public studioQuery(id?: number): StudioQuery
+    public studioQuery(args?: StudioArguments): StudioQuery
+    public studioQuery(params?: StudioArguments | number): StudioQuery {
+        return new StudioQuery(<never>params)
     }
 }
 
