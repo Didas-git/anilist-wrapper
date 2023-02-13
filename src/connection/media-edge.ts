@@ -3,12 +3,12 @@ import { AddMediaEdge, ExtractMedia, IMediaEdge } from "../typings";
 import { Edge } from "./edge";
 
 export interface MediaEdge<T> {
-    withNode<K extends MediaQuery>(node: K | ((node: MediaQuery) => K)): MediaEdge<T & { node: ExtractMedia<K> }>
+    withNode: <K extends MediaQuery>(node: K | ((node: MediaQuery) => K)) => MediaEdge<T & { node: ExtractMedia<K> }>;
 }
 
 export class MediaEdge<T = {}> extends Edge<MediaQuery, IMediaEdge> {
-    constructor() {
-        super(new MediaQuery({}))
+    public constructor() {
+        super(new MediaQuery({}));
     }
 
     public withId(): MediaEdge<AddMediaEdge<T, "id">> {
@@ -17,7 +17,7 @@ export class MediaEdge<T = {}> extends Edge<MediaQuery, IMediaEdge> {
     }
 
     public withRelationType(version?: number): MediaEdge<AddMediaEdge<T, "relationType">> {
-        this.query.set("relationType", { args: version ? { version } : void 0, fields: void 0 })
+        this.query.set("relationType", { args: version ? { version } : void 0, fields: void 0 });
         return <never>this;
     }
 

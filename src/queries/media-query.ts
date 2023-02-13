@@ -32,20 +32,21 @@ import {
 import { StudioQuery } from ".";
 
 export interface MediaQuery<T> {
-    fetch(raw?: false): Promise<T extends Media ? { [K in keyof T]: T[K] } : { id: number }>
-    fetch(raw?: true): Promise<T extends Media ? { data: { Media: { [K in keyof T]: T[K] } } } : { data: { Media: { id: number } } }>
+    fetch: ((raw?: false) => Promise<T extends Media
+        ? { [K in keyof T]: T[K] }
+        : { id: number }>) & ((raw?: true) => Promise<T extends Media
+            ? { data: { Media: { [K in keyof T]: T[K] } } }
+            : { data: { Media: { id: number } } }>);
 }
 
 export class MediaQuery<T = {}> extends Query<Media, MediaArguments> {
     protected default: string = "id";
     protected type: string = "Media";
-    protected args: MediaArguments = {
-        type: "ANIME"
-    };
+    protected args: MediaArguments = { type: "ANIME" };
 
-    constructor(name?: string)
-    constructor(args?: MediaArguments)
-    constructor(params?: MediaArguments | string) {
+    public constructor(name?: string);
+    public constructor(args?: MediaArguments);
+    public constructor(params?: MediaArguments | string) {
         super();
         if (params === undefined) return;
         if (typeof params === "string") this.args.search = params;
@@ -63,7 +64,7 @@ export class MediaQuery<T = {}> extends Query<Media, MediaArguments> {
     }
 
     public withTitles(...args: Array<keyof MediaTitle>): MediaQuery<AddMedia<T, "title">> {
-        this.query.set("title", args.length ? args : ["romaji"])
+        this.query.set("title", args.length ? args : ["romaji"]);
         return <never>this;
     }
 
@@ -88,12 +89,12 @@ export class MediaQuery<T = {}> extends Query<Media, MediaArguments> {
     }
 
     public withStartDate(...args: Array<keyof FuzzyDate>): MediaQuery<AddMedia<T, "startDate">> {
-        this.query.set("startDate", args.length ? args : ["year", "month", "day"])
+        this.query.set("startDate", args.length ? args : ["year", "month", "day"]);
         return <never>this;
     }
 
     public withEndDate(...args: Array<keyof FuzzyDate>): MediaQuery<AddMedia<T, "endDate">> {
-        this.query.set("endDate", args.length ? args : ["year", "month", "day"])
+        this.query.set("endDate", args.length ? args : ["year", "month", "day"]);
         return <never>this;
     }
 
@@ -153,7 +154,7 @@ export class MediaQuery<T = {}> extends Query<Media, MediaArguments> {
     }
 
     public withTrailer(...args: Array<keyof MediaTrailer>): MediaQuery<AddMedia<T, "trailer">> {
-        this.query.set("trailer", args.length ? args : ["id"])
+        this.query.set("trailer", args.length ? args : ["id"]);
         return <never>this;
     }
 
@@ -163,7 +164,7 @@ export class MediaQuery<T = {}> extends Query<Media, MediaArguments> {
     }
 
     public withCoverImage(...args: Array<keyof MediaCoverImage>): MediaQuery<AddMedia<T, "coverImage">> {
-        this.query.set("coverImage", args.length ? args : ["extraLarge", "large", "medium", "color"])
+        this.query.set("coverImage", args.length ? args : ["extraLarge", "large", "medium", "color"]);
         return <never>this;
     }
 
@@ -213,7 +214,7 @@ export class MediaQuery<T = {}> extends Query<Media, MediaArguments> {
     }
 
     public withTags(...args: Array<keyof MediaTag>): MediaQuery<AddMedia<T, "tags">> {
-        this.query.set("tags", args.length ? args : ["id"])
+        this.query.set("tags", args.length ? args : ["id"]);
         return <never>this;
     }
 
@@ -223,20 +224,20 @@ export class MediaQuery<T = {}> extends Query<Media, MediaArguments> {
         pageInfo?: P | ((page: PageInfo) => P)
     }): MediaQuery<T & MapRelation<ExtractMediaEdge<E>, ExtractMedia<M>, ExtractPageInfo<P>>> {
         if (!options) {
-            this.query.set("relations", [`edges { id }`])
+            this.query.set("relations", ["edges { id }"]);
             return <never>this;
         }
 
         const arr: Array<string> = [];
-        const edges = typeof options?.edges === "function" ? options.edges(new MediaEdge()).parse() : options.edges?.parse();
-        const nodes = typeof options?.nodes === "function" ? options.nodes(new MediaQuery({})).parse() : options.nodes?.parse();
-        const pageInfo = typeof options?.pageInfo === "function" ? options.pageInfo(new PageInfo()).parse() : options.pageInfo?.parse();
+        const edges = typeof options.edges === "function" ? options.edges(new MediaEdge()).parse() : options.edges?.parse();
+        const nodes = typeof options.nodes === "function" ? options.nodes(new MediaQuery({})).parse() : options.nodes?.parse();
+        const pageInfo = typeof options.pageInfo === "function" ? options.pageInfo(new PageInfo()).parse() : options.pageInfo?.parse();
 
         edges && arr.push(`edges { ${edges.fields} }`);
         nodes && arr.push(`nodes { ${nodes.fields} }`);
-        pageInfo && arr.push(`pageInfo { ${pageInfo.fields} }`)
+        pageInfo && arr.push(`pageInfo { ${pageInfo.fields} }`);
 
-        this.query.set("relations", arr.length ? arr : [`edges { id }`]);
+        this.query.set("relations", arr.length ? arr : ["edges { id }"]);
         return <never>this;
     }
 
@@ -252,20 +253,20 @@ export class MediaQuery<T = {}> extends Query<Media, MediaArguments> {
         }
     }): MediaQuery<T & MapRelation<ExtractCharacterEdge<E>, ExtractCharacter<C>, ExtractPageInfo<P>>> {
         if (!options) {
-            this.query.set("characters", [`edges { id }`])
+            this.query.set("characters", ["edges { id }"]);
             return <never>this;
         }
 
         const arr: Array<string> = [];
-        const edges = typeof options?.edges === "function" ? options.edges(new CharacterEdge()).parse() : options.edges?.parse();
-        const nodes = typeof options?.nodes === "function" ? options.nodes(new CharacterQuery()).parse() : options.nodes?.parse();
-        const pageInfo = typeof options?.pageInfo === "function" ? options.pageInfo(new PageInfo()).parse() : options.pageInfo?.parse();
+        const edges = typeof options.edges === "function" ? options.edges(new CharacterEdge()).parse() : options.edges?.parse();
+        const nodes = typeof options.nodes === "function" ? options.nodes(new CharacterQuery()).parse() : options.nodes?.parse();
+        const pageInfo = typeof options.pageInfo === "function" ? options.pageInfo(new PageInfo()).parse() : options.pageInfo?.parse();
 
         edges && arr.push(`edges { ${edges.fields} }`);
         nodes && arr.push(`nodes { ${nodes.fields} }`);
-        pageInfo && arr.push(`pageInfo { ${pageInfo.fields} }`)
+        pageInfo && arr.push(`pageInfo { ${pageInfo.fields} }`);
 
-        this.query.set("characters", { args: options.args, fields: arr.length ? arr : [`edges { id }`] });
+        this.query.set("characters", { args: options.args, fields: arr.length ? arr : ["edges { id }"] });
         return <never>this;
     }
 
@@ -282,20 +283,20 @@ export class MediaQuery<T = {}> extends Query<Media, MediaArguments> {
         }
     }): MediaQuery<T & MapRelation<ExtractStudioEdge<E>, ExtractStudio<S>, ExtractPageInfo<P>>> {
         if (!options) {
-            this.query.set("studios", [`edges { id }`])
+            this.query.set("studios", ["edges { id }"]);
             return <never>this;
         }
 
         const arr: Array<string> = [];
-        const edges = typeof options?.edges === "function" ? options.edges(new StudioEdge()).parse() : options.edges?.parse();
-        const nodes = typeof options?.nodes === "function" ? options.nodes(new StudioQuery()).parse() : options.nodes?.parse();
-        const pageInfo = typeof options?.pageInfo === "function" ? options.pageInfo(new PageInfo()).parse() : options.pageInfo?.parse();
+        const edges = typeof options.edges === "function" ? options.edges(new StudioEdge()).parse() : options.edges?.parse();
+        const nodes = typeof options.nodes === "function" ? options.nodes(new StudioQuery()).parse() : options.nodes?.parse();
+        const pageInfo = typeof options.pageInfo === "function" ? options.pageInfo(new PageInfo()).parse() : options.pageInfo?.parse();
 
         edges && arr.push(`edges { ${edges.fields} }`);
         nodes && arr.push(`nodes { ${nodes.fields} }`);
-        pageInfo && arr.push(`pageInfo { ${pageInfo.fields} }`)
+        pageInfo && arr.push(`pageInfo { ${pageInfo.fields} }`);
 
-        this.query.set("studios", { args: options.args, fields: arr.length ? arr : [`edges { id }`] });
+        this.query.set("studios", { args: options.args, fields: arr.length ? arr : ["edges { id }"] });
         return <never>this;
     }
 
@@ -315,7 +316,7 @@ export class MediaQuery<T = {}> extends Query<Media, MediaArguments> {
     }
 
     public withNextAiringEpisode(...args: Array<keyof AiringSchedule>): MediaQuery<AddMedia<T, "nextAiringEpisode">> {
-        this.query.set("nextAiringEpisode", args.length ? args : ["id"])
+        this.query.set("nextAiringEpisode", args.length ? args : ["id"]);
         return <never>this;
     }
 
@@ -325,12 +326,12 @@ export class MediaQuery<T = {}> extends Query<Media, MediaArguments> {
     // public withTrends() {}
 
     public withExternalLinks(...args: Array<keyof MediaExternalLink>): MediaQuery<AddMedia<T, "externalLinks">> {
-        this.query.set("externalLinks", args.length ? args : ["id"])
+        this.query.set("externalLinks", args.length ? args : ["id"]);
         return <never>this;
     }
 
     public withStreamingEpisodes(...args: Array<keyof MediaStreamingEpisode>): MediaQuery<AddMedia<T, "streamingEpisodes">> {
-        this.query.set("streamingEpisodes", args.length ? args : ["title, thumbnail", "url", "site"])
+        this.query.set("streamingEpisodes", args.length ? args : ["title, thumbnail", "url", "site"]);
         return <never>this;
     }
 
@@ -340,7 +341,7 @@ export class MediaQuery<T = {}> extends Query<Media, MediaArguments> {
     }
 
     public withMediaListEntries(...args: Array<keyof MediaList>): MediaQuery<AddMedia<T, "mediaListEntry">> {
-        this.query.set("mediaListEntry", args.length ? args : ["id"])
+        this.query.set("mediaListEntry", args.length ? args : ["id"]);
         return <never>this;
     }
 

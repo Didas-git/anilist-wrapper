@@ -3,4 +3,4 @@ export interface MediaTitle {
     english?: string | null;
     native?: string | null;
     userPreferred?: string | null;
-};
+}

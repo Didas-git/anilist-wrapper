@@ -4,8 +4,11 @@ import { AddStudio, ExtractMedia, ExtractMediaEdge, ExtractPageInfo, MapRelation
 import { Query } from "./query";
 
 export interface StudioQuery<T> {
-    fetch(raw?: false): Promise<T extends Studio ? { [K in keyof T]: T[K] } : { id: number }>
-    fetch(raw?: true): Promise<T extends Studio ? { data: { Studio: { [K in keyof T]: T[K] } } } : { data: { Studio: { id: number } } }>
+    fetch: ((raw?: false) => Promise<T extends Studio
+        ? { [K in keyof T]: T[K] }
+        : { id: number }>) & ((raw?: true) => Promise<T extends Studio
+            ? { data: { Studio: { [K in keyof T]: T[K] } } }
+            : { data: { Studio: { id: number } } }>);
 }
 
 export class StudioQuery<T = {}> extends Query<Studio, StudioArguments> {
@@ -13,9 +16,9 @@ export class StudioQuery<T = {}> extends Query<Studio, StudioArguments> {
     protected default: string = "id";
     protected type: string = "Studio";
 
-    constructor(id?: number)
-    constructor(args?: StudioArguments)
-    constructor(params?: StudioArguments | number) {
+    public constructor(id?: number);
+    public constructor(args?: StudioArguments);
+    public constructor(params?: StudioArguments | number) {
         super();
         if (params === undefined) return;
         if (typeof params === "number") this.args.id = params;
@@ -50,20 +53,20 @@ export class StudioQuery<T = {}> extends Query<Studio, StudioArguments> {
         }
     }): MediaQuery<T & MapRelation<ExtractMediaEdge<E>, ExtractMedia<M>, ExtractPageInfo<P>>> {
         if (!options) {
-            this.query.set("media", [`edges { id }`])
+            this.query.set("media", ["edges { id }"]);
             return <never>this;
         }
 
         const arr: Array<string> = [];
-        const edges = typeof options?.edges === "function" ? options.edges(new MediaEdge()).parse() : options.edges?.parse();
-        const nodes = typeof options?.nodes === "function" ? options.nodes(new MediaQuery({})).parse() : options.nodes?.parse();
-        const pageInfo = typeof options?.pageInfo === "function" ? options.pageInfo(new PageInfo()).parse() : options.pageInfo?.parse();
+        const edges = typeof options.edges === "function" ? options.edges(new MediaEdge()).parse() : options.edges?.parse();
+        const nodes = typeof options.nodes === "function" ? options.nodes(new MediaQuery({})).parse() : options.nodes?.parse();
+        const pageInfo = typeof options.pageInfo === "function" ? options.pageInfo(new PageInfo()).parse() : options.pageInfo?.parse();
 
         edges && arr.push(`edges { ${edges.fields} }`);
         nodes && arr.push(`nodes { ${nodes.fields} }`);
-        pageInfo && arr.push(`pageInfo { ${pageInfo.fields} }`)
+        pageInfo && arr.push(`pageInfo { ${pageInfo.fields} }`);
 
-        this.query.set("media", { args: options.args, fields: arr.length ? arr : [`edges { id }`] });
+        this.query.set("media", { args: options.args, fields: arr.length ? arr : ["edges { id }"] });
         return <never>this;
     }
 

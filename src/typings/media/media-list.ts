@@ -15,8 +15,10 @@ export interface MediaList {
     private?: boolean | null;
     notes?: string | null;
     hiddenFromStatusLists?: boolean | null;
+
     /** Map of booleans for which custom lists the entry are in */
     customLists?: unknown;
+
     /** Map of advanced scores with name keys */
     advancedScores?: unknown;
     startedAt?: FuzzyDate | null;

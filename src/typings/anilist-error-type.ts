@@ -6,5 +6,5 @@ export interface AnilistErrorType {
             line: number,
             column: number
         }>
-    }>
+    }>;
 }

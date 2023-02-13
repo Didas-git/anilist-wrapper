@@ -19,4 +19,4 @@ export type MapRelation<KE, KM, KP> = {
         ? Array<KM>
         : KP
     }
-}
+};

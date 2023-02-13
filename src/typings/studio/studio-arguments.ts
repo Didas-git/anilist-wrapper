@@ -6,5 +6,5 @@ export interface StudioArguments {
     id_not?: number;
     id_in?: Array<number>;
     id_not_in?: Array<number>;
-    sort?: Array<StudioSort>
+    sort?: Array<StudioSort>;
 }

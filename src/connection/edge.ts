@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Parser } from "../parser";
 import { Query } from "../queries";
 import { IEdge, QueryType } from "../typings";
@@ -6,16 +7,16 @@ export class Edge<T extends Query<any, any>, K extends IEdge<any>> extends Parse
 
     protected query: QueryType<K> = new Map();
     protected args = undefined;
-    protected default: string = `id`;
+    protected default: string = "id";
 
     public constructor(private readonly queryType: T) {
-        super()
+        super();
     }
 
     public withNode(node: Query<any, any> | ((node: T) => Query<any, any>)): any {
-        const { args, fields } = typeof node === "function" ? node(this.queryType).parse() : node.parse() ?? this.queryType.parse();
+        const { args, fields } = typeof node === "function" ? node(this.queryType).parse() : node.parse();
 
-        this.query.set("node", { args, fields: [fields] })
+        this.query.set("node", { args, fields: [fields] });
         return this;
     }
 }

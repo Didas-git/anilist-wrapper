@@ -1,4 +1,17 @@
-import { UserCountryStatistic, UserFormatStatistic, UserGenreStatistic, UserLengthStatistic, UserReleaseYearStatistic, UserScoreStatistic, UserStaffStatistic, UserStartYearStatistic, UserStatusStatistic, UserStudioStatistic, UserTagStatistic, UserVoiceActorStatistic } from ".";
+import {
+    UserCountryStatistic,
+    UserFormatStatistic,
+    UserGenreStatistic,
+    UserLengthStatistic,
+    UserReleaseYearStatistic,
+    UserScoreStatistic,
+    UserStaffStatistic,
+    UserStartYearStatistic,
+    UserStatusStatistic,
+    UserStudioStatistic,
+    UserTagStatistic,
+    UserVoiceActorStatistic
+} from ".";
 
 export interface UserStatistics {
     count?: number;

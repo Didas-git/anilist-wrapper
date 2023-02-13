@@ -1,1 +1,1 @@
-export type CharacterSort = "ID" | "ID_DESC" | "ROLE" | "ROLE_DESC" | "SEARCH_MATCH" | "FAVOURITES" | "FAVOURITES_DESC" | "RELEVANCE"
+export type CharacterSort = "ID" | "ID_DESC" | "ROLE" | "ROLE_DESC" | "SEARCH_MATCH" | "FAVOURITES" | "FAVOURITES_DESC" | "RELEVANCE";

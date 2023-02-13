@@ -1,8 +1,9 @@
+/* eslint-disable @typescript-eslint/naming-convention */
 import { MediaFormat, MediaSeason, MediaSort, MediaStatus, MediaType, MediaSource } from ".";
 import { CountryCode } from "../country-code";
 import { FuzzyDateInt } from "../fuzzy-date";
 
-export const EnumTypes = new Set(["season", "type", "format", "status", "source", "format_not", "status_not"])
+export const EnumTypes = new Set(["season", "type", "format", "status", "source", "format_not", "status_not"]);
 
 export interface MediaArguments {
     id?: number;

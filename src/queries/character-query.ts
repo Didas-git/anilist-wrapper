@@ -14,8 +14,11 @@ import {
 } from "../typings";
 
 export interface CharacterQuery<T> {
-    fetch(raw?: false): Promise<T extends Character ? { [K in keyof T]: T[K] } : { id: number }>
-    fetch(raw?: true): Promise<T extends Character ? { data: { Character: { [K in keyof T]: T[K] } } } : { data: { Character: { id: number } } }>
+    fetch: ((raw?: false) => Promise<T extends Character
+        ? { [K in keyof T]: T[K] }
+        : { id: number }>) & ((raw?: true) => Promise<T extends Character
+            ? { data: { Character: { [K in keyof T]: T[K] } } }
+            : { data: { Character: { id: number } } }>);
 }
 
 export class CharacterQuery<T = {}> extends Query<Character, CharacterArguments> {
@@ -23,9 +26,9 @@ export class CharacterQuery<T = {}> extends Query<Character, CharacterArguments>
     protected default: string = "id";
     protected type: string = "Character";
 
-    constructor(id?: number)
-    constructor(args?: CharacterArguments)
-    constructor(params?: CharacterArguments | number) {
+    public constructor(id?: number);
+    public constructor(args?: CharacterArguments);
+    public constructor(params?: CharacterArguments | number) {
         super();
         if (params === undefined) return;
         if (typeof params === "number") this.args.id = params;
@@ -100,20 +103,20 @@ export class CharacterQuery<T = {}> extends Query<Character, CharacterArguments>
         }
     }): MediaQuery<T & MapRelation<ExtractMediaEdge<E>, ExtractMedia<M>, ExtractPageInfo<P>>> {
         if (!options) {
-            this.query.set("media", [`edges { id }`])
+            this.query.set("media", ["edges { id }"]);
             return <never>this;
         }
 
         const arr: Array<string> = [];
-        const edges = typeof options?.edges === "function" ? options.edges(new MediaEdge()).parse() : options.edges?.parse();
-        const nodes = typeof options?.nodes === "function" ? options.nodes(new MediaQuery({})).parse() : options.nodes?.parse();
-        const pageInfo = typeof options?.pageInfo === "function" ? options.pageInfo(new PageInfo()).parse() : options.pageInfo?.parse();
+        const edges = typeof options.edges === "function" ? options.edges(new MediaEdge()).parse() : options.edges?.parse();
+        const nodes = typeof options.nodes === "function" ? options.nodes(new MediaQuery({})).parse() : options.nodes?.parse();
+        const pageInfo = typeof options.pageInfo === "function" ? options.pageInfo(new PageInfo()).parse() : options.pageInfo?.parse();
 
         edges && arr.push(`edges { ${edges.fields} }`);
         nodes && arr.push(`nodes { ${nodes.fields} }`);
-        pageInfo && arr.push(`pageInfo { ${pageInfo.fields} }`)
+        pageInfo && arr.push(`pageInfo { ${pageInfo.fields} }`);
 
-        this.query.set("media", { args: options.args, fields: arr.length ? arr : [`edges { id }`] });
+        this.query.set("media", { args: options.args, fields: arr.length ? arr : ["edges { id }"] });
         return <never>this;
     }
 

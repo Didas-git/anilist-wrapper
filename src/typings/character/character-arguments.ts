@@ -7,5 +7,5 @@ export interface CharacterArguments {
     id_not?: number;
     id_in?: Array<number>;
     id_not_in?: Array<number>;
-    sort?: Array<CharacterSort>
+    sort?: Array<CharacterSort>;
 }

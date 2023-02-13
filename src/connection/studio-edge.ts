@@ -3,12 +3,12 @@ import { AddStudioEdge, ExtractStudio, IStudioEdge } from "../typings";
 import { Edge } from "./edge";
 
 export interface StudioEdge<T> {
-    withNode<K extends StudioQuery>(node: K | ((node: StudioQuery) => K)): StudioEdge<T & { node: ExtractStudio<K> }>
+    withNode: <K extends StudioQuery>(node: K | ((node: StudioQuery) => K)) => StudioEdge<T & { node: ExtractStudio<K> }>;
 }
 
 export class StudioEdge<T = {}> extends Edge<StudioQuery, IStudioEdge> {
-    constructor() {
-        super(new StudioQuery())
+    public constructor() {
+        super(new StudioQuery());
     }
 
     public withId(): StudioEdge<AddStudioEdge<T, "id">> {

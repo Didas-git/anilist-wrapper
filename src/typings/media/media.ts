@@ -1,4 +1,3 @@
-import { MediaConnection, MediaCoverImage, MediaExternalLink, MediaFormat, MediaRank, MediaSeason, MediaStats, MediaStatus, MediaStreamingEpisode, MediaTag, MediaTitle, MediaTrailer, MediaTrendConnection, MediaType, MediaSource, MediaList } from ".";
 import { AiringSchedule, AiringScheduleConnection } from "../airing";
 import { CharacterConnection } from "../character";
 import { CountryCode } from "../country-code";
@@ -7,6 +6,23 @@ import { RecommendationConnection } from "../recommendation";
 import { ReviewConnection } from "../review";
 import { StaffConnection } from "../staff";
 import { StudioConnection } from "../studio";
+import {
+    MediaConnection,
+    MediaCoverImage,
+    MediaExternalLink,
+    MediaFormat,
+    MediaRank,
+    MediaSeason,
+    MediaStats,
+    MediaStatus,
+    MediaStreamingEpisode,
+    MediaTag, MediaTitle,
+    MediaTrailer,
+    MediaTrendConnection,
+    MediaType,
+    MediaSource,
+    MediaList
+} from ".";
 
 export interface Media {
     id?: number;

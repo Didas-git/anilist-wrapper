@@ -22,6 +22,8 @@
 - [ ] AiringSchedule Query
 - [ ] Recommendation Query
 - [ ] User Query
+- [x] Add ESLint
+- [ ] Add proper tests using vitest
 
 ## V2
 
