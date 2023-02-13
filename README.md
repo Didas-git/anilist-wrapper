@@ -21,6 +21,7 @@ You can visit the official graphql docs for anilist [here](https://anilist.githu
         - [Relations](#relations)
         - [Passing arguments at run time](#passing-arguments-at-run-time)
       - [Character Query](#character-query)
+      - [Studio Query](#studio-query)
 
 ## Status
 
@@ -204,6 +205,10 @@ await query.fetch()
 ```
 
 #### Character Query
+
+The usage is the same as the [MediaQuery](#media-query);
+
+#### Studio Query
 
 The usage is the same as the [MediaQuery](#media-query);
 

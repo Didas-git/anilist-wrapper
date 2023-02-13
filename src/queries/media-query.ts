@@ -1,7 +1,7 @@
 import { CharacterQuery } from "./character-query";
-import { CharacterEdge } from "./connection";
-import { MediaEdge } from "./connection/media-edge";
-import { PageInfo } from "./connection/page-info";
+import { CharacterEdge, StudioEdge } from "../connection";
+import { MediaEdge } from "../connection/media-edge";
+import { PageInfo } from "../connection/page-info";
 import { Query } from "./query";
 import {
     AiringSchedule,
@@ -22,8 +22,14 @@ import {
     ExtractMedia,
     ExtractMediaEdge,
     ExtractCharacter,
-    ExtractCharacterEdge
-} from "./typings";
+    ExtractCharacterEdge,
+    CharacterSort,
+    CharacterRole,
+    StudioSort,
+    ExtractStudio,
+    ExtractStudioEdge
+} from "../typings";
+import { StudioQuery } from ".";
 
 export interface MediaQuery<T> {
     fetch(raw?: false): Promise<T extends Media ? { [K in keyof T]: T[K] } : { id: number }>
@@ -44,11 +50,6 @@ export class MediaQuery<T = {}> extends Query<Media, MediaArguments> {
         if (params === undefined) return;
         if (typeof params === "string") this.args.search = params;
         else this.args = params;
-    }
-
-    protected buildQuery() {
-        const { args, fields } = this.parse()
-        return `query{Media(${args}){${fields}}}`
     }
 
     public withId(): MediaQuery<AddMedia<T, "id">> {
@@ -242,7 +243,13 @@ export class MediaQuery<T = {}> extends Query<Media, MediaArguments> {
     public withCharacters<E extends CharacterEdge, C extends CharacterQuery, P extends PageInfo>(options?: {
         edges?: E | ((edge: CharacterEdge) => E),
         nodes?: C | ((node: CharacterQuery) => C),
-        pageInfo?: P | ((page: PageInfo) => P)
+        pageInfo?: P | ((page: PageInfo) => P),
+        args?: {
+            sort?: Array<CharacterSort>,
+            role?: CharacterRole,
+            page?: number,
+            perPage?: number
+        }
     }): MediaQuery<T & MapRelation<ExtractCharacterEdge<E>, ExtractCharacter<C>, ExtractPageInfo<P>>> {
         if (!options) {
             this.query.set("characters", [`edges { id }`])
@@ -258,14 +265,39 @@ export class MediaQuery<T = {}> extends Query<Media, MediaArguments> {
         nodes && arr.push(`nodes { ${nodes.fields} }`);
         pageInfo && arr.push(`pageInfo { ${pageInfo.fields} }`)
 
-        this.query.set("characters", arr.length ? arr : [`edges { id }`]);
+        this.query.set("characters", { args: options.args, fields: arr.length ? arr : [`edges { id }`] });
         return <never>this;
     }
 
     //! PENDING!!!
     // public withStaff() {}
-    //! PENDING!!!
-    // public withStudios() { }
+
+    public withStudios<E extends StudioEdge, S extends StudioQuery, P extends PageInfo>(options?: {
+        edges?: E | ((edge: StudioEdge) => E),
+        nodes?: S | ((node: StudioQuery) => S),
+        pageInfo?: P | ((page: PageInfo) => P),
+        args?: {
+            sort?: Array<StudioSort>,
+            isMain?: boolean
+        }
+    }): MediaQuery<T & MapRelation<ExtractStudioEdge<E>, ExtractStudio<S>, ExtractPageInfo<P>>> {
+        if (!options) {
+            this.query.set("studios", [`edges { id }`])
+            return <never>this;
+        }
+
+        const arr: Array<string> = [];
+        const edges = typeof options?.edges === "function" ? options.edges(new StudioEdge()).parse() : options.edges?.parse();
+        const nodes = typeof options?.nodes === "function" ? options.nodes(new StudioQuery()).parse() : options.nodes?.parse();
+        const pageInfo = typeof options?.pageInfo === "function" ? options.pageInfo(new PageInfo()).parse() : options.pageInfo?.parse();
+
+        edges && arr.push(`edges { ${edges.fields} }`);
+        nodes && arr.push(`nodes { ${nodes.fields} }`);
+        pageInfo && arr.push(`pageInfo { ${pageInfo.fields} }`)
+
+        this.query.set("studios", { args: options.args, fields: arr.length ? arr : [`edges { id }`] });
+        return <never>this;
+    }
 
     public isFavourite(): MediaQuery<AddMedia<T, "isFavourite">> {
         this.query.set("isFavourite", void 0);

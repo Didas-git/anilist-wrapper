@@ -1,4 +1,4 @@
 import { Connection } from "../connection";
-import { Studio, StudioEdge } from ".";
+import { Studio, IStudioEdge } from ".";
 
-export interface StudioConnection extends Connection<StudioEdge, Studio> { }
+export interface StudioConnection extends Connection<IStudioEdge, Studio> { }

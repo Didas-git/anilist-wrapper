@@ -1,5 +1,5 @@
 import { Parser } from "../parser";
-import { Query } from "../query";
+import { Query } from "../queries";
 import { IEdge, QueryType } from "../typings";
 
 export class Edge<T extends Query<any, any>, K extends IEdge<any>> extends Parser {

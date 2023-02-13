@@ -1,10 +1,8 @@
-import { CharacterQuery } from "./character-query";
-import { MediaQuery } from "./media-query";
-import { PageQuery } from "./page-query";
+import { CharacterQuery, MediaQuery, PageQuery } from "./queries";
 import { CharacterArguments, MediaArguments, PageArguments } from "./typings";
 
-export * from "./media-query";
-export * from "./page-query";
+export * from "./queries/media-query";
+export * from "./queries/page-query";
 export * from "./typings";
 export * from "./anilist-error";
 export * from "./connection";

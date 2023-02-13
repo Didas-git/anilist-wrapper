@@ -1,7 +1,7 @@
 import { Query } from "./query";
 import { MediaQuery } from "./media-query";
-import { AddPage, ExtractCharacter, ExtractMedia, Page, PageArguments } from "./typings";
-import { PageInfo } from "./connection/page-info";
+import { AddPage, ExtractCharacter, ExtractMedia, Page, PageArguments } from "../typings";
+import { PageInfo } from "../connection/page-info";
 import { CharacterQuery } from "./character-query";
 
 export interface PageQuery<T> {
@@ -26,12 +26,6 @@ export class PageQuery<T = {}> extends Query<Page, PageArguments> {
 
         if (typeof args === "number") this.args.page = args;
         else this.args = { ...this.args, ...args };
-    }
-
-    protected buildQuery(): string {
-        const { args, fields } = this.parse();
-
-        return `query {Page(${args}){${fields}}}`
     }
 
     public withPageInfo<P extends PageInfo, K extends PageInfo>(page: K | ((page: P) => K)): PageQuery<AddPage<T, "pageInfo">> {

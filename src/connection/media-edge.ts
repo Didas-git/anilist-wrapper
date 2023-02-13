@@ -1,4 +1,4 @@
-import { MediaQuery } from "../media-query";
+import { MediaQuery } from "../queries";
 import { AddMediaEdge, ExtractMedia, IMediaEdge } from "../typings";
 import { Edge } from "./edge";
 

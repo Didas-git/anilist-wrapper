@@ -1,14 +1,22 @@
-import { MediaEdge, PageInfo } from "./connection";
+import { MediaEdge, PageInfo } from "../connection";
 import { MediaQuery } from "./media-query";
 import { Query } from "./query";
 import {
     AddCharacter,
     Character,
     CharacterArguments,
+    ExtractMedia,
+    ExtractMediaEdge,
+    ExtractPageInfo,
     MapRelation,
     MediaSort,
     MediaType
-} from "./typings";
+} from "../typings";
+
+export interface CharacterQuery<T> {
+    fetch(raw?: false): Promise<T extends Character ? { [K in keyof T]: T[K] } : { id: number }>
+    fetch(raw?: true): Promise<T extends Character ? { data: { Character: { [K in keyof T]: T[K] } } } : { data: { Character: { id: number } } }>
+}
 
 export class CharacterQuery<T = {}> extends Query<Character, CharacterArguments> {
     protected args: CharacterArguments = {};
@@ -22,11 +30,6 @@ export class CharacterQuery<T = {}> extends Query<Character, CharacterArguments>
         if (params === undefined) return;
         if (typeof params === "number") this.args.id = params;
         else this.args = params;
-    }
-
-    protected buildQuery() {
-        const { args, fields } = this.parse()
-        return `query{Character(${args}){${fields}}}`
     }
 
     public withId(): CharacterQuery<AddCharacter<T, "id">> {
@@ -95,7 +98,7 @@ export class CharacterQuery<T = {}> extends Query<Character, CharacterArguments>
             page?: number,
             perPage?: number
         }
-    }): MediaQuery<T & MapRelation<E, M, P>> {
+    }): MediaQuery<T & MapRelation<ExtractMediaEdge<E>, ExtractMedia<M>, ExtractPageInfo<P>>> {
         if (!options) {
             this.query.set("media", [`edges { id }`])
             return <never>this;

@@ -1,6 +1,6 @@
-import { AnilistError } from "./anilist-error";
-import { Parser } from "./parser";
-import { QueryType } from "./typings";
+import { AnilistError } from "../anilist-error";
+import { Parser } from "../parser";
+import { QueryType } from "../typings";
 
 export abstract class Query<T, K> extends Parser {
     static url = "https://graphql.anilist.co";
@@ -8,7 +8,10 @@ export abstract class Query<T, K> extends Parser {
     protected query: QueryType<T> = new Map()
     protected abstract type: string;
 
-    protected abstract buildQuery(): string;
+    protected buildQuery() {
+        const { args, fields } = this.parse()
+        return `query{${this.type}(${args}){${fields}}}`
+    }
 
     public async fetch(raw?: boolean): Promise<any> {
         const res = await fetch(Query.url, {
@@ -25,7 +28,7 @@ export abstract class Query<T, K> extends Parser {
 
         if (!res.ok) throw new AnilistError(json);
 
-        return raw ? <never>json : <never>json.data[this.type];
+        return raw ? json : json.data[this.type];
     }
 
     public arguments(args: K, override: boolean = false) {

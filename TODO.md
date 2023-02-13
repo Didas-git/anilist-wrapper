@@ -14,7 +14,7 @@
 - [x] Page Query (Partially)
 - [x] Set -> Map
 - [x] Character Query
-- [ ] Studio Query
+- [x] Studio Query
 - [ ] Staff Query
 
 ## ~

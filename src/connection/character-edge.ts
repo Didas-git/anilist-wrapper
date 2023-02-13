@@ -1,5 +1,5 @@
-import { CharacterQuery } from "../character-query";
-import { MediaQuery } from "../media-query";
+import { CharacterQuery } from "../queries/character-query";
+import { MediaQuery } from "../queries";
 import { AddCharacterEdge, ExtractCharacter, ExtractMedia, ICharacterEdge } from "../typings";
 import { Edge } from "./edge";
 
