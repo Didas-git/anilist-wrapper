@@ -1,5 +1,5 @@
 import { MediaQuery, CharacterQuery } from "../queries";
-import { AddCharacterEdge, ExtractCharacter, ExtractMedia, ICharacterEdge } from "../typings";
+import { ExtractCharacter, ExtractMedia, ICharacterEdge } from "../typings";
 import { Edge } from "./edge";
 
 export interface CharacterEdge<T> {
@@ -11,17 +11,17 @@ export class CharacterEdge<T = {}> extends Edge<CharacterQuery, ICharacterEdge> 
         super(new CharacterQuery());
     }
 
-    public withId(): CharacterEdge<AddCharacterEdge<T, "id">> {
+    public withId(): CharacterEdge<T & { id: Required<ICharacterEdge>["id"] }> {
         this.query.set("id", void 0);
         return <never>this;
     }
 
-    public withRole(): CharacterEdge<AddCharacterEdge<T, "role">> {
+    public withRole(): CharacterEdge<T & { role: Required<ICharacterEdge>["role"] }> {
         this.query.set("role", void 0);
         return <never>this;
     }
 
-    public withName(): CharacterEdge<AddCharacterEdge<T, "name">> {
+    public withName(): CharacterEdge<T & { name: Required<ICharacterEdge>["name"] }> {
         this.query.set("name", void 0);
         return <never>this;
     }
@@ -43,7 +43,7 @@ export class CharacterEdge<T = {}> extends Edge<CharacterQuery, ICharacterEdge> 
         return <never>this;
     }
 
-    public withFavouriteOrder(): CharacterEdge<AddCharacterEdge<T, "favouriteOrder">> {
+    public withFavouriteOrder(): CharacterEdge<T & { favouriteOrder: Required<ICharacterEdge>["favouriteOrder"] }> {
         this.query.set("favouriteOrder", void 0);
         return <never>this;
     }

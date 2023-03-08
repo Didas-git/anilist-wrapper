@@ -1,6 +1,6 @@
 import { MediaQuery } from ".";
 import { MediaEdge, PageInfo } from "../connection";
-import { AddStudio, ExtractMedia, ExtractMediaEdge, ExtractPageInfo, MapRelation, MediaSort, Studio, StudioArguments } from "../typings";
+import { ExtractMedia, ExtractMediaEdge, ExtractPageInfo, MapRelation, MediaSort, Studio, StudioArguments } from "../typings";
 import { Query } from "./query";
 
 export interface StudioQuery<T> {
@@ -25,17 +25,17 @@ export class StudioQuery<T = {}> extends Query<Studio, StudioArguments> {
         else this.args = params;
     }
 
-    public withId(): StudioQuery<AddStudio<T, "id">> {
+    public withId(): StudioQuery<T & { id: Required<Studio>["id"] }> {
         this.query.set("id", void 0);
         return <never>this;
     }
 
-    public withName(): StudioQuery<AddStudio<T, "name">> {
+    public withName(): StudioQuery<T & { name: Required<Studio>["name"] }> {
         this.query.set("name", void 0);
         return <never>this;
     }
 
-    public isAnimationStudio(): StudioQuery<AddStudio<T, "isAnimationStudio">> {
+    public isAnimationStudio(): StudioQuery<T & { isAnimationStudio: Required<Studio>["isAnimationStudio"] }> {
         this.query.set("isAnimationStudio", void 0);
         return <never>this;
     }
@@ -70,17 +70,17 @@ export class StudioQuery<T = {}> extends Query<Studio, StudioArguments> {
         return <never>this;
     }
 
-    public withSiteUrl(): StudioQuery<AddStudio<T, "siteUrl">> {
+    public withSiteUrl(): StudioQuery<T & { siteUrl: Required<Studio>["siteUrl"] }> {
         this.query.set("siteUrl", void 0);
         return <never>this;
     }
 
-    public isFavourite(): StudioQuery<AddStudio<T, "isFavourite">> {
+    public isFavourite(): StudioQuery<T & { isFavourite: Required<Studio>["isFavourite"] }> {
         this.query.set("isFavourite", void 0);
         return <never>this;
     }
 
-    public withFavourites(): StudioQuery<AddStudio<T, "favourites">> {
+    public withFavourites(): StudioQuery<T & { favourites: Required<Studio>["favourites"] }> {
         this.query.set("favourites", void 0);
         return <never>this;
     }

@@ -1,5 +1,5 @@
 import { MediaQuery } from "../queries";
-import { AddMediaEdge, ExtractMedia, IMediaEdge } from "../typings";
+import { ExtractMedia, IMediaEdge } from "../typings";
 import { Edge } from "./edge";
 
 export interface MediaEdge<T> {
@@ -11,17 +11,17 @@ export class MediaEdge<T = {}> extends Edge<MediaQuery, IMediaEdge> {
         super(new MediaQuery({}));
     }
 
-    public withId(): MediaEdge<AddMediaEdge<T, "id">> {
+    public withId(): MediaEdge<T & { id: Required<IMediaEdge>["id"] }> {
         this.query.set("id", void 0);
         return <never>this;
     }
 
-    public withRelationType(version?: number): MediaEdge<AddMediaEdge<T, "relationType">> {
+    public withRelationType(version?: number): MediaEdge<T & { relationType: Required<IMediaEdge>["relationType"] }> {
         this.query.set("relationType", { args: version ? { version } : void 0, fields: void 0 });
         return <never>this;
     }
 
-    public isMainStudio(): MediaEdge<AddMediaEdge<T, "isMainStudio">> {
+    public isMainStudio(): MediaEdge<T & { isMainStudio: Required<IMediaEdge>["isMainStudio"] }> {
         this.query.set("isMainStudio", void 0);
         return <never>this;
     }
@@ -31,27 +31,27 @@ export class MediaEdge<T = {}> extends Edge<MediaQuery, IMediaEdge> {
 
     // }
 
-    public withCharacterRole(): MediaEdge<AddMediaEdge<T, "characterRole">> {
+    public withCharacterRole(): MediaEdge<T & { characterRole: Required<IMediaEdge>["characterRole"] }> {
         this.query.set("characterRole", void 0);
         return <never>this;
     }
 
-    public withCharacterName(): MediaEdge<AddMediaEdge<T, "characterName">> {
+    public withCharacterName(): MediaEdge<T & { characterName: Required<IMediaEdge>["characterName"] }> {
         this.query.set("characterName", void 0);
         return <never>this;
     }
 
-    public withRoleNotes(): MediaEdge<AddMediaEdge<T, "roleNotes">> {
+    public withRoleNotes(): MediaEdge<T & { roleNotes: Required<IMediaEdge>["roleNotes"] }> {
         this.query.set("roleNotes", void 0);
         return <never>this;
     }
 
-    public withDubGroups(): MediaEdge<AddMediaEdge<T, "dubGroup">> {
+    public withDubGroups(): MediaEdge<T & { dubGroup: Required<IMediaEdge>["dubGroup"] }> {
         this.query.set("dubGroup", void 0);
         return <never>this;
     }
 
-    public withStaffRole(): MediaEdge<AddMediaEdge<T, "staffRole">> {
+    public withStaffRole(): MediaEdge<T & { staffRole: Required<IMediaEdge>["staffRole"] }> {
         this.query.set("staffRole", void 0);
         return <never>this;
     }
@@ -66,7 +66,7 @@ export class MediaEdge<T = {}> extends Edge<MediaQuery, IMediaEdge> {
 
     // }
 
-    public withFavouriteOrder(): MediaEdge<AddMediaEdge<T, "favouriteOrder">> {
+    public withFavouriteOrder(): MediaEdge<T & { favouriteOrder: Required<IMediaEdge>["favouriteOrder"] }> {
         this.query.set("favouriteOrder", void 0);
         return <never>this;
     }

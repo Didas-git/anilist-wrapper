@@ -15,7 +15,7 @@ import {
     MediaTitle,
     MediaTrailer,
     MediaList,
-    AddMedia,
+    // AddMedia,
     FuzzyDate,
     MapRelation,
     ExtractPageInfo,
@@ -53,167 +53,167 @@ export class MediaQuery<T = {}> extends Query<Media, MediaArguments> {
         else this.args = params;
     }
 
-    public withId(): MediaQuery<AddMedia<T, "id">> {
+    public withId(): MediaQuery<T & { id: Required<Media>["id"] }> {
         this.query.set("id", void 0);
         return <never>this;
     }
 
-    public withMalId(): MediaQuery<AddMedia<T, "idMal">> {
+    public withMalId(): MediaQuery<T & { idMal: Required<Media>["idMal"] }> {
         this.query.set("idMal", void 0);
         return <never>this;
     }
 
-    public withTitles(...args: Array<keyof MediaTitle>): MediaQuery<AddMedia<T, "title">> {
+    public withTitles(...args: Array<keyof MediaTitle>): MediaQuery<T & { title: Required<Media>["title"] }> {
         this.query.set("title", args.length ? args : ["romaji"]);
         return <never>this;
     }
 
-    public withType(): MediaQuery<AddMedia<T, "type">> {
+    public withType(): MediaQuery<T & { type: Required<Media>["type"] }> {
         this.query.set("type", void 0);
         return <never>this;
     }
 
-    public withFormat(): MediaQuery<AddMedia<T, "format">> {
+    public withFormat(): MediaQuery<T & { format: Required<Media>["format"] }> {
         this.query.set("format", void 0);
         return <never>this;
     }
 
-    public withStatus(version?: number): MediaQuery<AddMedia<T, "status">> {
+    public withStatus(version?: number): MediaQuery<T & { status: Required<Media>["status"] }> {
         this.query.set("status", { args: version ? { version } : void 0, fields: void 0 });
         return <never>this;
     }
 
-    public withDescription(asHtml?: boolean): MediaQuery<AddMedia<T, "description">> {
+    public withDescription(asHtml?: boolean): MediaQuery<T & { description: Required<Media>["description"] }> {
         this.query.set("description", { args: asHtml ? { asHtml } : void 0, fields: void 0 });
         return <never>this;
     }
 
-    public withStartDate(...args: Array<keyof FuzzyDate>): MediaQuery<AddMedia<T, "startDate">> {
+    public withStartDate(...args: Array<keyof FuzzyDate>): MediaQuery<T & { startDate: Required<Media>["startDate"] }> {
         this.query.set("startDate", args.length ? args : ["year", "month", "day"]);
         return <never>this;
     }
 
-    public withEndDate(...args: Array<keyof FuzzyDate>): MediaQuery<AddMedia<T, "endDate">> {
+    public withEndDate(...args: Array<keyof FuzzyDate>): MediaQuery<T & { endDate: Required<Media>["endDate"] }> {
         this.query.set("endDate", args.length ? args : ["year", "month", "day"]);
         return <never>this;
     }
 
-    public withSeason(): MediaQuery<AddMedia<T, "season">> {
+    public withSeason(): MediaQuery<T & { season: Required<Media>["season"] }> {
         this.query.set("season", void 0);
         return <never>this;
     }
 
-    public withSeasonYear(): MediaQuery<AddMedia<T, "seasonYear">> {
+    public withSeasonYear(): MediaQuery<T & { seasonYear: Required<Media>["seasonYear"] }> {
         this.query.set("seasonYear", void 0);
         return <never>this;
     }
 
-    public withSeasonInt(): MediaQuery<AddMedia<T, "seasonInt">> {
+    public withSeasonInt(): MediaQuery<T & { seasonInt: Required<Media>["seasonInt"] }> {
         this.query.set("seasonInt", void 0);
         return <never>this;
     }
 
-    public withEpisodes(): MediaQuery<AddMedia<T, "episodes">> {
+    public withEpisodes(): MediaQuery<T & { episodes: Required<Media>["episodes"] }> {
         this.query.set("episodes", void 0);
         return <never>this;
     }
 
-    public withDuration(): MediaQuery<AddMedia<T, "duration">> {
+    public withDuration(): MediaQuery<T & { duration: Required<Media>["duration"] }> {
         this.query.set("duration", void 0);
         return <never>this;
     }
 
-    public withChapters(): MediaQuery<AddMedia<T, "chapters">> {
+    public withChapters(): MediaQuery<T & { chapters: Required<Media>["chapters"] }> {
         this.query.set("chapters", void 0);
         return <never>this;
     }
 
-    public withVolumes(): MediaQuery<AddMedia<T, "volumes">> {
+    public withVolumes(): MediaQuery<T & { volumes: Required<Media>["volumes"] }> {
         this.query.set("volumes", void 0);
         return <never>this;
     }
 
-    public withCountryOfOrigin(): MediaQuery<AddMedia<T, "countryOfOrigin">> {
+    public withCountryOfOrigin(): MediaQuery<T & { countryOfOrigin: Required<Media>["countryOfOrigin"] }> {
         this.query.set("countryOfOrigin", void 0);
         return <never>this;
     }
 
-    public isLicensed(): MediaQuery<AddMedia<T, "isLicensed">> {
+    public isLicensed(): MediaQuery<T & { isLicensed: Required<Media>["isLicensed"] }> {
         this.query.set("isLicensed", void 0);
         return <never>this;
     }
 
-    public withSource(version?: number): MediaQuery<AddMedia<T, "source">> {
+    public withSource(version?: number): MediaQuery<T & { source: Required<Media>["source"] }> {
         this.query.set("source", { args: version ? { version } : void 0, fields: void 0 });
         return <never>this;
     }
 
-    public withTwitterHashtag(): MediaQuery<AddMedia<T, "hashtag">> {
+    public withTwitterHashtag(): MediaQuery<T & { hashtag: Required<Media>["hashtag"] }> {
         this.query.set("hashtag", void 0);
         return <never>this;
     }
 
-    public withTrailer(...args: Array<keyof MediaTrailer>): MediaQuery<AddMedia<T, "trailer">> {
+    public withTrailer(...args: Array<keyof MediaTrailer>): MediaQuery<T & { trailer: Required<Media>["trailer"] }> {
         this.query.set("trailer", args.length ? args : ["id"]);
         return <never>this;
     }
 
-    public updatedAt(): MediaQuery<AddMedia<T, "updatedAt">> {
+    public updatedAt(): MediaQuery<T & { updatedAt: Required<Media>["updatedAt"] }> {
         this.query.set("updatedAt", void 0);
         return <never>this;
     }
 
-    public withCoverImage(...args: Array<keyof MediaCoverImage>): MediaQuery<AddMedia<T, "coverImage">> {
+    public withCoverImage(...args: Array<keyof MediaCoverImage>): MediaQuery<T & { coverImage: Required<Media>["coverImage"] }> {
         this.query.set("coverImage", args.length ? args : ["extraLarge", "large", "medium", "color"]);
         return <never>this;
     }
 
-    public withBannerImage(): MediaQuery<AddMedia<T, "bannerImage">> {
+    public withBannerImage(): MediaQuery<T & { bannerImage: Required<Media>["bannerImage"] }> {
         this.query.set("bannerImage", void 0);
         return <never>this;
     }
 
-    public withGenres(): MediaQuery<AddMedia<T, "genres">> {
+    public withGenres(): MediaQuery<T & { genres: Required<Media>["genres"] }> {
         this.query.set("genres", void 0);
         return <never>this;
     }
 
-    public withSynonyms(): MediaQuery<AddMedia<T, "synonyms">> {
+    public withSynonyms(): MediaQuery<T & { synonyms: Required<Media>["synonyms"] }> {
         this.query.set("synonyms", void 0);
         return <never>this;
     }
 
-    public withAverageScore(): MediaQuery<AddMedia<T, "averageScore">> {
+    public withAverageScore(): MediaQuery<T & { averageScore: Required<Media>["averageScore"] }> {
         this.query.set("averageScore", void 0);
         return <never>this;
     }
 
-    public withMeanScore(): MediaQuery<AddMedia<T, "meanScore">> {
+    public withMeanScore(): MediaQuery<T & { meanScore: Required<Media>["meanScore"] }> {
         this.query.set("meanScore", void 0);
         return <never>this;
     }
 
-    public withPopularity(): MediaQuery<AddMedia<T, "popularity">> {
+    public withPopularity(): MediaQuery<T & { popularity: Required<Media>["popularity"] }> {
         this.query.set("popularity", void 0);
         return <never>this;
     }
 
-    public isLocked(): MediaQuery<AddMedia<T, "isLocked">> {
+    public isLocked(): MediaQuery<T & { isLocked: Required<Media>["isLocked"] }> {
         this.query.set("isLocked", void 0);
         return <never>this;
     }
 
-    public withTrending(): MediaQuery<AddMedia<T, "trending">> {
+    public withTrending(): MediaQuery<T & { trending: Required<Media>["trending"] }> {
         this.query.set("trending", void 0);
         return <never>this;
     }
 
-    public withFavourites(): MediaQuery<AddMedia<T, "favourites">> {
+    public withFavourites(): MediaQuery<T & { favourites: Required<Media>["favourites"] }> {
         this.query.set("favourites", void 0);
         return <never>this;
     }
 
-    public withTags(...args: Array<keyof MediaTag>): MediaQuery<AddMedia<T, "tags">> {
+    public withTags(...args: Array<keyof MediaTag>): MediaQuery<T & { tags: Required<Media>["tags"] }> {
         this.query.set("tags", args.length ? args : ["id"]);
         return <never>this;
     }
@@ -300,22 +300,22 @@ export class MediaQuery<T = {}> extends Query<Media, MediaArguments> {
         return <never>this;
     }
 
-    public isFavourite(): MediaQuery<AddMedia<T, "isFavourite">> {
+    public isFavourite(): MediaQuery<T & { isFavourite: Required<Media>["isFavourite"] }> {
         this.query.set("isFavourite", void 0);
         return <never>this;
     }
 
-    public isFavouriteBlocked(): MediaQuery<AddMedia<T, "isFavouriteBlocked">> {
+    public isFavouriteBlocked(): MediaQuery<T & { isFavouriteBlocked: Required<Media>["isFavouriteBlocked"] }> {
         this.query.set("isFavouriteBlocked", void 0);
         return <never>this;
     }
 
-    public isAdult(): MediaQuery<AddMedia<T, "isAdult">> {
+    public isAdult(): MediaQuery<T & { isAdult: Required<Media>["isAdult"] }> {
         this.query.set("isAdult", void 0);
         return <never>this;
     }
 
-    public withNextAiringEpisode(...args: Array<keyof AiringSchedule>): MediaQuery<AddMedia<T, "nextAiringEpisode">> {
+    public withNextAiringEpisode(...args: Array<keyof AiringSchedule>): MediaQuery<T & { nextAiringEpisode: Required<Media>["nextAiringEpisode"] }> {
         this.query.set("nextAiringEpisode", args.length ? args : ["id"]);
         return <never>this;
     }
@@ -325,22 +325,22 @@ export class MediaQuery<T = {}> extends Query<Media, MediaArguments> {
     //! PENDING!!!
     // public withTrends() {}
 
-    public withExternalLinks(...args: Array<keyof MediaExternalLink>): MediaQuery<AddMedia<T, "externalLinks">> {
+    public withExternalLinks(...args: Array<keyof MediaExternalLink>): MediaQuery<T & { externalLinks: Required<Media>["externalLinks"] }> {
         this.query.set("externalLinks", args.length ? args : ["id"]);
         return <never>this;
     }
 
-    public withStreamingEpisodes(...args: Array<keyof MediaStreamingEpisode>): MediaQuery<AddMedia<T, "streamingEpisodes">> {
+    public withStreamingEpisodes(...args: Array<keyof MediaStreamingEpisode>): MediaQuery<T & { streamingEpisodes: Required<Media>["streamingEpisodes"] }> {
         this.query.set("streamingEpisodes", args.length ? args : ["title, thumbnail", "url", "site"]);
         return <never>this;
     }
 
-    public withRankings(...args: Array<keyof MediaRank>): MediaQuery<AddMedia<T, "rankings">> {
+    public withRankings(...args: Array<keyof MediaRank>): MediaQuery<T & { rankings: Required<Media>["rankings"] }> {
         this.query.set("rankings", args.length ? args : ["id"]);
         return <never>this;
     }
 
-    public withMediaListEntries(...args: Array<keyof MediaList>): MediaQuery<AddMedia<T, "mediaListEntry">> {
+    public withMediaListEntries(...args: Array<keyof MediaList>): MediaQuery<T & { mediaListEntry: Required<Media>["mediaListEntry"] }> {
         this.query.set("mediaListEntry", args.length ? args : ["id"]);
         return <never>this;
     }
@@ -352,27 +352,27 @@ export class MediaQuery<T = {}> extends Query<Media, MediaArguments> {
     //! PENDING!!!
     // public withStats() {}
 
-    public withSiteUrl(): MediaQuery<AddMedia<T, "siteUrl">> {
+    public withSiteUrl(): MediaQuery<T & { siteUrl: Required<Media>["siteUrl"] }> {
         this.query.set("siteUrl", void 0);
         return <never>this;
     }
 
-    public withAutoCreateForumThread(): MediaQuery<AddMedia<T, "autoCreateForumThread">> {
+    public withAutoCreateForumThread(): MediaQuery<T & { autoCreateForumThread: Required<Media>["autoCreateForumThread"] }> {
         this.query.set("autoCreateForumThread", void 0);
         return <never>this;
     }
 
-    public isRecommendationBlocked(): MediaQuery<AddMedia<T, "isRecommendationBlocked">> {
+    public isRecommendationBlocked(): MediaQuery<T & { isRecommendationBlocked: Required<Media>["isRecommendationBlocked"] }> {
         this.query.set("isRecommendationBlocked", void 0);
         return <never>this;
     }
 
-    public isReviewBlocked(): MediaQuery<AddMedia<T, "isReviewBlocked">> {
+    public isReviewBlocked(): MediaQuery<T & { isReviewBlocked: Required<Media>["isReviewBlocked"] }> {
         this.query.set("isReviewBlocked", void 0);
         return <never>this;
     }
 
-    public withModNotes(): MediaQuery<AddMedia<T, "modNotes">> {
+    public withModNotes(): MediaQuery<T & { modNotes: Required<Media>["modNotes"] }> {
         this.query.set("modNotes", void 0);
         return <never>this;
     }

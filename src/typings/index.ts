@@ -22,7 +22,6 @@ export * from "./name";
 export * from "./page-info";
 export * from "./statistic";
 export * from "./status-distribution";
-export * from "./add";
 export * from "./extract";
 export * from "./extract/extract-media";
 export * from "./complex-internal-query";

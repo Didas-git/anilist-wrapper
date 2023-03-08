@@ -2,7 +2,6 @@ import { MediaEdge, PageInfo } from "../connection";
 import { MediaQuery } from "./media-query";
 import { Query } from "./query";
 import {
-    AddCharacter,
     Character,
     CharacterArguments,
     ExtractMedia,
@@ -35,57 +34,57 @@ export class CharacterQuery<T = {}> extends Query<Character, CharacterArguments>
         else this.args = params;
     }
 
-    public withId(): CharacterQuery<AddCharacter<T, "id">> {
+    public withId(): CharacterQuery<T & { id: Required<Character>["id"] }> {
         this.query.set("id", void 0);
         return <never>this;
     }
 
-    public withName(): CharacterQuery<AddCharacter<T, "name">> {
+    public withName(): CharacterQuery<T & { name: Required<Character>["name"] }> {
         this.query.set("name", void 0);
         return <never>this;
     }
 
-    public withImage(): CharacterQuery<AddCharacter<T, "image">> {
+    public withImage(): CharacterQuery<T & { image: Required<Character>["image"] }> {
         this.query.set("image", void 0);
         return <never>this;
     }
 
-    public withDescription(asHtml?: boolean): CharacterQuery<AddCharacter<T, "description">> {
+    public withDescription(asHtml?: boolean): CharacterQuery<T & { description: Required<Character>["description"] }> {
         this.query.set("description", { args: asHtml ? { asHtml } : void 0, fields: void 0 });
         return <never>this;
     }
 
-    public withGender(): CharacterQuery<AddCharacter<T, "gender">> {
+    public withGender(): CharacterQuery<T & { gender: Required<Character>["gender"] }> {
         this.query.set("gender", void 0);
         return <never>this;
     }
 
-    public withDateOfBirth(): CharacterQuery<AddCharacter<T, "dateOfBirth">> {
+    public withDateOfBirth(): CharacterQuery<T & { dateOfBirth: Required<Character>["dateOfBirth"] }> {
         this.query.set("dateOfBirth", void 0);
         return <never>this;
     }
 
-    public withAge(): CharacterQuery<AddCharacter<T, "age">> {
+    public withAge(): CharacterQuery<T & { age: Required<Character>["age"] }> {
         this.query.set("age", void 0);
         return <never>this;
     }
 
-    public withBloodType(): CharacterQuery<AddCharacter<T, "bloodType">> {
+    public withBloodType(): CharacterQuery<T & { bloodType: Required<Character>["bloodType"] }> {
         this.query.set("bloodType", void 0);
         return <never>this;
     }
 
-    public isFavourite(): CharacterQuery<AddCharacter<T, "isFavourite">> {
+    public isFavourite(): CharacterQuery<T & { isFavourite: Required<Character>["isFavourite"] }> {
         this.query.set("isFavourite", void 0);
         return <never>this;
     }
 
-    public isFavouriteBlocked(): CharacterQuery<AddCharacter<T, "isFavouriteBlocked">> {
+    public isFavouriteBlocked(): CharacterQuery<T & { isFavouriteBlocked: Required<Character>["isFavouriteBlocked"] }> {
         this.query.set("isFavouriteBlocked", void 0);
         return <never>this;
     }
 
-    public withSiteUrl(): CharacterQuery<AddCharacter<T, "siteUrl">> {
+    public withSiteUrl(): CharacterQuery<T & { siteUrl: Required<Character>["siteUrl"] }> {
         this.query.set("siteUrl", void 0);
         return <never>this;
     }
@@ -120,12 +119,12 @@ export class CharacterQuery<T = {}> extends Query<Character, CharacterArguments>
         return <never>this;
     }
 
-    public withFavourites(): CharacterQuery<AddCharacter<T, "favourites">> {
+    public withFavourites(): CharacterQuery<T & { favourites: Required<Character>["favourites"] }> {
         this.query.set("favourites", void 0);
         return <never>this;
     }
 
-    public withModNotes(): CharacterQuery<AddCharacter<T, "modNotes">> {
+    public withModNotes(): CharacterQuery<T & { modNotes: Required<Character>["modNotes"] }> {
         this.query.set("modNotes", void 0);
         return <never>this;
     }

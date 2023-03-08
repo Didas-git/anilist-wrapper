@@ -1,5 +1,5 @@
 import { MediaQuery, Query, StudioQuery } from ".";
-import { AddPage, ExtractCharacter, ExtractMedia, ExtractStudio, Page, PageArguments } from "../typings";
+import { ExtractCharacter, ExtractMedia, ExtractStudio, Page, PageArguments } from "../typings";
 import { PageInfo } from "../connection/page-info";
 import { CharacterQuery } from "./character-query";
 
@@ -31,7 +31,7 @@ export class PageQuery<T = {}> extends Query<Page, PageArguments> {
         else this.args = { ...this.args, ...args };
     }
 
-    public withPageInfo<P extends PageInfo, K extends PageInfo>(page: K | ((page: P) => K)): PageQuery<AddPage<T, "pageInfo">> {
+    public withPageInfo<P extends PageInfo, K extends PageInfo>(page: K | ((page: P) => K)): PageQuery<T & { pageInfo: Required<Page>["pageInfo"] }> {
         const { args, fields } = typeof page === "function" ? page(<P>new PageInfo()).parse() : page.parse();
 
         this.query.set("pageInfo", { args, fields: [fields] });
