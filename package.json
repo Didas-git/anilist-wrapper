@@ -11,6 +11,9 @@
     },
     "./package.json": "./package.json"
   },
+  "files": [
+    "./dist/"
+  ],
   "scripts": {
     "lint": "eslint src/**/*.ts",
     "build": "rm -rf dist && tsc",
