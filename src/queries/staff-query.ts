@@ -1,17 +1,18 @@
 import { CharacterEdge, MediaEdge, PageInfo } from "../connection";
+import { CharacterQuery } from "./character-query";
 import { MediaQuery } from "./media-query";
 import { Query } from "./query";
-import {
-    Staff,
-    StaffArguments,
-    ExtractMedia,
+
+import type {
     ExtractMediaEdge,
     ExtractPageInfo,
+    StaffArguments,
+    ExtractMedia,
     MapRelation,
     MediaSort,
-    MediaType
+    MediaType,
+    Staff
 } from "../typings";
-import { CharacterQuery } from "./character-query";
 
 export interface StaffQuery<T> {
     fetch: ((raw?: false) => Promise<T extends Staff

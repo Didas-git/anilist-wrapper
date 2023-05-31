@@ -1,6 +1,6 @@
-import { ReviewRating } from ".";
-import { Media, MediaType } from "../media";
-import { User } from "../user";
+import type { Media, MediaType } from "../media";
+import type { ReviewRating } from ".";
+import type { User } from "../user";
 
 export interface Review {
     id?: number;

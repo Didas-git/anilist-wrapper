@@ -1,7 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Parser } from "../parser";
-import { Query } from "../queries";
-import { IEdge, QueryType } from "../typings";
+
+import type { IEdge, QueryType } from "../typings";
+import type { Query } from "../queries";
 
 export class Edge<T extends Query<any, any>, K extends IEdge<any>> extends Parser {
 

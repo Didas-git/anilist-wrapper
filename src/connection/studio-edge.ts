@@ -1,6 +1,7 @@
 import { StudioQuery } from "../queries";
-import { ExtractStudio, IStudioEdge } from "../typings";
 import { Edge } from "./edge";
+
+import type { ExtractStudio, IStudioEdge } from "../typings";
 
 export interface StudioEdge<T> {
     withNode: <K extends StudioQuery>(node: K | ((node: StudioQuery) => K)) => StudioEdge<T & { node: ExtractStudio<K> }>;

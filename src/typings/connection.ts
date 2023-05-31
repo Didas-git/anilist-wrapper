@@ -1,4 +1,4 @@
-import { IPageInfo } from "./page-info";
+import type { IPageInfo } from "./page-info";
 
 export interface Connection<Edge, Node> {
     edges?: Array<Edge> | [];

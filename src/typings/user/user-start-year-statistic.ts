@@ -1,4 +1,4 @@
-import { Statistic } from "../statistic";
+import type { Statistic } from "../statistic";
 
 export interface UserStartYearStatistic extends Statistic {
     startYear?: number | null;

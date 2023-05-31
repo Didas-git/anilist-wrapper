@@ -1,35 +1,33 @@
+import { CharacterEdge, StudioEdge, MediaEdge, PageInfo } from "../connection";
 import { CharacterQuery } from "./character-query";
-import { CharacterEdge, StudioEdge } from "../connection";
-import { MediaEdge } from "../connection/media-edge";
-import { PageInfo } from "../connection/page-info";
+import { StudioQuery } from ".";
 import { Query } from "./query";
-import {
-    AiringSchedule,
-    Media,
-    MediaArguments,
-    MediaCoverImage,
-    MediaExternalLink,
-    MediaRank,
+
+import type {
     MediaStreamingEpisode,
-    MediaTag,
-    MediaTitle,
-    MediaTrailer,
-    MediaList,
-    // AddMedia,
-    FuzzyDate,
-    MapRelation,
-    ExtractPageInfo,
-    ExtractMedia,
+    ExtractCharacterEdge,
+    MediaExternalLink,
+    ExtractStudioEdge,
     ExtractMediaEdge,
     ExtractCharacter,
-    ExtractCharacterEdge,
+    ExtractPageInfo,
+    MediaCoverImage,
+    MediaArguments,
+    AiringSchedule,
     CharacterSort,
     CharacterRole,
-    StudioSort,
     ExtractStudio,
-    ExtractStudioEdge
+    ExtractMedia,
+    MediaTrailer,
+    MapRelation,
+    MediaTitle,
+    StudioSort,
+    MediaList,
+    MediaRank,
+    FuzzyDate,
+    MediaTag,
+    Media
 } from "../typings";
-import { StudioQuery } from ".";
 
 export interface MediaQuery<T> {
     fetch: ((raw?: false) => Promise<T extends Media

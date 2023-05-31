@@ -1,5 +1,5 @@
-import { ScoreDistribution } from "../score";
-import { StatusDistribution } from "../status-distribution";
+import type { StatusDistribution } from "../status-distribution";
+import type { ScoreDistribution } from "../score";
 
 export interface MediaStats {
     scoreDistribution?: Array<ScoreDistribution> | [];

@@ -1,5 +1,5 @@
-export * from "./studio";
-export * from "./studio-connection";
-export * from "./studio-edge";
-export * from "./studio-sort";
-export * from "./studio-arguments";
+export type * from "./studio-connection";
+export type * from "./studio-arguments";
+export type * from "./studio-edge";
+export type * from "./studio-sort";
+export type * from "./studio";

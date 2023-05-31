@@ -1,6 +1,6 @@
-import { Character } from "../character";
-import { Media } from "../media";
-import { IPageInfo } from "../page-info";
+import type { Character } from "../character";
+import type { IPageInfo } from "../page-info";
+import type { Media } from "../media";
 
 export interface Page {
     pageInfo?: IPageInfo | null;

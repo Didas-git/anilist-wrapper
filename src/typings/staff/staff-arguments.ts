@@ -1,4 +1,4 @@
-import { StaffSort } from "./staff-sort";
+import type { StaffSort } from "./staff-sort";
 
 export interface StaffArguments {
     id?: number;

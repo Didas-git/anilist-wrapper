@@ -1,6 +1,7 @@
 import { MediaQuery, CharacterQuery } from "../queries";
-import { ExtractCharacter, ExtractMedia, ICharacterEdge } from "../typings";
 import { Edge } from "./edge";
+
+import type { ExtractCharacter, ExtractMedia, ICharacterEdge } from "../typings";
 
 export interface CharacterEdge<T> {
     withNode: <K extends CharacterQuery>(node: K | ((node: CharacterQuery) => K)) => CharacterEdge<T & { node: ExtractCharacter<K> }>;

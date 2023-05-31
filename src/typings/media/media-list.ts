@@ -1,6 +1,6 @@
-import { Media, MediaListStatus } from ".";
-import { FuzzyDate } from "../fuzzy-date";
-import { User } from "../user";
+import type { Media, MediaListStatus } from ".";
+import type { FuzzyDate } from "../fuzzy-date";
+import type { User } from "../user";
 
 export interface MediaList {
     id?: number;

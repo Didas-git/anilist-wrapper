@@ -1,7 +1,16 @@
-import { MediaQuery } from ".";
 import { MediaEdge, PageInfo } from "../connection";
-import { ExtractMedia, ExtractMediaEdge, ExtractPageInfo, MapRelation, MediaSort, Studio, StudioArguments } from "../typings";
+import { MediaQuery } from ".";
 import { Query } from "./query";
+
+import type {
+    ExtractMediaEdge,
+    StudioArguments,
+    ExtractPageInfo,
+    ExtractMedia,
+    MapRelation,
+    MediaSort,
+    Studio
+} from "../typings";
 
 export interface StudioQuery<T> {
     fetch: ((raw?: false) => Promise<T extends Studio

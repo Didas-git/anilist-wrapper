@@ -1,6 +1,6 @@
-import { UserStaffNameLanguage, UserTitleLanguage } from ".";
-import { ListActivityOption } from "../list-activity-option";
-import { NotificationOption } from "../notification";
+import type { UserStaffNameLanguage, UserTitleLanguage } from ".";
+import type { ListActivityOption } from "../list-activity-option";
+import type { NotificationOption } from "../notification";
 
 export interface UserOptions {
     titleLanguage?: UserTitleLanguage | null;

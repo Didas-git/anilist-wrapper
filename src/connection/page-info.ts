@@ -1,5 +1,6 @@
 import { Parser } from "../parser";
-import { IPageInfo, QueryType } from "../typings";
+
+import type { IPageInfo, QueryType } from "../typings";
 
 export class PageInfo<T = {}> extends Parser {
     protected query: QueryType<IPageInfo> = new Map();

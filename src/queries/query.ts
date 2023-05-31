@@ -1,6 +1,7 @@
 import { AnilistError } from "../anilist-error";
 import { Parser } from "../parser";
-import { QueryType } from "../typings";
+
+import type { QueryType } from "../typings";
 
 export abstract class Query<T, K> extends Parser {
     private static url = "https://graphql.anilist.co";

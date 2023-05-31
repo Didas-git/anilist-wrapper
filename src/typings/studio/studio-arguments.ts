@@ -1,4 +1,4 @@
-import { StudioSort } from "./studio-sort";
+import type { StudioSort } from "./studio-sort";
 
 export interface StudioArguments {
     id?: number;

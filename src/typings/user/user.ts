@@ -1,7 +1,7 @@
-import { UserAvatar, UserOptions, UserPreviousName, UserStatisticTypes } from ".";
-import { Favourites } from "../favourites";
-import { MediaListOptions } from "../media";
-import { ModRole } from "../mod-role";
+import type { UserAvatar, UserOptions, UserPreviousName, UserStatisticTypes } from ".";
+import type { MediaListOptions } from "../media";
+import type { Favourites } from "../favourites";
+import type { ModRole } from "../mod-role";
 
 export interface User {
     id?: number;

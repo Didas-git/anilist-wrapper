@@ -1,8 +1,8 @@
-export * from "./staff";
-export * from "./staff-connection";
-export * from "./staff-edge";
-export * from "./staff-image";
-export * from "./staff-name";
-export * from "./staff-role-type";
-export * from "./staff-sort";
-export * from "./staff-arguments";
+export type * from "./staff";
+export type * from "./staff-connection";
+export type * from "./staff-edge";
+export type * from "./staff-image";
+export type * from "./staff-name";
+export type * from "./staff-role-type";
+export type * from "./staff-sort";
+export type * from "./staff-arguments";

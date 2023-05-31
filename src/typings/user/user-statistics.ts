@@ -1,16 +1,16 @@
-import {
+import type {
+    UserReleaseYearStatistic,
+    UserVoiceActorStatistic,
+    UserStartYearStatistic,
     UserCountryStatistic,
     UserFormatStatistic,
-    UserGenreStatistic,
-    UserLengthStatistic,
-    UserReleaseYearStatistic,
-    UserScoreStatistic,
-    UserStaffStatistic,
-    UserStartYearStatistic,
     UserStatusStatistic,
     UserStudioStatistic,
-    UserTagStatistic,
-    UserVoiceActorStatistic
+    UserLengthStatistic,
+    UserGenreStatistic,
+    UserScoreStatistic,
+    UserStaffStatistic,
+    UserTagStatistic
 } from ".";
 
 export interface UserStatistics {

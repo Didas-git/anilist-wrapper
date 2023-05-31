@@ -1,4 +1,4 @@
-import { MediaFormat, MediaRankType, MediaSeason } from ".";
+import type { MediaFormat, MediaRankType, MediaSeason } from ".";
 
 export interface MediaRank {
     id?: number;

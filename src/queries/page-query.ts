@@ -1,7 +1,14 @@
 import { MediaQuery, Query, StudioQuery } from ".";
-import { ExtractCharacter, ExtractMedia, ExtractStudio, Page, PageArguments } from "../typings";
-import { PageInfo } from "../connection/page-info";
 import { CharacterQuery } from "./character-query";
+import { PageInfo } from "../connection/page-info";
+
+import type {
+    ExtractCharacter,
+    ExtractMedia,
+    ExtractStudio,
+    Page,
+    PageArguments
+} from "../typings";
 
 export interface PageQuery<T> {
     fetch: ((raw?: false) => Promise<T extends Page

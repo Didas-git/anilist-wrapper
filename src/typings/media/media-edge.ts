@@ -1,7 +1,7 @@
-import { IEdge } from "../edge";
-import { Media, MediaRelation } from ".";
-import { Character, CharacterRole } from "../character";
-import { Staff, StaffRoleType } from "../staff";
+import type { Character, CharacterRole } from "../character";
+import type { Staff, StaffRoleType } from "../staff";
+import type { Media, MediaRelation } from ".";
+import type { IEdge } from "../edge";
 
 export interface IMediaEdge extends IEdge<Media> {
     id?: number | null;

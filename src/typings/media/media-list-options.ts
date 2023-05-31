@@ -1,5 +1,5 @@
-import { MediaListTypeOptions } from ".";
-import { ScoreFormat } from "../score";
+import type { MediaListTypeOptions } from ".";
+import type { ScoreFormat } from "../score";
 
 export interface MediaListOptions {
     scoreFormat?: ScoreFormat | null;

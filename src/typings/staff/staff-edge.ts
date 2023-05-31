@@ -1,5 +1,5 @@
-import { IEdge } from "../edge";
-import { Staff } from ".";
+import type { IEdge } from "../edge";
+import type { Staff } from ".";
 
 export interface StaffEdge extends IEdge<Staff> {
     id?: number | null;

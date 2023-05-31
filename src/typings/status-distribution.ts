@@ -1,4 +1,4 @@
-import { MediaListStatus } from "./media";
+import type { MediaListStatus } from "./media";
 
 export interface StatusDistribution {
     status?: MediaListStatus | null;

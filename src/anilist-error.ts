@@ -1,4 +1,4 @@
-import { AnilistErrorType } from "./typings";
+import type { AnilistErrorType } from "./typings";
 
 export class AnilistError extends Error {
     public errors: AnilistErrorType["errors"];

@@ -1,6 +1,6 @@
-import { CharacterImage, CharacterName } from ".";
-import { FuzzyDate } from "../fuzzy-date";
-import { MediaConnection } from "../media";
+import type { CharacterImage, CharacterName } from ".";
+import type { MediaConnection } from "../media";
+import type { FuzzyDate } from "../fuzzy-date";
 
 export interface Character {
     id?: number;

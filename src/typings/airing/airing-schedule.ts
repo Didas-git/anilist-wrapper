@@ -1,4 +1,4 @@
-import { Media } from "../media";
+import type { Media } from "../media";
 
 export interface AiringSchedule {
     id?: number;

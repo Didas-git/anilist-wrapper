@@ -1,8 +1,8 @@
-import { StaffImage, StaffName } from ".";
-import { CharacterConnection } from "../character";
-import { FuzzyDate } from "../fuzzy-date";
-import { MediaConnection } from "../media";
-import { User } from "../user";
+import type { CharacterConnection } from "../character";
+import type { MediaConnection } from "../media";
+import type { StaffImage, StaffName } from ".";
+import type { FuzzyDate } from "../fuzzy-date";
+import type { User } from "../user";
 
 export interface Staff {
     id?: number;

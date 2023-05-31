@@ -1,6 +1,7 @@
 import { MediaQuery } from "../queries";
-import { ExtractMedia, IMediaEdge } from "../typings";
 import { Edge } from "./edge";
+
+import type { ExtractMedia, IMediaEdge } from "../typings";
 
 export interface MediaEdge<T> {
     withNode: <K extends MediaQuery>(node: K | ((node: MediaQuery) => K)) => MediaEdge<T & { node: ExtractMedia<K> }>;

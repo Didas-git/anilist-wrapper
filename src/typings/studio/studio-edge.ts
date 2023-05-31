@@ -1,5 +1,5 @@
-import { IEdge } from "../edge";
-import { Studio } from "./studio";
+import type { IEdge } from "../edge";
+import type { Studio } from "./studio";
 
 export interface IStudioEdge extends IEdge<Studio> {
     id?: number | null;

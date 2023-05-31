@@ -1,7 +1,7 @@
-import { CharacterConnection } from "./character";
-import { MediaConnection } from "./media";
-import { StaffConnection } from "./staff";
-import { StudioConnection } from "./studio";
+import type { CharacterConnection } from "./character";
+import type { StudioConnection } from "./studio";
+import type { MediaConnection } from "./media";
+import type { StaffConnection } from "./staff";
 
 export interface Favourites {
     anime?: MediaConnection;

@@ -1,2 +1,2 @@
-export * from "./score-distribution";
-export * from "./score-format";
+export type * from "./score-distribution";
+export type * from "./score-format";

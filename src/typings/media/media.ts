@@ -1,12 +1,12 @@
-import { AiringSchedule, AiringScheduleConnection } from "../airing";
-import { CharacterConnection } from "../character";
-import { CountryCode } from "../country-code";
-import { FuzzyDate } from "../fuzzy-date";
-import { RecommendationConnection } from "../recommendation";
-import { ReviewConnection } from "../review";
-import { StaffConnection } from "../staff";
-import { StudioConnection } from "../studio";
-import {
+import type { AiringSchedule, AiringScheduleConnection } from "../airing";
+import type { RecommendationConnection } from "../recommendation";
+import type { CharacterConnection } from "../character";
+import type { CountryCode } from "../country-code";
+import type { StudioConnection } from "../studio";
+import type { ReviewConnection } from "../review";
+import type { StaffConnection } from "../staff";
+import type { FuzzyDate } from "../fuzzy-date";
+import type {
     MediaConnection,
     MediaCoverImage,
     MediaExternalLink,

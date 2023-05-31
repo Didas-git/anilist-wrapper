@@ -1,2 +1,2 @@
-export * from "./notification-option";
-export * from "./notification-type";
+export type * from "./notification-option";
+export type * from "./notification-type";

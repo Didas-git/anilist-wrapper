@@ -1,1 +1,1 @@
-export * from "./map-relation";
+export type * from "./map-relation";

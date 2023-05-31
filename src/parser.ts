@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { EnumTypes, QueryType } from "./typings";
+import { EnumTypes, type QueryType } from "./typings";
 
 interface ParseReturn {
     args: string | undefined;

@@ -1,4 +1,4 @@
-import { ExternalLinkType } from "../external-link-type";
+import type { ExternalLinkType } from "../external-link-type";
 
 export interface MediaExternalLink {
     id?: number;

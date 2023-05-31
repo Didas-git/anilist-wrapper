@@ -1,4 +1,4 @@
-import { MediaConnection } from "../media";
+import type { MediaConnection } from "../media";
 
 export interface Studio {
     id?: number;

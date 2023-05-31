@@ -1,4 +1,4 @@
-import { CharacterSort } from "./character-sort";
+import type { CharacterSort } from "./character-sort";
 
 export interface CharacterArguments {
     id?: number;

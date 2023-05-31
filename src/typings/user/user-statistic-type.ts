@@ -1,4 +1,4 @@
-import { UserStatistics } from ".";
+import type { UserStatistics } from ".";
 
 export interface UserStatisticTypes {
     anime?: UserStatistics | null;

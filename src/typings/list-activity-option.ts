@@ -1,4 +1,4 @@
-import { MediaListStatus } from "./media";
+import type { MediaListStatus } from "./media";
 
 export interface ListActivityOption {
     disabled?: boolean | null;

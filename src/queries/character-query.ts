@@ -1,13 +1,14 @@
 import { MediaEdge, PageInfo } from "../connection";
 import { MediaQuery } from "./media-query";
 import { Query } from "./query";
-import {
-    Character,
+
+import type {
     CharacterArguments,
-    ExtractMedia,
     ExtractMediaEdge,
     ExtractPageInfo,
+    ExtractMedia,
     MapRelation,
+    Character,
     MediaSort,
     MediaType
 } from "../typings";

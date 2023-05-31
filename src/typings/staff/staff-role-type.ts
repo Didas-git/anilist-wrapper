@@ -1,4 +1,4 @@
-import { Staff } from ".";
+import type { Staff } from ".";
 
 export interface StaffRoleType {
     voiceActor?: Staff | null;

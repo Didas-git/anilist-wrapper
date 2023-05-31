@@ -1,6 +1,6 @@
-import { RecommendationRating } from ".";
-import { Media } from "../media";
-import { User } from "../user";
+import type { RecommendationRating } from ".";
+import type { Media } from "../media";
+import type { User } from "../user";
 
 export interface Recommendation {
     id?: number;

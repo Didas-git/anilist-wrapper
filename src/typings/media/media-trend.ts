@@ -1,4 +1,4 @@
-import { Media } from ".";
+import type { Media } from ".";
 
 export interface MediaTrend {
     mediaId?: number;

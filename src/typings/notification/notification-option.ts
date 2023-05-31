@@ -1,4 +1,4 @@
-import { NotificationType } from ".";
+import type { NotificationType } from ".";
 
 export interface NotificationOption {
     type?: NotificationType | null;

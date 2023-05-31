@@ -1,10 +1,12 @@
 import { CharacterQuery, MediaQuery, PageQuery, StudioQuery } from "./queries";
-import { CharacterArguments, MediaArguments, PageArguments, StudioArguments } from "./typings";
+
+import type { CharacterArguments, MediaArguments, PageArguments, StudioArguments } from "./typings";
 
 export * from "./queries";
-export * from "./typings";
 export * from "./anilist-error";
 export * from "./connection";
+
+export type * from "./typings";
 
 export class Anilist {
     public query = {
