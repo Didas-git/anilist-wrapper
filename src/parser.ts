@@ -1,10 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { EnumTypes, type QueryType } from "./typings";
+import type { QueryType } from "./typings";
 
 interface ParseReturn {
     args: string | undefined;
     fields: string;
 }
+
+export const EnumTypes = new Set(["season", "type", "format", "status", "source", "format_not", "status_not"]);
 
 export abstract class Parser {
     protected abstract query: QueryType<any>;

@@ -3,8 +3,6 @@ import type { MediaFormat, MediaSeason, MediaSort, MediaStatus, MediaType, Media
 import type { CountryCode } from "../country-code";
 import type { FuzzyDateInt } from "../fuzzy-date";
 
-export const EnumTypes = new Set(["season", "type", "format", "status", "source", "format_not", "status_not"]);
-
 export interface MediaArguments {
     id?: number;
     idMal?: number;
