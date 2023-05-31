@@ -5,3 +5,4 @@ export * from "./staff-image";
 export * from "./staff-name";
 export * from "./staff-role-type";
 export * from "./staff-sort";
+export * from "./staff-arguments";

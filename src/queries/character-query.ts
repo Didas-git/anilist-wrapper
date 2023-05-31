@@ -100,7 +100,7 @@ export class CharacterQuery<T = {}> extends Query<Character, CharacterArguments>
             page?: number,
             perPage?: number
         }
-    }): MediaQuery<T & MapRelation<ExtractMediaEdge<E>, ExtractMedia<M>, ExtractPageInfo<P>>> {
+    }): CharacterQuery<T & MapRelation<ExtractMediaEdge<E>, ExtractMedia<M>, ExtractPageInfo<P>>> {
         if (!options) {
             this.query.set("media", ["edges { id }"]);
             return <never>this;
