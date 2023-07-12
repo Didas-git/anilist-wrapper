@@ -77,7 +77,6 @@
         "@typescript-eslint/default-param-last": "error",
         "@typescript-eslint/adjacent-overload-signatures": "error",
         "@typescript-eslint/no-dupe-class-members": "error",
-        "@typescript-eslint/no-duplicate-imports": "error",
         "@typescript-eslint/no-implied-eval": "error",
         "@typescript-eslint/space-infix-ops": "warn",
         "@typescript-eslint/no-meaningless-void-operator": "warn",
@@ -100,14 +99,6 @@
         "@typescript-eslint/no-confusing-non-null-assertion": "warn",
         "@typescript-eslint/explicit-member-accessibility": "warn",
         "@typescript-eslint/method-signature-style": "warn",
-        "@typescript-eslint/ban-types": [
-            "warn",
-            {
-                "types": {
-                    "{}": false
-                }
-            }
-        ],
         "@typescript-eslint/consistent-indexed-object-style": "warn",
         "@typescript-eslint/func-call-spacing": "warn",
         "@typescript-eslint/comma-dangle": "warn",
@@ -119,6 +110,20 @@
         "@typescript-eslint/padding-line-between-statements": "warn",
         "@typescript-eslint/semi": "warn",
         "@typescript-eslint/space-before-blocks": "warn",
+        "@typescript-eslint/ban-types": [
+            "warn",
+            {
+                "types": {
+                    "{}": false
+                }
+            }
+        ],
+        // "@typescript-eslint/no-duplicate-imports": [
+        //     "error",
+        //     {
+        //         "includeExports": true
+        //     }
+        // ],
         "@typescript-eslint/no-unnecessary-condition": [
             "warn",
             {
