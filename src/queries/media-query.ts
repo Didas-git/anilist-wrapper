@@ -42,10 +42,10 @@ export class MediaQuery<T = {}> extends Query<Media, MediaArguments> {
     protected type: string = "Media";
     protected args: MediaArguments = { type: "ANIME" };
 
-    public constructor(name?: string);
-    public constructor(args?: MediaArguments);
-    public constructor(params?: MediaArguments | string) {
-        super();
+    public constructor(name?: string, oAuthToken?: string);
+    public constructor(args?: MediaArguments, oAuthToken?: string);
+    public constructor(params?: MediaArguments | string, oAuthToken?: string) {
+        super(oAuthToken);
         if (params === undefined) return;
         if (typeof params === "string") this.args.search = params;
         else this.args = params;

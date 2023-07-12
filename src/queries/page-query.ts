@@ -29,11 +29,10 @@ export class PageQuery<T = {}> extends Query<Page, PageArguments> {
         id
     }`;
 
-    public constructor(page?: number);
-    public constructor(args?: PageArguments);
-    public constructor(args?: number | PageArguments) {
-        super();
-
+    public constructor(page?: number, oAuthToken?: string);
+    public constructor(args?: PageArguments, oAuthToken?: string);
+    public constructor(args?: number | PageArguments, oAuthToken?: string) {
+        super(oAuthToken);
         if (typeof args === "number") this.args.page = args;
         else this.args = { ...this.args, ...args };
     }

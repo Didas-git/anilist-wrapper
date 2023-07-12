@@ -27,10 +27,10 @@ export class StaffQuery<T = {}> extends Query<Staff, StaffArguments> {
     protected default: string = "id";
     protected type: string = "Staff";
 
-    public constructor(id?: number);
-    public constructor(args?: StaffArguments);
-    public constructor(params?: StaffArguments | number) {
-        super();
+    public constructor(id?: number, oAuthToken?: string);
+    public constructor(args?: StaffArguments, oAuthToken?: string);
+    public constructor(params?: StaffArguments | number, oAuthToken?: string) {
+        super(oAuthToken);
         if (params === undefined) return;
         if (typeof params === "number") this.args.id = params;
         else this.args = params;

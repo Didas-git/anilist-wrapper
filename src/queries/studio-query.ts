@@ -25,10 +25,10 @@ export class StudioQuery<T = {}> extends Query<Studio, StudioArguments> {
     protected default: string = "id";
     protected type: string = "Studio";
 
-    public constructor(id?: number);
-    public constructor(args?: StudioArguments);
-    public constructor(params?: StudioArguments | number) {
-        super();
+    public constructor(id?: number, oAuthToken?: string);
+    public constructor(args?: StudioArguments, oAuthToken?: string);
+    public constructor(params?: StudioArguments | number, oAuthToken?: string) {
+        super(oAuthToken);
         if (params === undefined) return;
         if (typeof params === "number") this.args.id = params;
         else this.args = params;

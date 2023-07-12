@@ -26,10 +26,10 @@ export class CharacterQuery<T = {}> extends Query<Character, CharacterArguments>
     protected default: string = "id";
     protected type: string = "Character";
 
-    public constructor(id?: number);
-    public constructor(args?: CharacterArguments);
-    public constructor(params?: CharacterArguments | number) {
-        super();
+    public constructor(id?: number, oAuthToken?: string);
+    public constructor(args?: CharacterArguments, oAuthToken?: string);
+    public constructor(params?: CharacterArguments | number, oAuthToken?: string) {
+        super(oAuthToken);
         if (params === undefined) return;
         if (typeof params === "number") this.args.id = params;
         else this.args = params;
