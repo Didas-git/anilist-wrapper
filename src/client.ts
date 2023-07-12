@@ -10,37 +10,15 @@ import {
 
 import type {
     CharacterArguments,
+    AccessTokenError,
+    AccessTokenInfo,
     StudioArguments,
-    StaffArguments,
     MediaArguments,
-    PageArguments
+    StaffArguments,
+    PageArguments,
+    ClientOptions,
+    OAuthFields
 } from "./typings";
-
-export interface ClientOptions {
-    OAuth?: OAuthFields;
-    OAuthToken?: string;
-    autoSaveOAuth?: boolean;
-}
-
-export interface OAuthFields {
-    clientId?: string | number;
-    clientSecret?: string;
-    redirectUri?: string;
-    responseType?: "token" | "code";
-}
-
-export interface AccessTokenInfo {
-    token_type: "Bearer";
-    expires_in: number;
-    access_token: string;
-    refresh_token: string;
-}
-
-export interface AccessTokenError {
-    error: string;
-    message: string;
-    hint: string;
-}
 
 export class Client {
     #options: ClientOptions;
