@@ -12,16 +12,20 @@ You can visit the official graphql docs for anilist [here](https://anilist.githu
   - [Installation](#installation)
   - [Usage](#usage)
     - [Creating a query](#creating-a-query)
-    - [Media query arguments](#media-query-arguments)
+    - [Query arguments](#query-arguments)
     - [Creating the query](#creating-the-query)
       - [Page Query](#page-query)
-      - [Media Query](#media-query)
+      - [Other Queries](#other-queries)
         - [Fetching without building the query](#fetching-without-building-the-query)
         - [Creating a complete search query](#creating-a-complete-search-query)
         - [Relations](#relations)
         - [Passing arguments at run time](#passing-arguments-at-run-time)
-      - [Character Query](#character-query)
-      - [Studio Query](#studio-query)
+  - [OAuth](#oauth)
+    - [`createOAuthURI`](#createoauthuri)
+      - [Implicit Grant URI](#implicit-grant-uri)
+      - [Authorization Code Grant](#authorization-code-grant)
+    - [`getAccessToken`](#getaccesstoken)
+    - [`handleOnServer`](#handleonserver)
 
 ## Status
 
@@ -37,25 +41,18 @@ npm i anilist
 
 ### Creating a query
 
-The exported `Anilist` object gives you 2 ways of creating a query, either by calling `query.<type>()` or `<type>Query()`.
-
 ```ts
 const query = anilist.mediaQuery();
 ```
-```ts
-const query = anilist.query.media();
-```
 
-I will be using `query.<type>()` for the examples moving forward
+### Query arguments
 
-### Media query arguments
-
-The media query can accept either an object of `MediaArguments` or a string.
+The queries can accept either an object of `MediaArguments` or a string.
 
 If you pass in a string it will be transformed into `{ search: string }` internally.
 
 ```ts
-const queryByName = anilist.query.media("Kamisama Ni Natta Hi");
+const queryByName = anilist.mediaQuery("Kamisama Ni Natta Hi");
 /*
 query {
     Media(type: ANIME, search: "Kamisama Ni Natta Hi") {
@@ -64,7 +61,7 @@ query {
 }
 */
 
-const queryById = anilist.query.media({
+const queryById = anilist.mediaQuery({
     id: 118419
 });
 /*
@@ -83,7 +80,7 @@ query {
 if you build the query and fetch it without telling which fields to return it will default to returning `{ media: { id } }` with `{ page: 1, perPage: 10 }`
 
 ```ts
-const query = anilist.query.page()
+const query = anilist.pageQuery()
 
 await query.fetch()
 /*
@@ -119,14 +116,14 @@ await query.fetch()
 */
 ```
 
-#### Media Query
+#### Other Queries
 
 ##### Fetching without building the query
 
 If you build the query and try to fetch it without telling which fields to return it will default to returning `id` to avoid errors.
 
 ```ts
-const query = anilist.query.media("Kamisama Ni Natta Hi");
+const query = anilist.mediaQuery("Kamisama Ni Natta Hi");
 
 await query.fetch();
 /*
@@ -146,7 +143,7 @@ await query.fetch();
 As the library follows the builder pattern you can just nest functions until you have every field you want.
 
 ```ts
-const query = anilist.query.media("Kamisama Ni Natta Hi")
+const query = anilist.mediaQuery("Kamisama Ni Natta Hi")
         .withId()
         .withSiteUrl()
         .withTitles()
@@ -170,7 +167,7 @@ await query.fetch();
 All relations that use edges and nodes will have the following structure
 
 ```ts
-anilist.query.media().withRelations({
+anilist.mediaQuery().withRelations({
   edges: (edge) => edge.withId().withNode((node) => node.withId()),
   nodes: (node) => node.withId(),
   pageInfo: (page) => page.withTotal(),
@@ -183,7 +180,7 @@ anilist.query.media().withRelations({
 Instead of passing the query arguments on query creation you can use `<MediaQuery>.prototype.arguments` to change them every time you want to run fetch. This will avoid creating a new query instance every time you change something on it.
 
 ```ts
-const query = anilist.query.media();
+const query = anilist.mediaQuery();
 
 await query.fetch()
 /*
@@ -204,12 +201,50 @@ await query.fetch()
 */
 ```
 
-#### Character Query
+## OAuth
 
-The usage is the same as the [MediaQuery](#media-query);
+The library provides 3 helpers methods for OAuth and i will explain them here
 
-#### Studio Query
+> **Remember:** 
+> All options can be passed to the client constructor so you don't have to pass them in every function
 
-The usage is the same as the [MediaQuery](#media-query);
+### `createOAuthURI`
+
+This method returns the url with all required properties
+
+#### Implicit Grant URI
+
+```ts
+// 
+const uri = anilist.createOAuthURI({
+  clientId: /* the id (can be an number or string) */,
+  responseType: "token"
+});
+```
+
+#### Authorization Code Grant
+
+```ts
+const uri = const uri = anilist.createOAuthURI({
+  clientId: /* the id (can be an number or string) */,
+  responseType: "code"
+})
+```
+
+### `getAccessToken`
+
+This helper method allows you to convert the Authorization Code Grant into an access token 
+
+```ts
+const response = anilist.getAccessToken(codeGrant, {
+  clientId: /* the id (can be an number or string) */,
+  clientSecret: /* the client secret */,
+  redirectUri: /* the redirect uri, this is required for this step*/,
+})
+```
+
+### `handleOnServer`
+
+This method will wait for a connection on `http://localhost:3000` and return the code that it received from that connection
 
 [^*]: Not everything is supported yet, please refer to the todo list to see what has full implementation or open an issue to talk about it 
