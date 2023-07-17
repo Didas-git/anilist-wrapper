@@ -49,7 +49,7 @@ export abstract class Query<T, K> extends Parser {
         return raw ? json : json.data[this.type];
     }
 
-    public arguments(args: K, token: string, override: boolean = false): this {
+    public arguments(args: K, token?: string, override: boolean = false): this {
         this.args = <never>(override ? args : { ...this.args, ...args });
         this.OAuthToken = token;
         return this;
