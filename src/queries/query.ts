@@ -51,7 +51,7 @@ export abstract class Query<T, K> extends Parser {
 
     public arguments(args: K, token?: string, override: boolean = false): this {
         this.args = <never>(override ? args : { ...this.args, ...args });
-        this.OAuthToken = token;
+        typeof token !== "undefined" && (this.OAuthToken = token);
         return this;
     }
 

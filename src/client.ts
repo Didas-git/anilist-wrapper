@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import { createServer } from "node:http";
 import {
     CharacterQuery,
     StudioQuery,
@@ -96,20 +95,5 @@ export class Client {
         });
 
         return <AccessTokenInfo | AccessTokenError>await res.json();
-    }
-
-    /** Be aware that the user still needs to click on the provided url */
-    public async handleOnServer(): Promise<string> {
-        return new Promise((resolve, reject) => {
-            const server = createServer((req, res) => {
-                const code = new URL(req.url ?? "", this.#options.OAuth?.redirectUri).searchParams.get("code");
-
-                res.end();
-                server.close();
-
-                if (code === null) reject("Something went wrong");
-                resolve(<string>code);
-            }).listen(3000);
-        });
     }
 }

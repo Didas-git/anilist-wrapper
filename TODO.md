@@ -27,7 +27,7 @@
 
 ## V2
 
-- [ ] Authentication
+- [x] Authentication
 - [ ] GenreCollection Query
 - [ ] MediaTagCollection Query
 - [ ] Viewer Query

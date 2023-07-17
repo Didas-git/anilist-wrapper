@@ -25,7 +25,6 @@ You can visit the official graphql docs for anilist [here](https://anilist.githu
       - [Implicit Grant URI](#implicit-grant-uri)
       - [Authorization Code Grant](#authorization-code-grant)
     - [`getAccessToken`](#getaccesstoken)
-    - [`handleOnServer`](#handleonserver)
 
 ## Status
 
@@ -203,7 +202,7 @@ await query.fetch()
 
 ## OAuth
 
-The library provides 3 helpers methods for OAuth and i will explain them here
+The library provides 2 helpers methods for OAuth and i will explain them here
 
 > **Remember:** 
 > All options can be passed to the client constructor so you don't have to pass them in every function
@@ -242,9 +241,5 @@ const response = anilist.getAccessToken(codeGrant, {
   redirectUri: /* the redirect uri, this is required for this step*/,
 })
 ```
-
-### `handleOnServer`
-
-This method will wait for a connection on `http://localhost:3000` and return the code that it received from that connection
 
 [^*]: Not everything is supported yet, please refer to the todo list to see what has full implementation or open an issue to talk about it 
