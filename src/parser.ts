@@ -22,18 +22,30 @@ export abstract class Parser {
         this.query.forEach((val, key) => {
             if (typeof val === "undefined") {
                 return arr.push(<string>key);
-            } else if (Array.isArray(val)) {
+            }
+
+            if (Array.isArray(val)) {
                 return arr.push(this.#parseFieldArray(<string>key, val));
             }
 
-            if (typeof val.args === "undefined" && typeof val.fields === "undefined") return arr.push(<string>key);
-            if (typeof val.fields === "undefined" && val.args !== undefined) {
-                if (typeof val.args === "string") return arr.push(this.#parseSimpleArgs(<string>key, val.args));
+            if (typeof val.args === "undefined" && typeof val.fields === "undefined") {
+                return arr.push(<string>key);
+            }
+            if (typeof val.fields === "undefined" && typeof val.args !== "undefined") {
+                if (typeof val.args === "string") {
+                    return arr.push(this.#parseSimpleArgs(<string>key, val.args));
+                }
                 return arr.push(this.#parseComplexArgs(<string>key, val.args));
             }
 
-            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-            return arr.push(this.#parseFieldArray(typeof val.args === "string" ? this.#parseSimpleArgs(<string>key, val.args) : this.#parseComplexArgs(<string>key, val.args!), val.fields!));
+            if (typeof val.fields !== "undefined" && typeof val.args === "undefined") {
+                return arr.push(this.#parseFieldArray(<string>key, val.fields));
+            }
+
+            return arr.push(this.#parseFieldArray(typeof val.args === "string"
+                ? this.#parseSimpleArgs(<string>key, val.args)
+                // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+                : this.#parseComplexArgs(<string>key, val.args!), val.fields!));
         });
 
         return {
