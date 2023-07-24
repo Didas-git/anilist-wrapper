@@ -1,4 +1,5 @@
 import {
+    AiringScheduleQuery,
     MediaTrendQuery,
     CharacterQuery,
     StudioQuery,
@@ -8,12 +9,13 @@ import {
 } from ".";
 
 import type {
+    AiringScheduleArguments,
+    MediaTrendArguments,
     CharacterArguments,
     StudioArguments,
     MediaArguments,
     StaffArguments,
-    PageArguments,
-    MediaTrendArguments
+    PageArguments
 } from "../typings";
 
 export class Queries {
@@ -40,6 +42,12 @@ export class Queries {
     public mediaTrend(args?: MediaTrendArguments, oAuthToken?: string): MediaTrendQuery;
     public mediaTrend(params?: MediaTrendArguments | number, oAuthToken?: string): MediaTrendQuery {
         return new MediaTrendQuery(<never>params, oAuthToken ?? this.#OAuthToken);
+    }
+
+    public airingSchedule(id?: number, oAuthToken?: string): AiringScheduleQuery;
+    public airingSchedule(args?: AiringScheduleArguments, oAuthToken?: string): AiringScheduleQuery;
+    public airingSchedule(params?: AiringScheduleArguments | number, oAuthToken?: string): AiringScheduleQuery {
+        return new AiringScheduleQuery(<never>params, oAuthToken ?? this.#OAuthToken);
     }
 
     public character(id?: number, oAuthToken?: string): CharacterQuery;

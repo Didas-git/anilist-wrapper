@@ -37,7 +37,7 @@
 - [ ] ExternalLinkSourceCollection Query
 - [ ] Fully implement Page query
 - [ ] Fully implement Media Query
-- [ ] AiringSchedule Query
+- [x] AiringSchedule Query
 - [ ] Recommendation Query
 - [ ] User Query
 
