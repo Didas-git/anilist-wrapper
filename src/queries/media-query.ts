@@ -1,7 +1,15 @@
-import { CharacterEdge, StudioEdge, MediaEdge, PageInfo } from "../connection";
 import { CharacterQuery } from "./character-query";
-import { StudioQuery } from ".";
+import { StudioQuery } from "./studio-query";
+import { StaffQuery } from "./staff-query";
 import { Query } from "./query";
+
+import {
+    CharacterEdge,
+    StudioEdge,
+    MediaEdge,
+    PageInfo,
+    StaffEdge
+} from "../connection";
 
 import type {
     MediaStreamingEpisode,
@@ -26,7 +34,10 @@ import type {
     MediaRank,
     FuzzyDate,
     MediaTag,
-    Media
+    Media,
+    ExtractStaffEdge,
+    ExtractStaff,
+    StaffSort
 } from "../typings";
 
 export interface MediaQuery<T> {
@@ -270,6 +281,33 @@ export class MediaQuery<T = {}> extends Query<Media, MediaArguments> {
 
     //! PENDING!!!
     // public withStaff() {}
+
+    public withStaff<E extends StaffEdge, S extends StaffQuery, P extends PageInfo>(options?: {
+        edges?: E | ((edge: StaffEdge) => E),
+        nodes?: S | ((node: StaffQuery) => S),
+        pageInfo?: P | ((page: PageInfo) => P),
+        args?: {
+            sort?: Array<StaffSort>,
+            isMain?: boolean
+        }
+    }): MediaQuery<T & MapRelation<ExtractStaffEdge<E>, ExtractStaff<S>, ExtractPageInfo<P>>> {
+        if (!options) {
+            this.query.set("staff", ["edges { id }"]);
+            return <never>this;
+        }
+
+        const arr: Array<string> = [];
+        const edges = typeof options.edges === "function" ? options.edges(new StaffEdge()).parse() : options.edges?.parse();
+        const nodes = typeof options.nodes === "function" ? options.nodes(new StaffQuery()).parse() : options.nodes?.parse();
+        const pageInfo = typeof options.pageInfo === "function" ? options.pageInfo(new PageInfo()).parse() : options.pageInfo?.parse();
+
+        edges && arr.push(`edges { ${edges.fields} }`);
+        nodes && arr.push(`nodes { ${nodes.fields} }`);
+        pageInfo && arr.push(`pageInfo { ${pageInfo.fields} }`);
+
+        this.query.set("studios", { args: options.args, fields: arr.length ? arr : ["edges { id }"] });
+        return <never>this;
+    }
 
     public withStudios<E extends StudioEdge, S extends StudioQuery, P extends PageInfo>(options?: {
         edges?: E | ((edge: StudioEdge) => E),
