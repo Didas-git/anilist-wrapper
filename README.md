@@ -31,7 +31,7 @@ You can visit the official graphql docs for anilist [here](https://anilist.githu
 To see the current status of the wrapper check the [todo](TODO.md) list.
 
 > **Warning**
-> As of v0.12 the only way to create queries is ` query.<queryName>`
+> As of v0.12 the only way to create queries is `query.<queryName>`
 
 ## Installation
 
