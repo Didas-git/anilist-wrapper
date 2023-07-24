@@ -15,23 +15,12 @@
 - [x] Set -> Map
 - [x] Character Query
 - [x] Studio Query
-- [ ] Staff Query
-
-## ~
-
-- [ ] AiringSchedule Query
-- [ ] Recommendation Query
-- [ ] User Query
-- [x] Add ESLint
-- [ ] Add proper tests using vitest
-
-## V2
-
+- [x] Staff Query
 - [x] Authentication
 - [ ] GenreCollection Query
 - [ ] MediaTagCollection Query
 - [ ] Viewer Query
-- [ ] MediaTrend Query
+- [x] MediaTrend Query
 - [ ] MediaList Query
 - [ ] MediaListCollection Query
 - [ ] Notification Query
@@ -48,3 +37,15 @@
 - [ ] ExternalLinkSourceCollection Query
 - [ ] Fully implement Page query
 - [ ] Fully implement Media Query
+- [ ] AiringSchedule Query
+- [ ] Recommendation Query
+- [ ] User Query
+
+## ~
+
+- [x] Add ESLint
+- [ ] Add proper tests using vitest
+
+## V2
+
+- [ ] Mutations
