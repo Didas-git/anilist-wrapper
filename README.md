@@ -30,6 +30,10 @@ You can visit the official graphql docs for anilist [here](https://anilist.githu
 
 To see the current status of the wrapper check the [todo](TODO.md) list.
 
+> **Warning**
+
+As of v0.12 the only way to create queries is ` query.<queryName>`
+
 ## Installation
 
 ```sh
@@ -41,7 +45,7 @@ npm i anilist
 ### Creating a query
 
 ```ts
-const query = anilist.mediaQuery();
+const query = anilist.query.media();
 ```
 
 ### Query arguments
@@ -51,7 +55,7 @@ The queries can accept either an object of `MediaArguments` or a string.
 If you pass in a string it will be transformed into `{ search: string }` internally.
 
 ```ts
-const queryByName = anilist.mediaQuery("Kamisama Ni Natta Hi");
+const queryByName = anilist.query.media("Kamisama Ni Natta Hi");
 /*
 query {
     Media(type: ANIME, search: "Kamisama Ni Natta Hi") {
@@ -60,7 +64,7 @@ query {
 }
 */
 
-const queryById = anilist.mediaQuery({
+const queryById = anilist.query.media({
     id: 118419
 });
 /*
@@ -122,7 +126,7 @@ await query.fetch()
 If you build the query and try to fetch it without telling which fields to return it will default to returning `id` to avoid errors.
 
 ```ts
-const query = anilist.mediaQuery("Kamisama Ni Natta Hi");
+const query = anilist.query.media("Kamisama Ni Natta Hi");
 
 await query.fetch();
 /*
@@ -142,7 +146,7 @@ await query.fetch();
 As the library follows the builder pattern you can just nest functions until you have every field you want.
 
 ```ts
-const query = anilist.mediaQuery("Kamisama Ni Natta Hi")
+const query = anilist.query.media("Kamisama Ni Natta Hi")
         .withId()
         .withSiteUrl()
         .withTitles()
@@ -166,7 +170,7 @@ await query.fetch();
 All relations that use edges and nodes will have the following structure
 
 ```ts
-anilist.mediaQuery().withRelations({
+anilist.query.media().withRelations({
   edges: (edge) => edge.withId().withNode((node) => node.withId()),
   nodes: (node) => node.withId(),
   pageInfo: (page) => page.withTotal(),
@@ -176,10 +180,10 @@ anilist.mediaQuery().withRelations({
 
 ##### Passing arguments at run time
 
-Instead of passing the query arguments on query creation you can use `<MediaQuery>.prototype.arguments` to change them every time you want to run fetch. This will avoid creating a new query instance every time you change something on it.
+Instead of passing the query arguments on query creation you can use `<query.media>.prototype.arguments` to change them every time you want to run fetch. This will avoid creating a new query instance every time you change something on it.
 
 ```ts
-const query = anilist.mediaQuery();
+const query = anilist.query.media();
 
 await query.fetch()
 /*
