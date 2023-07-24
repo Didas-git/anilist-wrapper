@@ -1,6 +1,8 @@
-import { MediaQuery, Query, StudioQuery } from ".";
 import { CharacterQuery } from "./character-query";
-import { PageInfo } from "../connection/page-info";
+import { StudioQuery } from "./studio-query";
+import { MediaQuery } from "./media-query";
+import { PageInfo } from "../connection";
+import { Base } from "../base";
 
 import type {
     ExtractCharacter,
@@ -18,16 +20,18 @@ export interface PageQuery<T> {
             : { data: { Page: { media: Array<{ id: number }> } } }>);
 }
 
-export class PageQuery<T = {}> extends Query<Page, PageArguments> {
+export class PageQuery<T = {}> extends Base<Page, PageArguments> {
     protected type: string = "Page";
+    protected default: string = `media {
+        id
+    }`;
+
     protected args: PageArguments = {
         page: 1,
         perPage: 10
     };
 
-    protected default: string = `media {
-        id
-    }`;
+    protected override queryOrMutation: "query" | "mutation" = "query";
 
     public constructor(page?: number, oAuthToken?: string);
     public constructor(args?: PageArguments, oAuthToken?: string);

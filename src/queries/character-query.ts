@@ -1,6 +1,6 @@
 import { MediaEdge, PageInfo } from "../connection";
 import { MediaQuery } from "./media-query";
-import { Query } from "./query";
+import { Base } from "../base";
 
 import type {
     CharacterArguments,
@@ -21,10 +21,11 @@ export interface CharacterQuery<T> {
             : { data: { Character: { id: number } } }>);
 }
 
-export class CharacterQuery<T = {}> extends Query<Character, CharacterArguments> {
-    protected args: CharacterArguments = {};
-    protected default: string = "id";
-    protected type: string = "Character";
+export class CharacterQuery<T = {}> extends Base<Character, CharacterArguments> {
+    protected override default: string = "id";
+    protected override type: string = "Character";
+    protected override args: CharacterArguments = {};
+    protected override queryOrMutation: "query" | "mutation" = "query";
 
     public constructor(id?: number, oAuthToken?: string);
     public constructor(args?: CharacterArguments, oAuthToken?: string);

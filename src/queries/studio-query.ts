@@ -1,6 +1,6 @@
 import { MediaEdge, PageInfo } from "../connection";
-import { MediaQuery } from ".";
-import { Query } from "./query";
+import { MediaQuery } from "./media-query";
+import { Base } from "../base";
 
 import type {
     ExtractMediaEdge,
@@ -20,10 +20,11 @@ export interface StudioQuery<T> {
             : { data: { Studio: { id: number } } }>);
 }
 
-export class StudioQuery<T = {}> extends Query<Studio, StudioArguments> {
-    protected args: StudioArguments = {};
-    protected default: string = "id";
-    protected type: string = "Studio";
+export class StudioQuery<T = {}> extends Base<Studio, StudioArguments> {
+    protected override default: string = "id";
+    protected override type: string = "Studio";
+    protected override args: StudioArguments = {};
+    protected override queryOrMutation: "query" | "mutation" = "query";
 
     public constructor(id?: number, oAuthToken?: string);
     public constructor(args?: StudioArguments, oAuthToken?: string);

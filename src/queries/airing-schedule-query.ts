@@ -1,4 +1,4 @@
-import { Query } from "./query";
+import { Base } from "../base";
 
 import type {
     AiringScheduleArguments,
@@ -15,10 +15,11 @@ export interface AiringScheduleQuery<T> {
             : { data: { AiringSchedule: { id: number } } }>);
 }
 
-export class AiringScheduleQuery<T = {}> extends Query<AiringSchedule, AiringScheduleArguments> {
+export class AiringScheduleQuery<T = {}> extends Base<AiringSchedule, AiringScheduleArguments> {
     protected override default: string = "id";
     protected override type: string = "AiringSchedule";
     protected override args: AiringScheduleArguments = {};
+    protected override queryOrMutation: "query" | "mutation" = "query";
 
     public constructor(id?: number, oAuthToken?: string);
     public constructor(args?: AiringScheduleArguments, oAuthToken?: string);

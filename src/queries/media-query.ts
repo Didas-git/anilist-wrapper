@@ -1,7 +1,7 @@
 import { CharacterQuery } from "./character-query";
 import { StudioQuery } from "./studio-query";
 import { StaffQuery } from "./staff-query";
-import { Query } from "./query";
+import { Base } from "../base";
 
 import {
     CharacterEdge,
@@ -48,10 +48,11 @@ export interface MediaQuery<T> {
             : { data: { Media: { id: number } } }>);
 }
 
-export class MediaQuery<T = {}> extends Query<Media, MediaArguments> {
-    protected default: string = "id";
-    protected type: string = "Media";
-    protected args: MediaArguments = { type: "ANIME" };
+export class MediaQuery<T = {}> extends Base<Media, MediaArguments> {
+    protected override default: string = "id";
+    protected override type: string = "Media";
+    protected override args: MediaArguments = { type: "ANIME" };
+    protected override queryOrMutation: "query" | "mutation" = "query";
 
     public constructor(name?: string, oAuthToken?: string);
     public constructor(args?: MediaArguments, oAuthToken?: string);

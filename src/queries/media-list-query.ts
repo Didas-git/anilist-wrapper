@@ -1,10 +1,10 @@
-import { Query } from "./query";
+import { MediaQuery } from "./media-query";
+import { Base } from "../base";
 
 import type {
     ExtractMedia,
     MediaList, MediaListArguments, ScoreFormat
 } from "../typings";
-import { MediaQuery } from "./media-query";
 
 export interface MediaListQuery<T> {
     fetch: ((raw?: false) => Promise<T extends MediaList
@@ -14,10 +14,11 @@ export interface MediaListQuery<T> {
             : { data: { MediaList: { id: number } } }>);
 }
 
-export class MediaListQuery<T = {}> extends Query<MediaList, MediaListArguments> {
-    protected default: string = "id";
-    protected type: string = "MediaList";
-    protected args: MediaListArguments = { type: "ANIME" };
+export class MediaListQuery<T = {}> extends Base<MediaList, MediaListArguments> {
+    protected override default: string = "id";
+    protected override type: string = "MediaList";
+    protected override args: MediaListArguments = { type: "ANIME" };
+    protected override queryOrMutation: "query" | "mutation" = "query";
 
     public constructor(id?: number, oAuthToken?: string);
     public constructor(args?: MediaListArguments, oAuthToken?: string);

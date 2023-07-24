@@ -1,7 +1,7 @@
 import { CharacterEdge, MediaEdge, PageInfo } from "../connection";
 import { CharacterQuery } from "./character-query";
 import { MediaQuery } from "./media-query";
-import { Query } from "./query";
+import { Base } from "../base";
 
 import type {
     ExtractMediaEdge,
@@ -22,10 +22,11 @@ export interface StaffQuery<T> {
             : { data: { Staff: { id: number } } }>);
 }
 
-export class StaffQuery<T = {}> extends Query<Staff, StaffArguments> {
-    protected args: StaffArguments = {};
-    protected default: string = "id";
-    protected type: string = "Staff";
+export class StaffQuery<T = {}> extends Base<Staff, StaffArguments> {
+    protected override default: string = "id";
+    protected override type: string = "Staff";
+    protected override args: StaffArguments = {};
+    protected override queryOrMutation: "query" | "mutation" = "query";
 
     public constructor(id?: number, oAuthToken?: string);
     public constructor(args?: StaffArguments, oAuthToken?: string);

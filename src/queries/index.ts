@@ -1,4 +1,3 @@
-export * from "./query";
 export * from "./airing-schedule-query";
 export * from "./media-trend-query";
 export * from "./media-list-query";

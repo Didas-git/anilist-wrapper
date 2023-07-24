@@ -1,13 +1,18 @@
-import { AnilistError } from "../anilist-error";
-import { Parser } from "../parser";
+import { AnilistError } from "./anilist-error";
+import { Parser } from "./parser";
 
-import type { QueryType } from "../typings";
+import type { QueryType } from "./typings";
 
-export abstract class Query<T, K> extends Parser {
+export abstract class Base<T, K> extends Parser {
     private static url = "https://graphql.anilist.co";
 
     protected query: QueryType<T> = new Map();
+
+    /** @internal */
     protected abstract type: string;
+
+    /** @internal */
+    protected abstract queryOrMutation: "query" | "mutation";
 
     /** @internal */
     // eslint-disable-next-line @typescript-eslint/naming-convention
@@ -21,7 +26,7 @@ export abstract class Query<T, K> extends Parser {
 
     protected buildQuery(): string {
         const { args, fields } = this.parse();
-        return `query{${this.type}(${args}){${fields}}}`;
+        return `${this.queryOrMutation}{${this.type}(${args}){${fields}}}`;
     }
 
     public async fetch(raw?: boolean): Promise<unknown> {
@@ -35,7 +40,7 @@ export abstract class Query<T, K> extends Parser {
 
         if (typeof this.OAuthToken !== "undefined") headers.Authorization = `Bearer ${this.OAuthToken}`;
 
-        const res = await fetch(Query.url, {
+        const res = await fetch(Base.url, {
             method: "POST",
             body: JSON.stringify({ query: this.buildQuery() }),
             headers

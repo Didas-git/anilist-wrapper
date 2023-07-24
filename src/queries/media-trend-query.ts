@@ -1,5 +1,5 @@
 import { MediaQuery } from "./media-query";
-import { Query } from "./query";
+import { Base } from "../base";
 
 import type {
     MediaTrendArguments,
@@ -15,10 +15,11 @@ export interface MediaTrendQuery<T> {
             : { data: { MediaTrend: { episode: number } } }>);
 }
 
-export class MediaTrendQuery<T = {}> extends Query<MediaTrend, MediaTrendArguments> {
+export class MediaTrendQuery<T = {}> extends Base<MediaTrend, MediaTrendArguments> {
     protected override default: string = "episode";
     protected override type: string = "MediaTrend";
     protected override args: MediaTrendArguments = {};
+    protected override queryOrMutation: "query" | "mutation" = "query";
 
     public constructor(id?: number, oAuthToken?: string);
     public constructor(args?: MediaTrendArguments, oAuthToken?: string);
