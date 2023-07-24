@@ -1,6 +1,6 @@
 {
   "name": "anilist",
-  "version": "0.11.0",
+  "version": "0.11.1",
   "description": "An UNOFFICIAL wrapper for the anilist api written in typescript",
   "main": "./dist/index.js",
   "exports": {
@@ -10,6 +10,9 @@
       "default": "./dist/index.js"
     },
     "./package.json": "./package.json"
+  },
+  "engines": {
+    "node": ">=18"
   },
   "files": [
     "./dist/"
