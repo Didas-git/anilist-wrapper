@@ -5,13 +5,15 @@ import {
     StudioQuery,
     StaffQuery,
     MediaQuery,
-    PageQuery
+    PageQuery,
+    MediaListQuery
 } from ".";
 
 import type {
     AiringScheduleArguments,
     MediaTrendArguments,
     CharacterArguments,
+    MediaListArguments,
     StudioArguments,
     MediaArguments,
     StaffArguments,
@@ -56,15 +58,22 @@ export class Queries {
         return new CharacterQuery(<never>params, oAuthToken ?? this.#OAuthToken);
     }
 
+    public staff(id?: number, oAuthToken?: string): StaffQuery;
+    public staff(args?: StaffArguments, oAuthToken?: string): StaffQuery;
+    public staff(params?: StaffArguments | number, oAuthToken?: string): StaffQuery {
+        return new StaffQuery(<never>params, oAuthToken ?? this.#OAuthToken);
+    }
+
+    public mediaList(id?: number, oAuthToken?: string): MediaListQuery;
+    public mediaList(args?: MediaListArguments, oAuthToken?: string): MediaListQuery;
+    public mediaList(params?: MediaListArguments | number, oAuthToken?: string): MediaListQuery {
+        return new MediaListQuery(<never>params, oAuthToken ?? this.#OAuthToken);
+    }
+
     public studio(id?: number, oAuthToken?: string): StudioQuery;
     public studio(args?: StudioArguments, oAuthToken?: string): StudioQuery;
     public studio(params?: StudioArguments | number, oAuthToken?: string): StudioQuery {
         return new StudioQuery(<never>params, oAuthToken ?? this.#OAuthToken);
     }
 
-    public staff(id?: number, oAuthToken?: string): StaffQuery;
-    public staff(args?: StaffArguments, oAuthToken?: string): StaffQuery;
-    public staff(params?: StaffArguments | number, oAuthToken?: string): StaffQuery {
-        return new StaffQuery(<never>params, oAuthToken ?? this.#OAuthToken);
-    }
 }
