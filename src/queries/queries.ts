@@ -1,0 +1,54 @@
+import {
+    CharacterQuery,
+    StudioQuery,
+    StaffQuery,
+    MediaQuery,
+    PageQuery
+} from ".";
+
+import type {
+    CharacterArguments,
+    StudioArguments,
+    MediaArguments,
+    StaffArguments,
+    PageArguments
+} from "../typings";
+
+export class Queries {
+    // eslint-disable-next-line @typescript-eslint/naming-convention
+    #OAuthToken: string | undefined;
+
+    public constructor(token: string | undefined) {
+        this.#OAuthToken = token;
+    }
+
+    public page(page?: number, oAuthToken?: string): PageQuery;
+    public page(params?: PageArguments, oAuthToken?: string): PageQuery;
+    public page(params?: number | PageArguments, oAuthToken?: string): PageQuery {
+        return new PageQuery(<never>params, oAuthToken ?? this.#OAuthToken);
+    }
+
+    public media(search?: string, oAuthToken?: string): MediaQuery;
+    public media(args?: MediaArguments, oAuthToken?: string): MediaQuery;
+    public media(params?: string | MediaArguments, oAuthToken?: string): MediaQuery {
+        return new MediaQuery(<never>params, oAuthToken ?? this.#OAuthToken);
+    }
+
+    public character(id?: number, oAuthToken?: string): CharacterQuery;
+    public character(args?: CharacterArguments, oAuthToken?: string): CharacterQuery;
+    public character(params?: CharacterArguments | number, oAuthToken?: string): CharacterQuery {
+        return new CharacterQuery(<never>params, oAuthToken ?? this.#OAuthToken);
+    }
+
+    public studio(id?: number, oAuthToken?: string): StudioQuery;
+    public studio(args?: StudioArguments, oAuthToken?: string): StudioQuery;
+    public studio(params?: StudioArguments | number, oAuthToken?: string): StudioQuery {
+        return new StudioQuery(<never>params, oAuthToken ?? this.#OAuthToken);
+    }
+
+    public staff(id?: number, oAuthToken?: string): StaffQuery;
+    public staff(args?: StaffArguments, oAuthToken?: string): StaffQuery;
+    public staff(params?: StaffArguments | number, oAuthToken?: string): StaffQuery {
+        return new StaffQuery(<never>params, oAuthToken ?? this.#OAuthToken);
+    }
+}

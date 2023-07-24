@@ -1,59 +1,21 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import {
-    CharacterQuery,
-    StudioQuery,
-    StaffQuery,
-    MediaQuery,
-    PageQuery
-} from "./queries";
+import { Queries } from "./queries";
 
+// eslint-disable-next-line @typescript-eslint/consistent-type-imports
 import type {
-    CharacterArguments,
     AccessTokenError,
     AccessTokenInfo,
-    StudioArguments,
-    MediaArguments,
-    StaffArguments,
-    PageArguments,
     ClientOptions,
     OAuthFields
 } from "./typings";
 
 export class Client {
     #options: ClientOptions;
+    #queries: Queries;
 
     public constructor(options?: ClientOptions) {
         this.#options = options ?? <ClientOptions>{};
-    }
-
-    public pageQuery(page?: number, oAuthToken?: string): PageQuery;
-    public pageQuery(params?: PageArguments, oAuthToken?: string): PageQuery;
-    public pageQuery(params?: number | PageArguments, oAuthToken?: string): PageQuery {
-        return new PageQuery(<never>params, oAuthToken ?? this.#options.OAuthToken);
-    }
-
-    public mediaQuery(search?: string, oAuthToken?: string): MediaQuery;
-    public mediaQuery(args?: MediaArguments, oAuthToken?: string): MediaQuery;
-    public mediaQuery(params?: string | MediaArguments, oAuthToken?: string): MediaQuery {
-        return new MediaQuery(<never>params, oAuthToken ?? this.#options.OAuthToken);
-    }
-
-    public characterQuery(id?: number, oAuthToken?: string): CharacterQuery;
-    public characterQuery(args?: CharacterArguments, oAuthToken?: string): CharacterQuery;
-    public characterQuery(params?: CharacterArguments | number, oAuthToken?: string): CharacterQuery {
-        return new CharacterQuery(<never>params, oAuthToken ?? this.#options.OAuthToken);
-    }
-
-    public studioQuery(id?: number, oAuthToken?: string): StudioQuery;
-    public studioQuery(args?: StudioArguments, oAuthToken?: string): StudioQuery;
-    public studioQuery(params?: StudioArguments | number, oAuthToken?: string): StudioQuery {
-        return new StudioQuery(<never>params, oAuthToken ?? this.#options.OAuthToken);
-    }
-
-    public staffQuery(id?: number, oAuthToken?: string): StaffQuery;
-    public staffQuery(args?: StaffArguments, oAuthToken?: string): StaffQuery;
-    public staffQuery(params?: StaffArguments | number, oAuthToken?: string): StaffQuery {
-        return new StaffQuery(<never>params, oAuthToken ?? this.#options.OAuthToken);
+        this.#queries = new Queries(this.#options.OAuthToken);
     }
 
     public createOAuthURI(options?: OAuthFields): string {
@@ -95,5 +57,9 @@ export class Client {
         });
 
         return <AccessTokenInfo | AccessTokenError>await res.json();
+    }
+
+    public get query(): Queries {
+        return this.#queries;
     }
 }
