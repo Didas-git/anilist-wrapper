@@ -1,6 +1,6 @@
 import { anilist } from "../src";
 
-const query = anilist.mediaQuery("Kamisama Ni Natta Hi").withId().withFormat().withStatus();
+const query = anilist.query.media("Kamisama Ni Natta Hi").withId().withFormat().withStatus();
 
 console.log(query.raw);
 /*
