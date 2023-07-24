@@ -1,7 +1,11 @@
+import { MediaQuery } from "./media-query";
 import { Query } from "./query";
 
-import type { ExtractMedia, MediaTrend, MediaTrendArguments } from "../typings";
-import { MediaQuery } from "./media-query";
+import type {
+    MediaTrendArguments,
+    ExtractMedia,
+    MediaTrend
+} from "../typings";
 
 export interface MediaTrendQuery<T> {
     fetch: ((raw?: false) => Promise<T extends MediaTrend
