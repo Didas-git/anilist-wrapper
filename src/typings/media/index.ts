@@ -1,6 +1,7 @@
 export type * from "./media-streaming-episode";
 export type * from "./media-list-type-options";
 export type * from "./media-trend-connection";
+export type * from "./media-trend-arguments";
 export type * from "./media-external-link";
 export type * from "./media-list-options";
 export type * from "./media-list-status";

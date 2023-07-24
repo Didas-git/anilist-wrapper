@@ -1,4 +1,5 @@
 import {
+    MediaTrendQuery,
     CharacterQuery,
     StudioQuery,
     StaffQuery,
@@ -11,7 +12,8 @@ import type {
     StudioArguments,
     MediaArguments,
     StaffArguments,
-    PageArguments
+    PageArguments,
+    MediaTrendArguments
 } from "../typings";
 
 export class Queries {
@@ -32,6 +34,12 @@ export class Queries {
     public media(args?: MediaArguments, oAuthToken?: string): MediaQuery;
     public media(params?: string | MediaArguments, oAuthToken?: string): MediaQuery {
         return new MediaQuery(<never>params, oAuthToken ?? this.#OAuthToken);
+    }
+
+    public mediaTrend(id?: number, oAuthToken?: string): MediaTrendQuery;
+    public mediaTrend(args?: MediaTrendArguments, oAuthToken?: string): MediaTrendQuery;
+    public mediaTrend(params?: MediaTrendArguments | number, oAuthToken?: string): MediaTrendQuery {
+        return new MediaTrendQuery(<never>params, oAuthToken ?? this.#OAuthToken);
     }
 
     public character(id?: number, oAuthToken?: string): CharacterQuery;

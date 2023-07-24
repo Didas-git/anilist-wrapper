@@ -1,4 +1,5 @@
 export * from "./query";
+export * from "./media-trend-query";
 export * from "./character-query";
 export * from "./studio-query";
 export * from "./media-query";
