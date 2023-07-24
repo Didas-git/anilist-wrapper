@@ -6,9 +6,9 @@ import { MediaQuery } from "./media-query";
 export interface MediaTrendQuery<T> {
     fetch: ((raw?: false) => Promise<T extends MediaTrend
         ? { [K in keyof T]: T[K] }
-        : { id: number }>) & ((raw?: true) => Promise<T extends MediaTrend
-            ? { data: { Media: { [K in keyof T]: T[K] } } }
-            : { data: { Media: { id: number } } }>);
+        : { episode: number }>) & ((raw?: true) => Promise<T extends MediaTrend
+            ? { data: { MediaTrend: { [K in keyof T]: T[K] } } }
+            : { data: { MediaTrend: { episode: number } } }>);
 }
 
 export class MediaTrendQuery<T = {}> extends Query<MediaTrend, MediaTrendArguments> {
