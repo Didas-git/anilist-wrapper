@@ -6,6 +6,8 @@ import type {
     CharacterArguments,
     ExtractMediaEdge,
     ExtractPageInfo,
+    CharacterImage,
+    CharacterName,
     ExtractMedia,
     MapRelation,
     Character,
@@ -41,13 +43,13 @@ export class CharacterQuery<T = {}> extends Base<Character, CharacterArguments> 
         return <never>this;
     }
 
-    public withName(): CharacterQuery<T & { name: Required<Character>["name"] }> {
-        this.query.set("name", void 0);
+    public withName(...args: Array<keyof CharacterName>): CharacterQuery<T & { name: Required<Character>["name"] }> {
+        this.query.set("name", args.length ? args : ["first", "middle", "last", "full", "native", "userPreferred"]);
         return <never>this;
     }
 
-    public withImage(): CharacterQuery<T & { image: Required<Character>["image"] }> {
-        this.query.set("image", void 0);
+    public withImage(...args: Array<keyof CharacterImage>): CharacterQuery<T & { image: Required<Character>["image"] }> {
+        this.query.set("image", args.length ? args : ["large", "medium"]);
         return <never>this;
     }
 

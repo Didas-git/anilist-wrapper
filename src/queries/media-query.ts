@@ -280,9 +280,6 @@ export class MediaQuery<T = {}> extends Base<Media, MediaArguments> {
         return <never>this;
     }
 
-    //! PENDING!!!
-    // public withStaff() {}
-
     public withStaff<E extends StaffEdge, S extends StaffQuery, P extends PageInfo>(options?: {
         edges?: E | ((edge: StaffEdge) => E),
         nodes?: S | ((node: StaffQuery) => S),

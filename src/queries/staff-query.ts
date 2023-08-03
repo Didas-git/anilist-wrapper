@@ -9,8 +9,10 @@ import type {
     StaffArguments,
     ExtractMedia,
     MapRelation,
+    StaffImage,
     MediaSort,
     MediaType,
+    StaffName,
     Staff
 } from "../typings";
 
@@ -42,8 +44,8 @@ export class StaffQuery<T = {}> extends Base<Staff, StaffArguments> {
         return <never>this;
     }
 
-    public withName(): StaffQuery<T & { name: Required<Staff>["name"] }> {
-        this.query.set("name", void 0);
+    public withName(...args: Array<keyof StaffName>): StaffQuery<T & { name: Required<Staff>["name"] }> {
+        this.query.set("name", args.length ? args : ["first", "middle", "last", "full", "native", "userPreferred"]);
         return <never>this;
     }
 
@@ -52,8 +54,8 @@ export class StaffQuery<T = {}> extends Base<Staff, StaffArguments> {
         return <never>this;
     }
 
-    public withImage(): StaffQuery<T & { image: Required<Staff>["image"] }> {
-        this.query.set("image", void 0);
+    public withImage(...args: Array<keyof StaffImage>): StaffQuery<T & { image: Required<Staff>["image"] }> {
+        this.query.set("image", args.length ? args : ["large", "medium"]);
         return <never>this;
     }
 
@@ -207,15 +209,17 @@ export class StaffQuery<T = {}> extends Base<Staff, StaffArguments> {
         return <never>this;
     }
 
-    public withStaff(): StaffQuery<T & { staff: Required<Staff>["staff"] }> {
-        this.query.set("staff", void 0);
-        return <never>this;
-    }
+    //! NEEDS REFACTOR!!!
+    // public withStaff(): StaffQuery<T & { staff: Required<Staff>["staff"] }> {
+    //     this.query.set("staff", void 0);
+    //     return <never>this;
+    // }
 
-    public withSubmitter(): StaffQuery<T & { submitter: Required<Staff>["submitter"] }> {
-        this.query.set("submitter", void 0);
-        return <never>this;
-    }
+    //! PENDING!!!
+    // public withSubmitter(): StaffQuery<T & { submitter: Required<Staff>["submitter"] }> {
+    //     this.query.set("submitter", void 0);
+    //     return <never>this;
+    // }
 
     public withSubmissionStatus(): StaffQuery<T & { submissionStatus: Required<Staff>["submissionStatus"] }> {
         this.query.set("submissionStatus", void 0);
