@@ -9,6 +9,7 @@ import { Base } from "../base";
 
 import type {
     ExtractAiringSchedule,
+    ExtractMediaTrend,
     ExtractCharacter,
     ExtractMediaList,
     ExtractStudio,
@@ -16,7 +17,6 @@ import type {
     ExtractMedia,
     ExtractStaff,
     Page,
-    ExtractMediaTrend
 } from "../typings";
 import { MediaTrendQuery } from "./media-trend-query";
 

@@ -39,6 +39,21 @@ const query = anilist.query.media()
         nodes: (n) => n.withId(),
         pageInfo: (p) => p.withTotal()
     })
+    .withCharacters({
+        edges: (e) => e.withNode((n) => n.withId()),
+        nodes: (n) => n.withId(),
+        pageInfo: (p) => p.withTotal()
+    })
+    .withStaff({
+        edges: (e) => e.withNode((n) => n.withId()),
+        nodes: (n) => n.withId(),
+        pageInfo: (p) => p.withTotal()
+    })
+    .withStudios({
+        edges: (e) => e.withNode((n) => n.withId()),
+        nodes: (n) => n.withId(),
+        pageInfo: (p) => p.withTotal()
+    })
     .isFavourite()
     .isFavouriteBlocked()
     .isAdult()

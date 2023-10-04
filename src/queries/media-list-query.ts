@@ -2,8 +2,10 @@ import { MediaQuery } from "./media-query";
 import { Base } from "../base";
 
 import type {
+    MediaListArguments,
     ExtractMedia,
-    MediaList, MediaListArguments, ScoreFormat
+    ScoreFormat,
+    MediaList
 } from "../typings";
 
 export interface MediaListQuery<T> {

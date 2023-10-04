@@ -18,6 +18,7 @@ import type {
     ExtractStudioEdge,
     ExtractMediaEdge,
     ExtractCharacter,
+    ExtractStaffEdge,
     ExtractPageInfo,
     MediaCoverImage,
     MediaArguments,
@@ -28,16 +29,16 @@ import type {
     ExtractMedia,
     MediaTrailer,
     MapRelations,
+    ExtractStaff,
     MediaTitle,
     StudioSort,
     MediaList,
     MediaRank,
     FuzzyDate,
+    StaffSort,
     MediaTag,
-    Media,
-    ExtractStaffEdge,
-    ExtractStaff,
-    StaffSort
+    Expand,
+    Media
 } from "../typings";
 
 export interface MediaQuery<T> {
@@ -232,11 +233,11 @@ export class MediaQuery<T = {}> extends Base<Media, MediaArguments> {
         return <never>this;
     }
 
-    public withRelations<E extends MediaEdge, M extends MediaQuery, P extends PageInfo>(options?: {
+    public withRelations<E extends MediaEdge, M extends MediaQuery<any>, P extends PageInfo>(options?: {
         edges?: E | ((edge: MediaEdge) => E),
         nodes?: M | ((node: MediaQuery) => M),
         pageInfo?: P | ((page: PageInfo) => P)
-    }): MediaQuery<T & { relations: MapRelations<ExtractMediaEdge<E>, ExtractMedia<M>, ExtractPageInfo<P>> }> {
+    }): MediaQuery<T & { relations: Expand<MapRelations<ExtractMediaEdge<E>, ExtractMedia<M>, ExtractPageInfo<P>>> }> {
         if (!options) {
             this.query.set("relations", ["edges { id }"]);
             return <never>this;
@@ -265,7 +266,7 @@ export class MediaQuery<T = {}> extends Base<Media, MediaArguments> {
             page?: number,
             perPage?: number
         }
-    }): MediaQuery<T & { characters: MapRelations<ExtractCharacterEdge<E>, ExtractCharacter<C>, ExtractPageInfo<P>> }> {
+    }): MediaQuery<T & { characters: Expand<MapRelations<ExtractCharacterEdge<E>, ExtractCharacter<C>, ExtractPageInfo<P>>> }> {
         if (!options) {
             this.query.set("characters", ["edges { id }"]);
             return <never>this;
@@ -292,7 +293,7 @@ export class MediaQuery<T = {}> extends Base<Media, MediaArguments> {
             sort?: Array<StaffSort>,
             isMain?: boolean
         }
-    }): MediaQuery<T & { staff: MapRelations<ExtractStaffEdge<E>, ExtractStaff<S>, ExtractPageInfo<P>> }> {
+    }): MediaQuery<T & { staff: Expand<MapRelations<ExtractStaffEdge<E>, ExtractStaff<S>, ExtractPageInfo<P>>> }> {
         if (!options) {
             this.query.set("staff", ["edges { id }"]);
             return <never>this;
@@ -319,7 +320,7 @@ export class MediaQuery<T = {}> extends Base<Media, MediaArguments> {
             sort?: Array<StudioSort>,
             isMain?: boolean
         }
-    }): MediaQuery<T & { studios: MapRelations<ExtractStudioEdge<E>, ExtractStudio<S>, ExtractPageInfo<P>> }> {
+    }): MediaQuery<T & { studios: Expand<MapRelations<ExtractStudioEdge<E>, ExtractStudio<S>, ExtractPageInfo<P>>> }> {
         if (!options) {
             this.query.set("studios", ["edges { id }"]);
             return <never>this;

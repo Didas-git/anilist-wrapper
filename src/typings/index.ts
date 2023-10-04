@@ -21,6 +21,7 @@ export type * from "./extract";
 export type * from "./studio";
 export type * from "./review";
 export type * from "./airing";
+export type * from "./expand";
 export type * from "./media";
 export type * from "./score";
 export type * from "./staff";

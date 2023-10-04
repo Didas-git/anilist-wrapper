@@ -13,7 +13,8 @@ import type {
     MediaSort,
     MediaType,
     StaffName,
-    Staff
+    Staff,
+    Expand
 } from "../typings";
 
 export interface StaffQuery<T> {
@@ -134,7 +135,7 @@ export class StaffQuery<T = {}> extends Base<Staff, StaffArguments> {
             page?: number,
             perPage?: number
         }
-    }): StaffQuery<T & { staffMedia: MapRelations<ExtractMediaEdge<E>, ExtractMedia<M>, ExtractPageInfo<P>> }> {
+    }): StaffQuery<T & { staffMedia: Expand<MapRelations<ExtractMediaEdge<E>, ExtractMedia<M>, ExtractPageInfo<P>>> }> {
         if (!options) {
             this.query.set("staffMedia", ["edges { id }"]);
             return <never>this;
@@ -164,7 +165,7 @@ export class StaffQuery<T = {}> extends Base<Staff, StaffArguments> {
             page?: number,
             perPage?: number
         }
-    }): StaffQuery<T & { characters: MapRelations<ExtractMediaEdge<E>, ExtractMedia<M>, ExtractPageInfo<P>> }> {
+    }): StaffQuery<T & { characters: Expand<MapRelations<ExtractMediaEdge<E>, ExtractMedia<M>, ExtractPageInfo<P>>> }> {
         if (!options) {
             this.query.set("characters", ["edges { id }"]);
             return <never>this;
@@ -194,7 +195,7 @@ export class StaffQuery<T = {}> extends Base<Staff, StaffArguments> {
             page?: number,
             perPage?: number
         }
-    }): StaffQuery<T & { characterMedia: MapRelations<ExtractMediaEdge<E>, ExtractMedia<M>, ExtractPageInfo<P>> }> {
+    }): StaffQuery<T & { characterMedia: Expand<MapRelations<ExtractMediaEdge<E>, ExtractMedia<M>, ExtractPageInfo<P>>> }> {
         if (!options) {
             this.query.set("characterMedia", ["edges { id }"]);
             return <never>this;
