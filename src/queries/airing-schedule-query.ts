@@ -8,11 +8,15 @@ import type {
 import { MediaQuery } from "./media-query";
 
 export interface AiringScheduleQuery<T> {
-    fetch: ((raw?: false) => Promise<T extends AiringSchedule
-        ? { [K in keyof T]: T[K] }
-        : { id: number }>) & ((raw?: true) => Promise<T extends AiringSchedule
-            ? { data: { AiringSchedule: { [K in keyof T]: T[K] } } }
-            : { data: { AiringSchedule: { id: number } } }>);
+    fetch: ((raw?: false) => Promise<
+        keyof T extends never
+        ? { id: number }
+        : { [K in keyof T]: T[K] }
+    >) & ((raw?: true) => Promise<
+        keyof T extends never
+        ? { data: { AiringSchedule: { id: number } } }
+        : { data: { AiringSchedule: { [K in keyof T]: T[K] } } }
+    >);
 }
 
 export class AiringScheduleQuery<T = {}> extends Base<AiringSchedule, AiringScheduleArguments> {
@@ -25,7 +29,7 @@ export class AiringScheduleQuery<T = {}> extends Base<AiringSchedule, AiringSche
     public constructor(args?: AiringScheduleArguments, oAuthToken?: string);
     public constructor(params?: AiringScheduleArguments | number, oAuthToken?: string) {
         super(oAuthToken);
-        if (params === undefined) return;
+        if (typeof params === "undefined") return;
         if (typeof params === "number") this.args.id = params;
         else this.args = params;
     }
@@ -56,7 +60,7 @@ export class AiringScheduleQuery<T = {}> extends Base<AiringSchedule, AiringSche
     }
 
     public withMedia<M extends MediaQuery>(media: M | ((media: MediaQuery) => M)): AiringScheduleQuery<T & { media: ExtractMedia<M> }> {
-        const { fields } = typeof media === "function" ? media(<never>new MediaQuery()).parse() : media.parse();
+        const { fields } = typeof media === "function" ? media(new MediaQuery()).parse() : media.parse();
 
         this.query.set("media", { args: void 0, fields: [fields] });
         return <never>this;

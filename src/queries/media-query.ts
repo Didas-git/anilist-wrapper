@@ -41,11 +41,15 @@ import type {
 } from "../typings";
 
 export interface MediaQuery<T> {
-    fetch: ((raw?: false) => Promise<T extends Media
-        ? { [K in keyof T]: T[K] }
-        : { id: number }>) & ((raw?: true) => Promise<T extends Media
-            ? { data: { Media: { [K in keyof T]: T[K] } } }
-            : { data: { Media: { id: number } } }>);
+    fetch: ((raw?: false) => Promise<
+        keyof T extends never
+        ? { id: number }
+        : { [K in keyof T]: T[K] }
+    >) & ((raw?: true) => Promise<
+        keyof T extends never
+        ? { data: { Media: { id: number } } }
+        : { data: { Media: { [K in keyof T]: T[K] } } }
+    >);
 }
 
 export class MediaQuery<T = {}> extends Base<Media, MediaArguments> {

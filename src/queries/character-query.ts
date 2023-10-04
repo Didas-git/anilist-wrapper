@@ -16,11 +16,15 @@ import type {
 } from "../typings";
 
 export interface CharacterQuery<T> {
-    fetch: ((raw?: false) => Promise<T extends Character
-        ? { [K in keyof T]: T[K] }
-        : { id: number }>) & ((raw?: true) => Promise<T extends Character
-            ? { data: { Character: { [K in keyof T]: T[K] } } }
-            : { data: { Character: { id: number } } }>);
+    fetch: ((raw?: false) => Promise<
+        keyof T extends never
+        ? { id: number }
+        : { [K in keyof T]: T[K] }
+    >) & ((raw?: true) => Promise<
+        keyof T extends never
+        ? { data: { Character: { id: number } } }
+        : { data: { Character: { [K in keyof T]: T[K] } } }
+    >);
 }
 
 export class CharacterQuery<T = {}> extends Base<Character, CharacterArguments> {
@@ -29,12 +33,12 @@ export class CharacterQuery<T = {}> extends Base<Character, CharacterArguments> 
     protected override args: CharacterArguments = {};
     protected override queryOrMutation: "query" | "mutation" = "query";
 
-    public constructor(id?: number, oAuthToken?: string);
+    public constructor(name?: string, oAuthToken?: string);
     public constructor(args?: CharacterArguments, oAuthToken?: string);
-    public constructor(params?: CharacterArguments | number, oAuthToken?: string) {
+    public constructor(params?: CharacterArguments | string, oAuthToken?: string) {
         super(oAuthToken);
-        if (params === undefined) return;
-        if (typeof params === "number") this.args.id = params;
+        if (typeof params === "undefined") return;
+        if (typeof params === "string") this.args.search = params;
         else this.args = params;
     }
 

@@ -38,7 +38,7 @@ export class CharacterEdge<T = {}> extends Edge<CharacterQuery, ICharacterEdge> 
     // }
 
     public withMedia<M extends MediaQuery>(media: M | ((media: MediaQuery) => M)): CharacterEdge<T & { media: Array<ExtractMedia<M>> }> {
-        const { args, fields } = typeof media === "function" ? media(<never>new MediaQuery()).parse() : media.parse();
+        const { args, fields } = typeof media === "function" ? media(new MediaQuery()).parse() : media.parse();
 
         this.query.set("media", { args, fields: [fields] });
         return <never>this;

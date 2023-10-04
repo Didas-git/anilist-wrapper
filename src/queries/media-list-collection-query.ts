@@ -7,33 +7,33 @@ import type {
 } from "../typings";
 
 export interface MediaListCollectionQuery<T> {
-    fetch: ((raw?: false) => Promise<T extends MediaListCollection
-        ? { [K in keyof T]: T[K] }
-        : { id: number }>) & ((raw?: true) => Promise<T extends MediaListCollection
-            ? { data: { MediaListCollection: { [K in keyof T]: T[K] } } }
-            : { data: { MediaListCollection: { id: number } } }>);
+    fetch: ((raw?: false) => Promise<
+        keyof T extends never
+        ? { hasNextChunk: boolean }
+        : { [K in keyof T]: T[K] }
+    >) & ((raw?: true) => Promise<
+        keyof T extends never
+        ? { data: { MediaListCollection: { hasNextChunk: boolean } } }
+        : { data: { MediaListCollection: { [K in keyof T]: T[K] } } }
+    >);
 }
 
 export class MediaListCollectionQuery<T = {}> extends Base<MediaListCollection, MediaListCollectionArguments> {
-    protected override default: string = `lists {
-        name
-    }`;
-
+    protected override default: string = "hasNextChunk";
     protected override type: string = "MediaListCollection";
     protected override args: MediaListCollectionArguments = { type: "ANIME" };
     protected override queryOrMutation: "query" | "mutation" = "query";
 
-    public constructor(name?: string, oAuthToken?: string);
-    public constructor(args?: MediaListCollectionArguments, oAuthToken?: string);
-    public constructor(params?: MediaListCollectionArguments | string, oAuthToken?: string) {
+    public constructor(name: string, oAuthToken?: string);
+    public constructor(args: MediaListCollectionArguments, oAuthToken?: string);
+    public constructor(params: MediaListCollectionArguments | string, oAuthToken?: string) {
         super(oAuthToken);
-        if (params === undefined) return;
         if (typeof params === "string") this.args.userName = params;
         else this.args = params;
     }
 
-    public withLists<P extends MediaListGroupQuery, K extends MediaListGroupQuery>(mediaGroup: K | ((mediaGroup: P) => K)): MediaListCollectionQuery<T & { lists: Required<MediaListCollection>["lists"] }> {
-        const { args, fields } = typeof mediaGroup === "function" ? mediaGroup(<P>new MediaListGroupQuery()).parse() : mediaGroup.parse();
+    public withLists<M extends MediaListGroupQuery>(mediaGroup: M | ((mediaGroup: MediaListGroupQuery) => M)): MediaListCollectionQuery<T & { lists: Required<MediaListCollection>["lists"] }> {
+        const { args, fields } = typeof mediaGroup === "function" ? mediaGroup(new MediaListGroupQuery()).parse() : mediaGroup.parse();
 
         this.query.set("lists", { args, fields: [fields] });
         return <never>this;

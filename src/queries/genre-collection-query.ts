@@ -1,7 +1,8 @@
 import { Base } from "../base";
 
 export interface GenreCollectionQuery {
-    fetch: ((raw?: false) => Promise<Array<string>>) & ((raw?: true) => Promise<{ data: { GenreCollection: Array<string> } }>);
+    fetch: ((raw?: false) => Promise<Array<string>>)
+    & ((raw?: true) => Promise<{ data: { GenreCollection: Array<string> } }>);
 }
 
 export class GenreCollectionQuery extends Base<never, never> {

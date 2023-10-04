@@ -17,11 +17,15 @@ import type {
 } from "../typings";
 
 export interface StaffQuery<T> {
-    fetch: ((raw?: false) => Promise<T extends Staff
-        ? { [K in keyof T]: T[K] }
-        : { id: number }>) & ((raw?: true) => Promise<T extends Staff
-            ? { data: { Staff: { [K in keyof T]: T[K] } } }
-            : { data: { Staff: { id: number } } }>);
+    fetch: ((raw?: false) => Promise<
+        keyof T extends never
+        ? { id: number }
+        : { [K in keyof T]: T[K] }
+    >) & ((raw?: true) => Promise<
+        keyof T extends never
+        ? { data: { Staff: { id: number } } }
+        : { data: { Staff: { [K in keyof T]: T[K] } } }
+    >);
 }
 
 export class StaffQuery<T = {}> extends Base<Staff, StaffArguments> {
@@ -30,12 +34,12 @@ export class StaffQuery<T = {}> extends Base<Staff, StaffArguments> {
     protected override args: StaffArguments = {};
     protected override queryOrMutation: "query" | "mutation" = "query";
 
-    public constructor(id?: number, oAuthToken?: string);
+    public constructor(search?: string, oAuthToken?: string);
     public constructor(args?: StaffArguments, oAuthToken?: string);
-    public constructor(params?: StaffArguments | number, oAuthToken?: string) {
+    public constructor(params?: StaffArguments | string, oAuthToken?: string) {
         super(oAuthToken);
         if (params === undefined) return;
-        if (typeof params === "number") this.args.id = params;
+        if (typeof params === "string") this.args.search = params;
         else this.args = params;
     }
 

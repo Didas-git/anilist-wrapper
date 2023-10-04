@@ -13,11 +13,15 @@ import type {
 } from "../typings";
 
 export interface StudioQuery<T> {
-    fetch: ((raw?: false) => Promise<T extends Studio
-        ? { [K in keyof T]: T[K] }
-        : { id: number }>) & ((raw?: true) => Promise<T extends Studio
-            ? { data: { Studio: { [K in keyof T]: T[K] } } }
-            : { data: { Studio: { id: number } } }>);
+    fetch: ((raw?: false) => Promise<
+        keyof T extends never
+        ? { id: number }
+        : { [K in keyof T]: T[K] }
+    >) & ((raw?: true) => Promise<
+        keyof T extends never
+        ? { data: { Studio: { id: number } } }
+        : { data: { Studio: { [K in keyof T]: T[K] } } }
+    >);
 }
 
 export class StudioQuery<T = {}> extends Base<Studio, StudioArguments> {
@@ -26,12 +30,12 @@ export class StudioQuery<T = {}> extends Base<Studio, StudioArguments> {
     protected override args: StudioArguments = {};
     protected override queryOrMutation: "query" | "mutation" = "query";
 
-    public constructor(id?: number, oAuthToken?: string);
+    public constructor(name?: string, oAuthToken?: string);
     public constructor(args?: StudioArguments, oAuthToken?: string);
-    public constructor(params?: StudioArguments | number, oAuthToken?: string) {
+    public constructor(params?: StudioArguments | string, oAuthToken?: string) {
         super(oAuthToken);
         if (params === undefined) return;
-        if (typeof params === "number") this.args.id = params;
+        if (typeof params === "string") this.args.search = params;
         else this.args = params;
     }
 

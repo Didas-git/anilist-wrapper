@@ -49,21 +49,21 @@ export class Queries {
         return new MediaTrendQuery(<never>params, oAuthToken ?? this.#OAuthToken);
     }
 
-    public airingSchedule(id?: number, oAuthToken?: string): AiringScheduleQuery;
-    public airingSchedule(args?: AiringScheduleArguments, oAuthToken?: string): AiringScheduleQuery;
-    public airingSchedule(params?: AiringScheduleArguments | number, oAuthToken?: string): AiringScheduleQuery {
+    public airingSchedule(id: number, oAuthToken?: string): AiringScheduleQuery;
+    public airingSchedule(args: AiringScheduleArguments, oAuthToken?: string): AiringScheduleQuery;
+    public airingSchedule(params: AiringScheduleArguments | number, oAuthToken?: string): AiringScheduleQuery {
         return new AiringScheduleQuery(<never>params, oAuthToken ?? this.#OAuthToken);
     }
 
-    public character(id?: number, oAuthToken?: string): CharacterQuery;
+    public character(name?: string, oAuthToken?: string): CharacterQuery;
     public character(args?: CharacterArguments, oAuthToken?: string): CharacterQuery;
-    public character(params?: CharacterArguments | number, oAuthToken?: string): CharacterQuery {
+    public character(params?: CharacterArguments | string, oAuthToken?: string): CharacterQuery {
         return new CharacterQuery(<never>params, oAuthToken ?? this.#OAuthToken);
     }
 
-    public staff(id?: number, oAuthToken?: string): StaffQuery;
+    public staff(name?: string, oAuthToken?: string): StaffQuery;
     public staff(args?: StaffArguments, oAuthToken?: string): StaffQuery;
-    public staff(params?: StaffArguments | number, oAuthToken?: string): StaffQuery {
+    public staff(params?: StaffArguments | string, oAuthToken?: string): StaffQuery {
         return new StaffQuery(<never>params, oAuthToken ?? this.#OAuthToken);
     }
 
@@ -83,9 +83,9 @@ export class Queries {
         return new GenreCollectionQuery(oAuthToken);
     }
 
-    public studio(id?: number, oAuthToken?: string): StudioQuery;
+    public studio(name?: string, oAuthToken?: string): StudioQuery;
     public studio(args?: StudioArguments, oAuthToken?: string): StudioQuery;
-    public studio(params?: StudioArguments | number, oAuthToken?: string): StudioQuery {
+    public studio(params?: StudioArguments | string, oAuthToken?: string): StudioQuery {
         return new StudioQuery(<never>params, oAuthToken ?? this.#OAuthToken);
     }
 

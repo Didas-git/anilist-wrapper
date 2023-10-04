@@ -8,11 +8,15 @@ import type {
 } from "../typings";
 
 export interface MediaTrendQuery<T> {
-    fetch: ((raw?: false) => Promise<T extends MediaTrend
-        ? { [K in keyof T]: T[K] }
-        : { episode: number }>) & ((raw?: true) => Promise<T extends MediaTrend
-            ? { data: { MediaTrend: { [K in keyof T]: T[K] } } }
-            : { data: { MediaTrend: { episode: number } } }>);
+    fetch: ((raw?: false) => Promise<
+        keyof T extends never
+        ? { episode: number }
+        : { [K in keyof T]: T[K] }
+    >) & ((raw?: true) => Promise<
+        keyof T extends never
+        ? { data: { MediaTrend: { episode: number } } }
+        : { data: { MediaTrend: { [K in keyof T]: T[K] } } }
+    >);
 }
 
 export class MediaTrendQuery<T = {}> extends Base<MediaTrend, MediaTrendArguments> {
@@ -25,7 +29,7 @@ export class MediaTrendQuery<T = {}> extends Base<MediaTrend, MediaTrendArgument
     public constructor(args?: MediaTrendArguments, oAuthToken?: string);
     public constructor(params?: MediaTrendArguments | number, oAuthToken?: string) {
         super(oAuthToken);
-        if (params === undefined) return;
+        if (typeof params === "undefined") return;
         if (typeof params === "number") this.args.mediaId = params;
         else this.args = params;
     }
@@ -71,7 +75,7 @@ export class MediaTrendQuery<T = {}> extends Base<MediaTrend, MediaTrendArgument
     }
 
     public withMedia<M extends MediaQuery>(media: M | ((media: MediaQuery) => M)): MediaTrendQuery<T & { media: ExtractMedia<M> }> {
-        const { fields } = typeof media === "function" ? media(<never>new MediaQuery()).parse() : media.parse();
+        const { fields } = typeof media === "function" ? media(new MediaQuery()).parse() : media.parse();
 
         this.query.set("media", { args: void 0, fields: [fields] });
         return <never>this;

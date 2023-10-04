@@ -7,11 +7,15 @@ import type {
 } from "../typings";
 
 export interface MediaListQuery<T> {
-    fetch: ((raw?: false) => Promise<T extends MediaList
-        ? { [K in keyof T]: T[K] }
-        : { id: number }>) & ((raw?: true) => Promise<T extends MediaList
-            ? { data: { MediaList: { [K in keyof T]: T[K] } } }
-            : { data: { MediaList: { id: number } } }>);
+    fetch: ((raw?: false) => Promise<
+        keyof T extends never
+        ? { id: number }
+        : { [K in keyof T]: T[K] }
+    >) & ((raw?: true) => Promise<
+        keyof T extends never
+        ? { data: { MediaList: { id: number } } }
+        : { data: { MediaList: { [K in keyof T]: T[K] } } }
+    >);
 }
 
 export class MediaListQuery<T = {}> extends Base<MediaList, MediaListArguments> {
@@ -120,7 +124,7 @@ export class MediaListQuery<T = {}> extends Base<MediaList, MediaListArguments> 
     }
 
     public withMedia<M extends MediaQuery>(media: M | ((media: MediaQuery) => M)): MediaListQuery<T & { media: ExtractMedia<M> }> {
-        const { fields } = typeof media === "function" ? media(<never>new MediaQuery()).parse() : media.parse();
+        const { fields } = typeof media === "function" ? media(new MediaQuery()).parse() : media.parse();
 
         this.query.set("media", { args: void 0, fields: [fields] });
         return <never>this;

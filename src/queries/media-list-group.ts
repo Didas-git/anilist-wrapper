@@ -3,22 +3,14 @@ import { MediaListQuery } from "./media-list-query";
 
 import type { MediaListGroup } from "../typings";
 
-export interface MediaListGroupQuery<T> {
-    fetch: ((raw?: false) => Promise<T extends MediaListGroup
-        ? { [K in keyof T]: T[K] }
-        : { id: number }>) & ((raw?: true) => Promise<T extends MediaListGroup
-            ? { data: { MediaListGroup: { [K in keyof T]: T[K] } } }
-            : { data: { MediaListGroup: { id: number } } }>);
-}
-
 export class MediaListGroupQuery<T = {}> extends Base<MediaListGroup, never> {
     protected override default: string = "name";
     protected override type: string = "MediaListGroup";
     protected override args: Record<PropertyKey, any> | undefined;
     protected override queryOrMutation: "query" | "mutation" = "query";
 
-    public withEntries<P extends MediaListQuery, K extends MediaListQuery>(mediaList: K | ((mediaList: P) => K)): MediaListGroupQuery<T & { entries: Required<MediaListGroup>["entries"] }> {
-        const { args, fields } = typeof mediaList === "function" ? mediaList(<P>new MediaListQuery()).parse() : mediaList.parse();
+    public withEntries<M extends MediaListQuery>(mediaList: M | ((mediaList: MediaListQuery) => M)): MediaListGroupQuery<T & { entries: Required<MediaListGroup>["entries"] }> {
+        const { args, fields } = typeof mediaList === "function" ? mediaList(new MediaListQuery()).parse() : mediaList.parse();
 
         this.query.set("entries", { args, fields: [fields] });
         return <never>this;
