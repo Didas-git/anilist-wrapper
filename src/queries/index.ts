@@ -1,4 +1,5 @@
 export * from "./media-list-collection-query";
+export * from "./genre-collection-query";
 export * from "./airing-schedule-query";
 export * from "./media-trend-query";
 export * from "./media-list-query";

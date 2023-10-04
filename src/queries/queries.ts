@@ -1,5 +1,6 @@
 import {
     MediaListCollectionQuery,
+    GenreCollectionQuery,
     AiringScheduleQuery,
     MediaTrendQuery,
     CharacterQuery,
@@ -76,6 +77,10 @@ export class Queries {
     public mediaListCollection(args?: MediaListCollectionArguments, oAuthToken?: string): MediaListCollectionQuery;
     public mediaListCollection(params?: MediaListCollectionArguments | string, oAuthToken?: string): MediaListCollectionQuery {
         return new MediaListCollectionQuery(<never>params, oAuthToken ?? this.#OAuthToken);
+    }
+
+    public genreCollection(oAuthToken?: string): GenreCollectionQuery {
+        return new GenreCollectionQuery(oAuthToken);
     }
 
     public studio(id?: number, oAuthToken?: string): StudioQuery;

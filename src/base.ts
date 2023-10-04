@@ -26,7 +26,13 @@ export abstract class Base<T, K> extends Parser {
 
     protected buildQuery(): string {
         const { args, fields } = this.parse();
-        return `${this.queryOrMutation}{${this.type}(${args}){${fields}}}`;
+        let query = `${this.queryOrMutation}{${this.type}`;
+
+        if (typeof args !== "undefined") query += `(${args})`;
+        if (typeof fields !== "undefined" && fields.length !== 0) query += `{${fields}}`;
+        query += "}";
+
+        return query;
     }
 
     public async fetch(raw?: boolean): Promise<unknown> {
