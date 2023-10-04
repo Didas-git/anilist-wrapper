@@ -17,12 +17,12 @@
 - [x] Studio Query
 - [x] Staff Query
 - [x] Authentication
-- [ ] GenreCollection Query
+- [x] GenreCollection Query
 - [ ] MediaTagCollection Query
 - [ ] Viewer Query
 - [x] MediaTrend Query
 - [x] MediaList Query
-- [ ] MediaListCollection Query
+- [x] MediaListCollection Query
 - [ ] Notification Query
 - [ ] Review Query
 - [ ] Activity Query

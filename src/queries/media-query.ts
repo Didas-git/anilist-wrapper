@@ -27,7 +27,7 @@ import type {
     ExtractStudio,
     ExtractMedia,
     MediaTrailer,
-    MapRelation,
+    MapRelations,
     MediaTitle,
     StudioSort,
     MediaList,
@@ -236,7 +236,7 @@ export class MediaQuery<T = {}> extends Base<Media, MediaArguments> {
         edges?: E | ((edge: MediaEdge) => E),
         nodes?: M | ((node: MediaQuery) => M),
         pageInfo?: P | ((page: PageInfo) => P)
-    }): MediaQuery<T & MapRelation<ExtractMediaEdge<E>, ExtractMedia<M>, ExtractPageInfo<P>>> {
+    }): MediaQuery<T & { relations: MapRelations<ExtractMediaEdge<E>, ExtractMedia<M>, ExtractPageInfo<P>> }> {
         if (!options) {
             this.query.set("relations", ["edges { id }"]);
             return <never>this;
@@ -265,7 +265,7 @@ export class MediaQuery<T = {}> extends Base<Media, MediaArguments> {
             page?: number,
             perPage?: number
         }
-    }): MediaQuery<T & MapRelation<ExtractCharacterEdge<E>, ExtractCharacter<C>, ExtractPageInfo<P>>> {
+    }): MediaQuery<T & { characters: MapRelations<ExtractCharacterEdge<E>, ExtractCharacter<C>, ExtractPageInfo<P>> }> {
         if (!options) {
             this.query.set("characters", ["edges { id }"]);
             return <never>this;
@@ -292,7 +292,7 @@ export class MediaQuery<T = {}> extends Base<Media, MediaArguments> {
             sort?: Array<StaffSort>,
             isMain?: boolean
         }
-    }): MediaQuery<T & MapRelation<ExtractStaffEdge<E>, ExtractStaff<S>, ExtractPageInfo<P>>> {
+    }): MediaQuery<T & { staff: MapRelations<ExtractStaffEdge<E>, ExtractStaff<S>, ExtractPageInfo<P>> }> {
         if (!options) {
             this.query.set("staff", ["edges { id }"]);
             return <never>this;
@@ -319,7 +319,7 @@ export class MediaQuery<T = {}> extends Base<Media, MediaArguments> {
             sort?: Array<StudioSort>,
             isMain?: boolean
         }
-    }): MediaQuery<T & MapRelation<ExtractStudioEdge<E>, ExtractStudio<S>, ExtractPageInfo<P>>> {
+    }): MediaQuery<T & { studios: MapRelations<ExtractStudioEdge<E>, ExtractStudio<S>, ExtractPageInfo<P>> }> {
         if (!options) {
             this.query.set("studios", ["edges { id }"]);
             return <never>this;

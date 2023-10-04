@@ -7,7 +7,7 @@ import type {
     StudioArguments,
     ExtractPageInfo,
     ExtractMedia,
-    MapRelation,
+    MapRelations,
     MediaSort,
     Studio
 } from "../typings";
@@ -65,7 +65,7 @@ export class StudioQuery<T = {}> extends Base<Studio, StudioArguments> {
             page?: number,
             perPage?: number
         }
-    }): StudioQuery<T & MapRelation<ExtractMediaEdge<E>, ExtractMedia<M>, ExtractPageInfo<P>>> {
+    }): StudioQuery<T & { media: MapRelations<ExtractMediaEdge<E>, ExtractMedia<M>, ExtractPageInfo<P>> }> {
         if (!options) {
             this.query.set("media", ["edges { id }"]);
             return <never>this;

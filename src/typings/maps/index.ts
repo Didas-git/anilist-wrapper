@@ -1,1 +1,1 @@
-export type * from "./map-relation";
+export type * from "./map-edges";

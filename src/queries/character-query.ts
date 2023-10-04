@@ -9,7 +9,7 @@ import type {
     CharacterImage,
     CharacterName,
     ExtractMedia,
-    MapRelation,
+    MapRelations,
     Character,
     MediaSort,
     MediaType
@@ -108,7 +108,7 @@ export class CharacterQuery<T = {}> extends Base<Character, CharacterArguments> 
             page?: number,
             perPage?: number
         }
-    }): CharacterQuery<T & MapRelation<ExtractMediaEdge<E>, ExtractMedia<M>, ExtractPageInfo<P>>> {
+    }): CharacterQuery<T & { media: MapRelations<ExtractMediaEdge<E>, ExtractMedia<M>, ExtractPageInfo<P>> }> {
         if (!options) {
             this.query.set("media", ["edges { id }"]);
             return <never>this;
