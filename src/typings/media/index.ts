@@ -1,7 +1,9 @@
+export type * from "./media-list-collection-arguments";
 export type * from "./media-streaming-episode";
 export type * from "./media-list-type-options";
 export type * from "./media-trend-connection";
 export type * from "./media-trend-arguments";
+export type * from "./media-list-collection";
 export type * from "./media-list-arguments";
 export type * from "./media-external-link";
 export type * from "./media-list-options";
@@ -10,6 +12,7 @@ export type * from "./media-cover-image";
 export type * from "./media-trend-sort";
 export type * from "./media-trend-edge";
 export type * from "./media-connection";
+export type * from "./media-list-group";
 export type * from "./media-arguments";
 export type * from "./media-rank-type";
 export type * from "./media-list-sort";

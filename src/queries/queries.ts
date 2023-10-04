@@ -1,15 +1,17 @@
 import {
+    MediaListCollectionQuery,
     AiringScheduleQuery,
     MediaTrendQuery,
     CharacterQuery,
+    MediaListQuery,
     StudioQuery,
     StaffQuery,
     MediaQuery,
-    PageQuery,
-    MediaListQuery
+    PageQuery
 } from ".";
 
 import type {
+    MediaListCollectionArguments,
     AiringScheduleArguments,
     MediaTrendArguments,
     CharacterArguments,
@@ -68,6 +70,12 @@ export class Queries {
     public mediaList(args?: MediaListArguments, oAuthToken?: string): MediaListQuery;
     public mediaList(params?: MediaListArguments | number, oAuthToken?: string): MediaListQuery {
         return new MediaListQuery(<never>params, oAuthToken ?? this.#OAuthToken);
+    }
+
+    public mediaListCollection(name?: string, oAuthToken?: string): MediaListCollectionQuery;
+    public mediaListCollection(args?: MediaListCollectionArguments, oAuthToken?: string): MediaListCollectionQuery;
+    public mediaListCollection(params?: MediaListCollectionArguments | string, oAuthToken?: string): MediaListCollectionQuery {
+        return new MediaListCollectionQuery(<never>params, oAuthToken ?? this.#OAuthToken);
     }
 
     public studio(id?: number, oAuthToken?: string): StudioQuery;
