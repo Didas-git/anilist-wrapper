@@ -1,3 +1,4 @@
+export * from "./airing-schedule-edge";
 export * from "./character-edge";
 export * from "./studio-edge";
 export * from "./staff-edge";

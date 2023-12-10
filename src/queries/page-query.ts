@@ -16,7 +16,7 @@ import type {
     PageArguments,
     ExtractMedia,
     ExtractStaff,
-    Page,
+    Page
 } from "../typings";
 import { MediaTrendQuery } from "./media-trend-query";
 

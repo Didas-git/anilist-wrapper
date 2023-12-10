@@ -1,3 +1,4 @@
+export type * from "./extract-airing-schedule-edge";
 export type * from "./extract-airing-schedule";
 export type * from "./extract-character-edge";
 export type * from "./extract-studio-edge";

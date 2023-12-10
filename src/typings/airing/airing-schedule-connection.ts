@@ -1,4 +1,4 @@
-import type { AiringSchedule, AiringScheduleEdge } from ".";
+import type { AiringSchedule, IAiringScheduleEdge } from ".";
 import type { Connection } from "../connection";
 
-export interface AiringScheduleConnection extends Connection<AiringScheduleEdge, AiringSchedule> { }
+export interface AiringScheduleConnection extends Connection<IAiringScheduleEdge, AiringSchedule> { }
