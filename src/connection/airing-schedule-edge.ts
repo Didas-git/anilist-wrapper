@@ -1,5 +1,5 @@
-import { AiringScheduleQuery } from "src/queries";
-import type { ExtractAiringSchedule, IAiringScheduleEdge } from "src/typings";
+import { AiringScheduleQuery } from "../queries";
+import type { ExtractAiringSchedule, IAiringScheduleEdge } from "../typings";
 import { Edge } from "./edge";
 
 export interface AiringScheduleEdge<T> {
