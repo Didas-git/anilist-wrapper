@@ -1,9 +1,11 @@
+import { AiringScheduleQuery } from "./airing-schedule-query";
 import { CharacterQuery } from "./character-query";
 import { StudioQuery } from "./studio-query";
 import { StaffQuery } from "./staff-query";
 import { Base } from "../base";
 
 import {
+    AiringScheduleEdge,
     CharacterEdge,
     StudioEdge,
     MediaEdge,
@@ -12,6 +14,8 @@ import {
 } from "../connection";
 
 import type {
+    ExtractAiringScheduleEdge,
+    ExtractAiringSchedule,
     MediaStreamingEpisode,
     ExtractCharacterEdge,
     MediaExternalLink,
@@ -359,8 +363,32 @@ export class MediaQuery<T = {}> extends Base<Media, MediaArguments> {
         return <never>this;
     }
 
-    //! PENDING!!!
-    // public withAiringSchedule() {}
+    public withAiringSchedule<E extends AiringScheduleEdge, A extends AiringScheduleQuery, P extends PageInfo>(options?: {
+        edges?: E | ((edge: AiringScheduleEdge) => E),
+        nodes?: A | ((node: AiringScheduleQuery) => A),
+        pageInfo?: P | ((page: PageInfo) => P),
+        args?: {
+            notYetAired?: boolean,
+            page?: number,
+            perPage?: number
+        }
+    }): MediaQuery<T & { airingSchedule: Expand<MapRelations<ExtractAiringScheduleEdge<E>, ExtractAiringSchedule<A>, ExtractPageInfo<P>>> }> {
+        if (!options) {
+            this.query.set("airingSchedule", ["nodes { id, airingAt, episode }"]);
+            return <never>this;
+        }
+        const arr: Array<string> = [];
+        const edges = typeof options.edges === "function" ? options.edges(new AiringScheduleEdge()).parse() : options.edges?.parse();
+        const nodes = typeof options.nodes === "function" ? options.nodes(new AiringScheduleQuery()).parse() : options.nodes?.parse();
+        const pageInfo = typeof options.pageInfo === "function" ? options.pageInfo(new PageInfo()).parse() : options.pageInfo?.parse();
+
+        edges && arr.push(`edges { ${edges.fields} }`);
+        nodes && arr.push(`nodes { ${nodes.fields} }`);
+        pageInfo && arr.push(`pageInfo { ${pageInfo.fields} }`);
+
+        this.query.set("airingSchedule", { args: options.args, fields: arr.length ? arr : ["nodes { id, airingAt, episode }"] });
+        return <never>this;
+    }
     //! PENDING!!!
     // public withTrends() {}
 
