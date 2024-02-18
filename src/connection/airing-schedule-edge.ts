@@ -11,7 +11,6 @@ export class AiringScheduleEdge<T = {}> extends Edge<AiringScheduleQuery, IAirin
         super(new AiringScheduleQuery());
     }
 
-    /** @deprecated Always returns null  */
     public withId(): AiringScheduleEdge<T & { id: Required<IAiringScheduleEdge>["id"] }> {
         this.query.set("id", void 0);
         return <never>this;
